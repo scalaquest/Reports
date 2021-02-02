@@ -8,12 +8,13 @@ PDF of from the repo website.
 
 ## How generate report versions
 
-Releases are auto-generated using semantic versioning, at each merged PR on
-main. Just create a new git semantic-versioned tag when a major version is
+Releases are auto-generated using semantic versioning, **at each merged PR on
+main**. Just create a new git semantic-versioned tag when a major version is
 required, like:
 
 ```
 git tag 0.2.4 -a
 ```
 
-Minor version will be handled as well, without the need of creating more tags.
+Prereleases will be handled as well, without the need of manually creating more
+tags.
