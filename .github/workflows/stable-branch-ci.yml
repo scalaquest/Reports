@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - dev
+      - main
 
   pull_request:
     branches:
@@ -15,9 +16,7 @@ on:
 
 jobs:
   StabilityCheck:
-
     runs-on: ubuntu-18.04
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

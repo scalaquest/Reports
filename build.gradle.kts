@@ -23,5 +23,6 @@ gitSemVer {
 
 
 tasks.register("generateVersionFile") {
-    File("${buildDir}/versionz").writeText(version.toString())
+    mkdir("build")
+    File("${buildDir}/version").writeText(version.toString())
 }
