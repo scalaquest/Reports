@@ -1,6 +1,5 @@
 # Requisiti
 
-
 ## Requisiti di business
 
 ## Requisiti utente

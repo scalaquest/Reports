@@ -1,9 +1,10 @@
 # Retrospettiva
-<!--Restrospettiva 
-(descrizione finale dettagliata dell'andamento 
+
+<!--Restrospettiva
+(descrizione finale dettagliata dell'andamento
 dello sviluppo,
-del backlog, 
-delle iterazioni; 
+del backlog,
+delle iterazioni;
 commenti finali)-->
 
 ## Descrizione dello sviluppo
