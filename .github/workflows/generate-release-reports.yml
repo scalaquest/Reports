@@ -3,9 +3,9 @@ name: Reports Generation
 # Generate new reports release on tag creation, only if semantic
 # versioning is respected.
 on:
-  create:
+  push:
     tags:
-      - "[0-9]+.[0-9]+.[0-9]+*"
+      - '*.*.*'
 
 jobs:
   ReportsGeneration:
@@ -15,17 +15,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      # Use cache if available for Gradle
-      - name: Cache Gradle packages
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: Merge PPS markdown files
         id: ppsreportfiles
