@@ -8,7 +8,7 @@ on:
       - '*.*.*'
 
 jobs:
-  ReportsGeneration:
+  deploy:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repository
