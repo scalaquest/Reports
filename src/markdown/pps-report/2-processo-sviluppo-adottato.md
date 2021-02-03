@@ -1,6 +1,5 @@
 # Processo di sviluppo adottato
 
-
 ## Modalità di divisione in itinere dei task
 
 ## Meeting e interazioni pianificate
