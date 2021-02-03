@@ -3,7 +3,7 @@ name: Reports Generation
 # Generate new reports release on tag creation, only if semantic
 # versioning is respected.
 on:
-  create:
+  push:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+*"
 
