@@ -1,19 +1,15 @@
-name: Stable Branches CI
+name: Markdown Lint
 
 # Trigger on pull request on the stable branch, and as an additional
 # check when pushing on main
 
 on:
-  push:
-    branches:
-      - main
-
   pull_request:
     branches:
       - main
 
 jobs:
-  StabilityCheck:
+  Lint:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repository
@@ -30,5 +26,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Syntax and Style Check with Spotless
+      - name: Format check and Lint
         run: ./gradlew spotlessCheck
