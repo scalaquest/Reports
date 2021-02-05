@@ -7,11 +7,8 @@ on:
     branches:
       - dev
       - main
-
-  pull_request:
-    branches:
-      - main
-      - dev
+      - 'release/**'
+      - 'hotfix/**'
 
 jobs:
   lint:
