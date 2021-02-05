@@ -34,7 +34,7 @@ jobs:
         id: genversion
         run: |
           ./gradlew generateVersionFile
-          RELEASE_VERSION=$(cat ./core/build/version)
+          RELEASE_VERSION=$(cat ./build/version)
 
       - name: Create pre-release
         id: create-release
