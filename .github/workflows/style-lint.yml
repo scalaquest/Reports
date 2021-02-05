@@ -1,4 +1,4 @@
-name: Markdown style check and lint
+name: Markdown lint
 
 # Basic style control, to ensure quality on Markdown drafting.
 
@@ -15,7 +15,7 @@ on:
 
 jobs:
   lint:
-    name: Markdown style check and lint
+    name: Markdown lint
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repository
@@ -31,5 +31,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Format check and lint
+      - name: Style check and lint
         run: ./gradlew spotlessCheck
