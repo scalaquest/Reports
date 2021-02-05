@@ -1,21 +1,23 @@
-name: Markdown Lint
+name: Markdown lint
 
-# Trigger on pull request on the stable branch, and as an additional
-# check when pushing on main
+# Basic style control, to ensure quality on Markdown drafting.
 
 on:
-  pull_request:
+  push:
     branches:
+      - dev
       - main
+      - 'release/**'
+      - 'hotfix/**'
 
 jobs:
-  Lint:
+  lint:
+    name: Markdown lint
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Use cache if available for Gradle
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
@@ -26,5 +28,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Format check and Lint
+      - name: Style check and lint
         run: ./gradlew spotlessCheck
