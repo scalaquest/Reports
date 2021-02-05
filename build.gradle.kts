@@ -1,6 +1,6 @@
 plugins {
     id("com.diffplug.spotless")
-    id ("org.danilopianini.git-sensitive-semantic-versioning")
+    id("org.danilopianini.git-sensitive-semantic-versioning")
 }
 
 repositories {
@@ -18,11 +18,17 @@ spotless {
 }
 
 gitSemVer {
-    version = computeGitSemVer() // THIS IS MANDATORY, AND MUST BE LAST IN BLOCK
+    minimumVersion.set("0.1.0")
+    developmentIdentifier.set("dev")
+    noTagIdentifier.set("archeo")
+    fullHash.set(false)
+    maxVersionLength.set(Int.MAX_VALUE)
+    developmentCounterLength.set(2)
+    version = computeGitSemVer()
 }
 
 
 tasks.register("generateVersionFile") {
     mkdir("build")
-    File("${buildDir}/version").writeText(version.toString())
+    File(buildDir.toString() + "/version").writeText(version.toString())
 }
