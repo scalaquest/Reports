@@ -34,7 +34,7 @@ jobs:
         id: genversion
         run: |
           ./gradlew generateVersionFile
-          RELEASE_VERSION=$(cat ./build/version)
+          echo "RELEASE_VERSION=$(cat ./build/version)" >> $GITHUB_ENV
 
       - name: Create pre-release
         id: create-release
