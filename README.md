@@ -8,12 +8,12 @@ PDF of from the repo website.
 
 ## How generate report versions
 
-Releases are auto-generated using semantic versioning, at each merged PR on
-main. Just create a new git semantic-versioned tag when a major version is
-required, like:
+To generate a release, open a new branch named `release/<versioncode>`, with
+`<versioncode>` a code for the version respecting semantic versioning. Then,
+create locally a new annotated tag, and push it remotely:
 
+```shell
+git checkout -b release/<versioncode>
+git tag 0.2.4-dev+01 -a
+git push --set-upstream origin release/<versioncode> --follow-tags
 ```
-git tag 0.2.4 -a
-```
-
-Minor version will be handled as well, without the need of creating more tags.
