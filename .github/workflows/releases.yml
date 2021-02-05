@@ -1,4 +1,4 @@
-name: Generate new release
+name: Generate release
 
 # Generates a new release, after a release/* branch is successfully
 # merged into main. The tag name is inferred from the branch name.
@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    name: Generate new release
+    name: Generate release
 
     # only merged pull requests must trigger this job
     if: github.event.pull_request.merged == true
