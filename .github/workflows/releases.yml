@@ -39,6 +39,8 @@ jobs:
       # Scaladoc' titles, as the version of the projects are based on gitSemVer.
       - name: Add local tag
         run: |
+          git config user.name releaserbot
+          git config user.email github-actions@github.com
           git tag env.RELEASE_VERSION -a
 
       - name: Create Release
