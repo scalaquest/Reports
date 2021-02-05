@@ -33,7 +33,7 @@ jobs:
       - name: Extract version from GitSemVer
         id: genversion
         run: |
-          ./gradlew :core:generateVersionFile
+          ./gradlew generateVersionFile
           RELEASE_VERSION=$(cat ./core/build/version)
 
       - name: Create pre-release
