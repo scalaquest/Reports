@@ -1,4 +1,4 @@
-name: Generate new release
+name: Generate release
 
 # Generates a new release, after a release/* branch is successfully
 # merged into main. The tag name is inferred from the branch name.
@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    name: Generate new release
+    name: Generate release
 
     # only merged pull requests must trigger this job
     if: github.event.pull_request.merged == true
@@ -62,10 +62,7 @@ jobs:
           base: dev
           title: Merge main into dev branch
           body: |
-            This PR merges the master branch back into dev.
-            This happens to ensure that the updates that happend on the release
-            branch, i.e. CHANGELOG and manifest updates are also present on the
-            dev branch.
+            This PR merges the master branch back into dev. This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates, are also present on the dev branch.
 
       - name: Cache Gradle packages
         uses: actions/cache@v2
