@@ -126,8 +126,8 @@ finished the dictionary module, a sort of initial "wrapper" used to generate
 Prolog code initially. **Team 1** carried on various tasks regarding CI, QA
 enhancement, release generation, and created a bot for dependency update.
 
-In addition, reports and documentation now are located in a separate repo, and a
-new page for the project description has been deployed.
+In addition, reports and documentation now are located in a separate repository,
+and a new page for the project description has been deployed.
 
 Useful links:
 
