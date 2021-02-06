@@ -118,3 +118,23 @@ Useful links:
 - [(Issue) Represent ItemRefs as an ADT](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/30)
 - [(Issue) Reports basic structure](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/20)
 - [(Pull request) Set up Markdown subproject](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/46)
+
+## Sprint 6 (31st January - 6th February)
+
+In this Sprint we continued working divided in groups. **Team 2** continued and
+finished the dictionary module, a sort of initial "wrapper" used to generate
+Prolog code initially. **Team 1** carried on various tasks regarding CI, QA
+enhancement, release generation, and created a bot for dependency update.
+
+In addition, reports and documentation now are located in a separate repo, and a
+new page for the project description has been deployed.
+
+Useful links:
+
+- [(Issue) Dictionary and Prolog Parser refactoring](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/48)
+- [(Issue) Review and refactor model](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/66)
+- [(Issue) Set up delivery and deployment](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/22)
+- [(Issue) Further QA features](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/52)
+- [(Issue) Reports in a separate repository](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/54)
+- [(Issue) Dependabot](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/64)
+- [(Pull Request) Release with GitFlow and semantic versioning](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/63)
