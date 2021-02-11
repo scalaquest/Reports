@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/macos,web,linux,windows,intellij+all
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,web,linux,windows,intellij+all
+# Created by https://www.toptal.com/developers/gitignore/api/macos,linux,windows,intellij+all
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,windows,intellij+all
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -135,21 +135,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.wasm
-*.wat
-*.xhtml
-
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -176,4 +161,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,web,linux,windows,intellij+all
+# End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows,intellij+all
