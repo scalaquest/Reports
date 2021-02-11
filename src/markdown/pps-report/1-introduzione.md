@@ -1,7 +1,7 @@
 ---
 autoSectionLabels: true
-title: Pandoc cross-ref demo
-author: Scalaquest group
+title: PPS Report
+author: Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo Nardini
 numbersections: true
 ---
 
