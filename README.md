@@ -9,8 +9,8 @@ separate repository, as the structure of them begun to rise in complexity.
 ## How to consult reports?
 
 You can examine the reports from the
-[PPS report website](https://scalaquest.github.io/reports/pps.html),
-[LSS report website](https://scalaquest.github.io/reports/lss.html), in
+[PPS report website](https://scalaquest.github.io/reports/reports/pps.html),
+[LSS report website](https://scalaquest.github.io/reports/reports/lss.html), in
 [LaTeX PDF](https://github.com/scalaquest/reports/releases/latest) format, or
 directly from the
 [Markdown files](https://github.com/scalaquest/reports/tree/main/src/markdown).
