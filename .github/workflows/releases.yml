@@ -19,7 +19,7 @@ jobs:
       - name: Checkout GitHub Pages
         uses: actions/checkout@v2
         with:
-          branch: gh-pages
+          ref: gh-pages
           path: ./gh-pages
 
       - name: Checkout web template
