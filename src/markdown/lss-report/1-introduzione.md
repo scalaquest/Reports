@@ -1,7 +1,9 @@
 ---
 autoSectionLabels: true
 title: LSS Report
-author: Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo Nardini
+author:
+  Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo
+  Nardini
 numbersections: true
 ---
 

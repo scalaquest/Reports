@@ -6,7 +6,11 @@
 This is the entry point for PPS and LSS reports. We decided to set them in a
 separate repository, as the structure of them begun to rise in complexity.
 
-You can consult reports and other project documentation, either in
-[Markdown](./src/markdown), in a LaTeX
-[PDF](https://github.com/scalaquest/reports/releases/) of from the
-[web version](https://scalaquest.github.io/reports).
+## How to consult reports?
+
+You can examine the reports from the
+[PPS report website](https://scalaquest.github.io/reports/pps.html),
+[LSS report website](https://scalaquest.github.io/reports/lss.html), in
+[LaTeX PDF](https://github.com/scalaquest/reports/releases/latest) format, or
+directly from the
+[Markdown files](https://github.com/scalaquest/reports/tree/main/src/markdown).
