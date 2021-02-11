@@ -1,99 +1,24 @@
-<!DOCTYPE html>
-<html  dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PPS Report</title>
-        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-        <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css">
-
-        <link rel="stylesheet" href="style.css">
-        <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-        <script src="uikit.js"></script>
-        <script src="scripts.js"></script>
-        <script src="jquery.sticky-kit.js"></script>
-
-        <meta name="generator" content="pandoc-uikit" />
-                <meta name="author" content="Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo Nardini" />
-                        <title>PPS Report</title>
-        <style type="text/css">code{white-space: pre;}</style>
-                                                       
-    </head>
-
-    <body>
-
-
-        <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-
-                        <div class="uk-grid" data-uk-grid-margin>
-                <div class="uk-width-1-1">
-                    <h1 class="uk-heading-large">PPS Report</h1>
-                                                            <p class="uk-text-large">Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo Nardini</p>
-                                    </div>
-            </div>
-            
-            <div class="uk-grid" data-uk-grid-margin >          
-                <div class="uk-width-medium-1-4">
-                    <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
-                        <div class="uk-panel uk-panel-box menu-begin" >
-
-                                                        <ul>
-                                                        <li><a href="#sec:introduzione">Introduzione</a></li>
-                                                        <li><a href="#sec:processo-di-sviluppo-adottato">Processo di sviluppo adottato</a>
-                                                        <ul>
-                                                        <li><a href="#sec:modalità-di-divisione-in-itinere-dei-task">Modalità di divisione in itinere dei task</a></li>
-                                                        <li><a href="#sec:meeting-e-interazioni-pianificate">Meeting e interazioni pianificate</a></li>
-                                                        <li><a href="#sec:modalità-di-revisione-in-itinere-dei-task">Modalità di revisione in itinere dei task</a></li>
-                                                        <li><a href="#sec:scelta-degli-strumenti-di-test-build-e-ci">Scelta degli strumenti di test, build e CI</a></li>
-                                                        </ul></li>
-                                                        <li><a href="#sec:requisiti">Requisiti</a>
-                                                        <ul>
-                                                        <li><a href="#sec:requisiti-di-business">Requisiti di business</a></li>
-                                                        <li><a href="#sec:requisiti-utente">Requisiti utente</a></li>
-                                                        <li><a href="#sec:requisiti-funzionali">Requisiti funzionali</a></li>
-                                                        <li><a href="#sec:requisiti-non-funzionali">Requisiti non funzionali</a></li>
-                                                        <li><a href="#sec:requisiti-di-implementazione">Requisiti di implementazione</a></li>
-                                                        </ul></li>
-                                                        <li><a href="#sec:design-architetturale">Design architetturale</a>
-                                                        <ul>
-                                                        <li><a href="#sec:architettura-complessiva">Architettura complessiva</a></li>
-                                                        <li><a href="#sec:pattern-architetturali">Pattern architetturali</a></li>
-                                                        <li><a href="#sec:componenti-del-sistema-distribuito">Componenti del sistema distribuito</a></li>
-                                                        <li><a href="#sec:scelete-tecnologiche">Scelete tecnologiche</a></li>
-                                                        </ul></li>
-                                                        <li><a href="#sec:design-di-dettaglio">Design di dettaglio</a>
-                                                        <ul>
-                                                        <li><a href="#sec:scelte-rilevanti">Scelte rilevanti</a></li>
-                                                        <li><a href="#sec:pattern-di-progettazione">Pattern di progettazione</a></li>
-                                                        <li><a href="#sec:organizzazione-del-codice">Organizzazione del codice</a></li>
-                                                        </ul></li>
-                                                        <li><a href="#sec:implementazione">Implementazione</a>
-                                                        <ul>
-                                                        <li><a href="#sec:angelini-thomas">Angelini Thomas</a></li>
-                                                        <li><a href="#sec:corina-jacopo">Corina Jacopo</a></li>
-                                                        <li><a href="#sec:gorini-francesco">Gorini Francesco</a></li>
-                                                        <li><a href="#sec:maldini-riccardo">Maldini Riccardo</a></li>
-                                                        <li><a href="#sec:nardini-filippo">Nardini Filippo</a></li>
-                                                        </ul></li>
-                                                        <li><a href="#sec:retrospettiva">Retrospettiva</a>
-                                                        <ul>
-                                                        <li><a href="#sec:descrizione-dello-sviluppo">Descrizione dello sviluppo</a></li>
-                                                        <li><a href="#sec:descrizione-del-backlog">Descrizione del backlog</a></li>
-                                                        <li><a href="#sec:descrizione-delle-iterazioni">Descrizione delle iterazioni</a></li>
-                                                        <li><a href="#sec:commenti-finali">Commenti finali</a></li>
-                                                        </ul></li>
-                                                        </ul>
-                            
-                        </div>
-                    </div>
-                </div>
-
-                <div class="uk-width-medium-3-4">
-<h1 id="sec:introduzione">Introduzione</h1>
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      <meta name="author" content="Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo Nardini">
+      
+      <title>PPS Report</title>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Font-awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Styles -->
+      <link rel="stylesheet" href="https://ashki23.github.io/styles.css">
+         </head>
+   <body>
+            <div class="container">
+         <h1 class="title">PPS Report</h1>
+                  <div class="row">
+            <div class="col-xl-10"><h1 id="sec:introduzione">Introduzione</h1>
 <p>L’obiettivo di questo progetto è quello di realizzare un framework per l’implementazione di giochi del genere Interactive Fiction (come ad esempio Zork), nel quale il giocatore può utilizzare comandi di testo per influenzare l’ambiente e proseguire nel gioco.</p>
 <p>Il framework metterà a disposizione una parte principale definita “core” attraverso la quale è possibile gestire i comandi inseriti dall’utente e, di conseguenza, modificare lo stato di gioco.</p>
 <p>Il giocatore si interfaccerà attraverso una CLI, senza escludere una possibile soluzione che utilizzi un’altra tecnologia come ad esempio un’interfaccia web.</p>
@@ -149,11 +74,75 @@ commenti finali)-->
 <h2 id="sec:descrizione-dello-sviluppo">Descrizione dello sviluppo</h2>
 <h2 id="sec:descrizione-del-backlog">Descrizione del backlog</h2>
 <h2 id="sec:descrizione-delle-iterazioni">Descrizione delle iterazioni</h2>
-<h2 id="sec:commenti-finali">Commenti finali</h2>                    
-                </div>
+<h2 id="sec:commenti-finali">Commenti finali</h2></div>
+            <div class="d-none d-xl-block col-xl-2 bd-toc">
+               <ul class="section-nav">
+                  <li class="toc-entry"><ul>
+<li><a href="#sec:introduzione">Introduzione</a></li>
+<li><a href="#sec:processo-di-sviluppo-adottato">Processo di sviluppo adottato</a>
+<ul>
+<li><a href="#sec:modalità-di-divisione-in-itinere-dei-task">Modalità di divisione in itinere dei task</a></li>
+<li><a href="#sec:meeting-e-interazioni-pianificate">Meeting e interazioni pianificate</a></li>
+<li><a href="#sec:modalità-di-revisione-in-itinere-dei-task">Modalità di revisione in itinere dei task</a></li>
+<li><a href="#sec:scelta-degli-strumenti-di-test-build-e-ci">Scelta degli strumenti di test, build e CI</a></li>
+</ul></li>
+<li><a href="#sec:requisiti">Requisiti</a>
+<ul>
+<li><a href="#sec:requisiti-di-business">Requisiti di business</a></li>
+<li><a href="#sec:requisiti-utente">Requisiti utente</a></li>
+<li><a href="#sec:requisiti-funzionali">Requisiti funzionali</a></li>
+<li><a href="#sec:requisiti-non-funzionali">Requisiti non funzionali</a></li>
+<li><a href="#sec:requisiti-di-implementazione">Requisiti di implementazione</a></li>
+</ul></li>
+<li><a href="#sec:design-architetturale">Design architetturale</a>
+<ul>
+<li><a href="#sec:architettura-complessiva">Architettura complessiva</a></li>
+<li><a href="#sec:pattern-architetturali">Pattern architetturali</a></li>
+<li><a href="#sec:componenti-del-sistema-distribuito">Componenti del sistema distribuito</a></li>
+<li><a href="#sec:scelete-tecnologiche">Scelete tecnologiche</a></li>
+</ul></li>
+<li><a href="#sec:design-di-dettaglio">Design di dettaglio</a>
+<ul>
+<li><a href="#sec:scelte-rilevanti">Scelte rilevanti</a></li>
+<li><a href="#sec:pattern-di-progettazione">Pattern di progettazione</a></li>
+<li><a href="#sec:organizzazione-del-codice">Organizzazione del codice</a></li>
+</ul></li>
+<li><a href="#sec:implementazione">Implementazione</a>
+<ul>
+<li><a href="#sec:angelini-thomas">Angelini Thomas</a></li>
+<li><a href="#sec:corina-jacopo">Corina Jacopo</a></li>
+<li><a href="#sec:gorini-francesco">Gorini Francesco</a></li>
+<li><a href="#sec:maldini-riccardo">Maldini Riccardo</a></li>
+<li><a href="#sec:nardini-filippo">Nardini Filippo</a></li>
+</ul></li>
+<li><a href="#sec:retrospettiva">Retrospettiva</a>
+<ul>
+<li><a href="#sec:descrizione-dello-sviluppo">Descrizione dello sviluppo</a></li>
+<li><a href="#sec:descrizione-del-backlog">Descrizione del backlog</a></li>
+<li><a href="#sec:descrizione-delle-iterazioni">Descrizione delle iterazioni</a></li>
+<li><a href="#sec:commenti-finali">Commenti finali</a></li>
+</ul></li>
+</ul></li>
+               </ul>
             </div>
-
-            <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
-        </div>
-    </body>
+         </div>
+               </div>
+            <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+      <!-- Mathjax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>
+         /* Bootstrap styles to tables */
+         function bootstrapStylePandocTables() {
+         $('tr.header').parent('thead').parent('table').addClass('table table-condensed'); }
+         $(document).ready(function () { bootstrapStylePandocTables(); });
+         /* Adjust the height when click the toc */
+         var shiftWindow = function() { scrollBy(0, -60) };
+         window.addEventListener("hashchange", shiftWindow);
+         function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+   </body>
 </html>
