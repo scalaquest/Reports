@@ -3,11 +3,9 @@ name: Generate release
 # Generates a new release, after a release/* branch is successfully
 # merged into main. The tag name is inferred from the branch name.
 on:
-  pull_request:
+  push:
     branches:
-      - main
-    types:
-      - closed
+      - feature/html-reports
 
 jobs:
   release:
@@ -31,83 +29,12 @@ jobs:
         run: |
           git clone https://github.com/diversen/pandoc-uikit ./template
 
-      - name: Extract version from branch name (for release branches)
-        if: startsWith(github.event.pull_request.head.ref, 'release/')
-        run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
-          VERSION=${BRANCH_NAME#release/}
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
-
-      - name: Extract version from branch name (for hotfix branches)
-        if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
-        run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
-          VERSION=${BRANCH_NAME#hotfix/}
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
-
-      # Only locally: this is useful to have the right release name on .jar(s) and
-      # Scaladoc' titles, as the version of the projects are based on gitSemVer.
-      - name: Add local tag
-        run: |
-          git config user.name releaserbot
-          git config user.email github-actions@github.com
-          git tag ${{ env.RELEASE_VERSION }} -a -m "Local tag"
-
-      - name: Create Release
-        id: create-release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.RELEASE_VERSION }}
-          release_name: ${{ env.RELEASE_VERSION }}
-          prerelease: false
-
-      - name: Merge main into dev branch
-        uses: thomaseizinger/create-pull-request@1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          head: main
-          base: dev
-          title: Merge main into dev branch
-          body: |
-            This PR merges the master branch back into dev. This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates, are also present on the dev branch.
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Prepare report generation
         id: reports
         run: |
           echo "::set-output name=PPS_REPORT_MERGED::$(printf '"%s" ' src/markdown/pps-report/*.md)"
           echo "::set-output name=LSS_REPORT_MERGED::$(printf '"%s" ' src/markdown/lss-report/*.md)"
           mkdir report
-
-      - name: Generate PPS report LaTex PDF
-        uses: docker://pandoc/latex:2.11.3.2
-        with:
-          args: -F pandoc-crossref --output=report/PPSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.PPS_REPORT_MERGED }}
-
-      - name: Generate LSS report LaTex PDF
-        uses: docker://pandoc/latex:2.11.3.2
-        with:
-          args: -F pandoc-crossref --output=report/LSSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.LSS_REPORT_MERGED }}
-
-      - name: Upload release assets
-        uses: dwenegar/upload-release-assets@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          release_id: ${{ steps.create-release.outputs.id }}
-          assets_path: ./report
 
       - name: Prepare gh-pages environment
         run: |
