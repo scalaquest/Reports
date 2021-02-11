@@ -11,9 +11,6 @@ jobs:
   release:
     name: Generate release
 
-    # only merged pull requests must trigger this job
-    if: github.event.pull_request.merged == true
-
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repository
