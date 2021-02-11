@@ -56,3 +56,4 @@ jobs:
           git add reports
           git commit -m "Update reports"
           git push
+
