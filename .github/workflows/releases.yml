@@ -35,8 +35,8 @@ jobs:
 
       - name: Prepare gh-pages environment
         run: |
-          rm -rf gh-pages/{reports}
-          mkdir gh-pages/{reports} -p
+          rm -rf gh-pages/reports
+          mkdir gh-pages/reports -p
 
       - name: Generate PPS report HTML
         uses: docker://pandoc/latex:2.11.3.2
