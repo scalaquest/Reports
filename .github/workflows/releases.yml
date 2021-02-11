@@ -21,6 +21,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Checkout GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: ./gh-pages
+
+      - name: Checkout web template
+        run: |
+          git clone https://github.com/scalaquest/pandoc-bootstrap.git ./template
+
       - name: Extract version from branch name (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/')
         run: |
@@ -98,3 +108,27 @@ jobs:
         with:
           release_id: ${{ steps.create-release.outputs.id }}
           assets_path: ./report
+
+      - name: Prepare gh-pages environment
+        run: |
+          rm -rf gh-pages/reports
+          mkdir gh-pages/reports -p
+
+      - name: Generate PPS report HTML
+        uses: docker://pandoc/latex:2.11.3.2
+        with:
+          args: ${{ steps.reports.outputs.PPS_REPORT_MERGED }} --o ./gh-pages/reports/pps.html -f markdown --template ./template/template.html --toc --toc-depth=2 -F pandoc-crossref
+
+      - name: Generate LSS report HTML
+        uses: docker://pandoc/latex:2.11.3.2
+        with:
+          args: ${{ steps.reports.outputs.LSS_REPORT_MERGED }} --o ./gh-pages/reports/lss.html -f markdown --template ./template/template.html --toc --toc-depth=2 -F pandoc-crossref
+
+      - name: Push reports to gh-pages
+        run: |
+          cd gh-pages
+          git config user.name Reportbot
+          git config user.email github-actions@github.com
+          git add reports
+          git commit -m "Update reports"
+          git push

@@ -1,10 +1,12 @@
 ---
 autoSectionLabels: true
-title: Pandoc cross-ref demo
-author: Scalaquest group
+title: LSS Report
+author: Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo Nardini
 numbersections: true
 ---
 
 # LSS Report
 
-## Sezione {#sec:prima-sezione}
+## Introduzione {#sec:prima-sezione}
+
+Hello, I'm in @sec:prima-sezione
