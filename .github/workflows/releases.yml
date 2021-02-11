@@ -21,6 +21,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Checkout GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          branch: gh-pages
+          path: ./gh-pages
+
+      - name: Checkout web template
+        run: |
+          git clone https://github.com/diversen/pandoc-uikit ./template
+
       - name: Extract version from branch name (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/')
         run: |
@@ -81,12 +91,12 @@ jobs:
           echo "::set-output name=LSS_REPORT_MERGED::$(printf '"%s" ' src/markdown/lss-report/*.md)"
           mkdir report
 
-      - name: Generate PPS report
+      - name: Generate PPS report LaTex PDF
         uses: docker://pandoc/latex:2.11.3.2
         with:
           args: -F pandoc-crossref --output=report/PPSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.PPS_REPORT_MERGED }}
 
-      - name: Generate LSS report
+      - name: Generate LSS report LaTex PDF
         uses: docker://pandoc/latex:2.11.3.2
         with:
           args: -F pandoc-crossref --output=report/LSSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.LSS_REPORT_MERGED }}
@@ -98,3 +108,27 @@ jobs:
         with:
           release_id: ${{ steps.create-release.outputs.id }}
           assets_path: ./report
+
+      - name: Prepare gh-pages environment
+        run: |
+          rm -rf gh-pages/{reports}
+          mkdir gh-pages/{reports} -p
+
+      - name: Generate PPS report HTML
+        uses: docker://pandoc/latex:2.11.3.2
+        with:
+          args: ${{ steps.reports.outputs.PPS_REPORT_MERGED }} --o ./gh-pages/reports/pps.html -f markdown --template ./template/standalone.html --toc --toc-depth=2
+
+      - name: Generate LSS report HTML
+        uses: docker://pandoc/latex:2.11.3.2
+        with:
+          args: ${{ steps.reports.outputs.LSS_REPORT_MERGED }} --o ./gh-pages/reports/lss.html -f markdown --template ./template/standalone.html --toc --toc-depth=2
+
+      - name: Push reports to gh-pages
+        run: |
+          cd gh-pages
+          git config user.name Reportbot
+          git config user.email github-actions@github.com
+          git add reports
+          git commit -m "Update reports"
+          git push
