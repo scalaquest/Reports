@@ -24,7 +24,7 @@ jobs:
 
       - name: Checkout web template
         run: |
-          git clone https://github.com/diversen/pandoc-uikit ./template
+          git clone https://github.com/ashki23/pandoc-bootstrap.git ./template
 
       - name: Prepare report generation
         id: reports
@@ -41,12 +41,12 @@ jobs:
       - name: Generate PPS report HTML
         uses: docker://pandoc/latex:2.11.3.2
         with:
-          args: ${{ steps.reports.outputs.PPS_REPORT_MERGED }} --o ./gh-pages/reports/pps.html -f markdown --template ./template/standalone.html --toc --toc-depth=2 -F pandoc-crossref
+          args: ${{ steps.reports.outputs.PPS_REPORT_MERGED }} --o ./gh-pages/reports/pps.html -f markdown --template ./template/template.html --toc --toc-depth=2 -F pandoc-crossref
 
       - name: Generate LSS report HTML
         uses: docker://pandoc/latex:2.11.3.2
         with:
-          args: ${{ steps.reports.outputs.LSS_REPORT_MERGED }} --o ./gh-pages/reports/lss.html -f markdown --template ./template/standalone.html --toc --toc-depth=2 -F pandoc-crossref
+          args: ${{ steps.reports.outputs.LSS_REPORT_MERGED }} --o ./gh-pages/reports/lss.html -f markdown --template ./template/template.html --toc --toc-depth=2 -F pandoc-crossref
 
       - name: Push reports to gh-pages
         run: |
