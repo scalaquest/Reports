@@ -24,7 +24,7 @@ jobs:
 
       - name: Checkout web template
         run: |
-          git clone https://github.com/ashki23/pandoc-bootstrap.git ./template
+          git clone https://github.com/scalaquest/pandoc-bootstrap.git ./template
 
       - name: Prepare report generation
         id: reports
