@@ -89,6 +89,7 @@ jobs:
         run: |
           echo "::set-output name=PPS_REPORT_MERGED::$(printf '"%s" ' src/markdown/pps-report/*.md)"
           echo "::set-output name=LSS_REPORT_MERGED::$(printf '"%s" ' src/markdown/lss-report/*.md)"
+          echo "::set-output name=APPENDIX_MERGED::$(printf '"%s" ' src/markdown/appendix/*.md)"
           mkdir report
 
       - name: Generate PPS report
@@ -100,6 +101,11 @@ jobs:
         uses: docker://pandoc/latex:2.11.3.2
         with:
           args: -F pandoc-crossref --output=report/LSSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.LSS_REPORT_MERGED }}
+
+      - name: Generate appendix documents
+        uses: docker://pandoc/latex:2.11.3.2
+        with:
+          args: -F pandoc-crossref --output=report/Appendix-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.APPENDIX_MERGED }}
 
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1
@@ -124,11 +130,16 @@ jobs:
         with:
           args: ${{ steps.reports.outputs.LSS_REPORT_MERGED }} --o ./gh-pages/reports/lss.html -f markdown --template ./template/template.html --toc --toc-depth=2 -F pandoc-crossref
 
+      - name: Generate LSS report HTML
+        uses: docker://pandoc/latex:2.11.3.2
+        with:
+          args: ${{ steps.reports.outputs.APPENDIX_MERGED }} --o ./gh-pages/reports/appendix.html -f markdown --template ./template/template.html --toc --toc-depth=2 -F pandoc-crossref
+
       - name: Push reports to gh-pages
         run: |
           cd gh-pages
           git config user.name Reportbot
           git config user.email github-actions@github.com
           git add reports
-          git commit -m "Update reports"
+          git commit -m "Update reports to version ${{ env.RELEASE_VERSION }}"
           git push
