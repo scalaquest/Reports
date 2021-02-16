@@ -12,9 +12,10 @@ sia per quanto concerne il corretto sviluppo del progetto.
 Il lavoro è stato sviluppato principalmente in sottoteam composti da due o tre
 persone, seguendo una sorta di "pair programming". Questa modalità, già
 utilizzata in altri progetti, inizialmente limita la velocità di lavoro in
-quanto non diversi componenti sono occupati sulla stessa parte di codice.
+quanto diversi componenti sono occupati sulla stessa parte di codice.
 Tuttavia questo processo porta ad un innalzamento della qualità di ciò che viene
-prodotto e, successivamente, ad un minore debito tecnico.
+prodotto e, successivamente, ad un minore debito tecnico in quanto le scelte vengono
+discusse in tempo reale tra i membri.
 
 ## Modalità di divisione in itinere dei task
 
@@ -25,25 +26,39 @@ questi incontri erano sempre presenti tutti i membri del team, in quanto
 risultava particolarmente importante sentire tutte le opinioni e le peculiarità
 emerse nell'ultima settimana.
 
-In particolare, la scaletta di ogni incontro è stata la seguente.
+## Meeting e interazioni pianificate
 
-- Brainstorming generale in cui ogni componente metteva al corrente i colleghi
-  di ciò che era stato fatto durante lo sprint appena terminato. Questo portava
+Ad ogni meeting è stata seguita la seguente scaletta:
+
+- **Brainstorming generale**: ogni componente ha aggiornato i colleghi
+  di ciò che è stato fatto durante lo sprint appena terminato. Questo ha portato
   spesso a importanti discussioni su tematiche emerse dal lavoro di ogni membro
   del team.
 
-- Merge delle parti che potevano essere unite al branch principale del progetto.
+- **Merge**: insieme delle parti che sono state aggiunte al branch principale del progetto
+  attraverso Pull Request in modo tale attivare la Continous Integration.
 
-- Definizione dei task: in questa fase venivano eliminati dalla programmazione
-  tutte le funzionalità che erano state completate. Inoltre, nel backlog si
-  aggiungevano feature ancora da sviluppare emerse durante l'ultima settimana.
+- **Definizione dei task**: in questa fase sono stati eliminati dalla programmazione
+  tutte le funzionalità completate. Inoltre, nel backlog sono state
+  aggiunte feature ancora da sviluppare emerse durante l'ultimo meeting.
 
-- Infine, veniva programmato il lavoro per lo sprint che si accingeva a
-  cominciare. In questo modo venivano scelte le parti più urgenti da sviluppare
-  e, ciascuna di esse veniva assegnata ad una parte del team.
-
-## Meeting e interazioni pianificate
+- **Programmazione del futuro ciclo**: è stato programmato il lavoro per lo sprint che 
+  si accingeva a cominciare. In questo modo sono state scelte le parti più urgenti da sviluppare
+  e, ciascuna di esse è stata assegnata ad una parte del team.
 
 ## Modalità di revisione in itinere dei task
 
+-Test?
+-CI?
+
 ## Scelta degli strumenti di test, build e CI
+
+Nel progetto è stato adoperato **Gradle** come build automation tool in quanto il team
+ha una conoscenza pregressa su di essa, inoltre il tool risulta essere molto supportato
+e completo in ogni suo aspetto.
+
+Per quanto concerne i test è stata adoperata **ScalaTest** come testing tool in quanto
+è ritenuta funzionale e completa. Nello specifico si è utilizzato lo stile di *AnyWordSpec*
+poichè risulta essere sufficientemente dichiarativo grazie alla innestabilità.
+
+-CI?
