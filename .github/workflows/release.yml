@@ -1,7 +1,8 @@
-name: Generate release
+name: Release
 
 # Generates a new release, after a release/* branch is successfully
 # merged into main. The tag name is inferred from the branch name.
+
 on:
   pull_request:
     branches:
@@ -10,8 +11,7 @@ on:
       - closed
 
 jobs:
-  release:
-    name: Generate release
+  Deploy:
 
     # only merged pull requests must trigger this job
     if: github.event.pull_request.merged == true
@@ -20,16 +20,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Checkout GitHub Pages
-        uses: actions/checkout@v2
         with:
-          ref: gh-pages
-          path: ./gh-pages
-
-      - name: Checkout web template
-        run: |
-          git clone https://github.com/scalaquest/PandocBootstrap.git ./template
+          fetch-depth: 0
+          submodules: 'recursive'
 
       - name: Extract version from branch name (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/')
@@ -45,15 +38,14 @@ jobs:
           VERSION=${BRANCH_NAME#hotfix/}
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
-      # Only locally: this is useful to have the right release name on .jar(s) and
-      # Scaladoc' titles, as the version of the projects are based on gitSemVer.
-      - name: Add local tag
+      - name: Add tag
         run: |
           git config user.name releaserbot
           git config user.email github-actions@github.com
-          git tag ${{ env.RELEASE_VERSION }} -a -m "Local tag"
+          git tag ${{ env.RELEASE_VERSION }} -a -m "Release ${{ env.RELEASE_VERSION }}"
+          git push --follow-tags
 
-      - name: Create Release
+      - name: Create release
         id: create-release
         uses: actions/create-release@v1
         env:
@@ -63,7 +55,7 @@ jobs:
           release_name: ${{ env.RELEASE_VERSION }}
           prerelease: false
 
-      - name: Merge main into dev branch
+      - name: Create "merge into dev" pull request
         uses: thomaseizinger/create-pull-request@1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -72,36 +64,30 @@ jobs:
           base: dev
           title: Merge main into dev branch
           body: |
-            This PR merges the master branch back into dev. This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates, are also present on the dev branch.
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+            This PR merges the main branch back into dev. This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates, are also present on the dev branch.
 
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
 
-      - name: Generate PPS report
-        uses: docker://pandoc/latex:2.11.4
-        with:
-          args: -d ./src/markdown/pps-report/pps-latex-default.yml -o report/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+      - name: Prepare environment
+        run: |
+          mkdir docs
 
-      - name: Generate LSS report
+      - name: Generate PPS report PDF
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/lss-report/lss-latex-default.yml -o report/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+          args: -d ./pandoc/pps-report/latex.yaml -o docs/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
-      - name: Generate appendix documents
+      - name: Generate LSS report PDF
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/appendix/appendix-latex-default.yml -o report/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+          args: -d ./pandoc/lss-report/latex.yaml -o docs/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate appendix documents PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1
@@ -109,7 +95,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: ${{ steps.create-release.outputs.id }}
-          assets_path: ./report
+          assets_path: ./docs
+
+      - name: Checkout GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: ./gh-pages
 
       - name: Prepare gh-pages environment
         run: |
@@ -119,17 +111,17 @@ jobs:
       - name: Generate PPS report HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/pps-report/pps-html-default.yml -o ./gh-pages/reports/pps.html
+          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/reports/pps.html
 
       - name: Generate LSS report HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/lss-report/lss-html-default.yml -o ./gh-pages/reports/lss.html
+          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/reports/lss.html
 
-      - name: Generate LSS report HTML
+      - name: Generate Appendix documents HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/appendix/appendix-html-default.yml -o ./gh-pages/reports/appendix.html
+          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/reports/appendix.html
 
       - name: Push reports to gh-pages
         run: |

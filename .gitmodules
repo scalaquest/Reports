@@ -1,0 +1,3 @@
+[submodule "html-template"]
+	path = pandoc/templates
+	url = https://github.com/scalaquest/PandocBootstrap.git

@@ -1,11 +1,10 @@
-from: markdown
-
 defaults:
-  - ./src/markdown/appendix/appendix-default
+  - ./src/appendix/index
+  - ./pandoc/defaults/latex
 
 output-file: Appendix.pdf
+resource-path: ['./src/appendix']
 
 metadata:
   title: ScalaQuest
   subtitle: Appendix Documents
-  lang: it-IT

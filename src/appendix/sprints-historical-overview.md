@@ -1,12 +1,3 @@
----
-autoSectionLabels: true
-title: Appendix Documents
-author:
-Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo
-Nardini
-numbersections: true
----
-
 # Sprints Historical Overview
 
 In this document keep track of what we have done in the last Sprints (not the

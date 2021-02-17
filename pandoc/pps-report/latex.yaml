@@ -1,11 +1,10 @@
-from: markdown
-
 defaults:
-  - ./src/markdown/pps-report/pps-default
+  - ./src/pps-report/index
+  - ./pandoc/defaults/latex
 
 output-file: PPSReport.pdf
+resource-path: ['./src/pps-report']
 
 metadata:
   title: ScalaQuest
   subtitle: PPS Report
-  lang: it-IT

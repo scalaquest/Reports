@@ -1,0 +1,10 @@
+defaults:
+  - ./src/pps-report/index
+  - ./pandoc/defaults/latex
+
+output-file: LSSReport.pdf
+resource-path: ['./src/lss-report']
+
+metadata:
+  title: ScalaQuest
+  subtitle: LSS Report

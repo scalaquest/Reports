@@ -10,7 +10,7 @@ on:
       - 'hotfix/**'
 
 jobs:
-  prerelease:
+  Deploy:
     name: Opt-in pre-release
     if: contains(github.event.head_commit.message, '[prerelease]')
     runs-on: ubuntu-18.04
@@ -50,20 +50,24 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
 
-      - name: Generate PPS report
-        uses: docker://pandoc/latex:2.11.4
-        with:
-          args: -d ./src/markdown/pps-report/pps-latex-default.yml -o report/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+      - name: Prepare environment
+        run: |
+          mkdir docs
 
-      - name: Generate LSS report
+      - name: Generate PPS report PDF
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/lss-report/lss-latex-default.yml -o report/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+          args: -d ./pandoc/pps-report/latex.yaml -o docs/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
-      - name: Generate appendix documents
+      - name: Generate LSS report PDF
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/appendix/appendix-latex-default.yml -o report/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+          args: -d ./pandoc/lss-report/latex.yaml -o docs/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate appendix documents PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1
@@ -71,4 +75,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: ${{ steps.create-release.outputs.id }}
-          assets_path: ./report
+          assets_path: ./docs

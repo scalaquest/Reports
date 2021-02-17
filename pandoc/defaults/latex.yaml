@@ -1,0 +1,21 @@
+from: markdown
+table-of-contents: true
+toc-depth: 2
+number-sections: true
+top-level-division: chapter
+
+filters:
+  - pandoc-crossref
+
+metadata:
+  title: ScalaQuest
+  subtitle: Report
+  lang: it-IT
+  author:
+    - Thomas Angelini
+    - Jacopo Corina
+    - Francesco Gorini
+    - Riccardo Maldini
+    - Filippo Nardini
+  autoSectionLabels: true
+  chapters: true

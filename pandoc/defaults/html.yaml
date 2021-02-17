@@ -1,7 +1,10 @@
 from: markdown
-
-input-files:
-  - ./src/markdown/lss-report/1-introduzione.md
+table-of-contents: true
+toc-depth: 2
+number-sections: true
+top-level-division: chapter
+template: template.html
+data-dir: pandoc
 
 metadata:
   author:
@@ -15,8 +18,4 @@ metadata:
 
 filters:
   - pandoc-crossref
-table-of-contents: true
-toc-depth: 2
-number-sections: true
-resource-path: ['./src/markdown/lss-report']
-top-level-division: chapter
+
