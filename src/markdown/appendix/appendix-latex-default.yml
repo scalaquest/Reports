@@ -1,0 +1,12 @@
+from: markdown
+
+defaults:
+  - ./src/markdown/appendix/appendix-default
+
+output-file: Appendix.pdf
+
+metadata:
+  title: ScalaQuest
+  subtitle: Appendix Documents
+  lang: it-IT
+  date: 20 Febbraio 2021

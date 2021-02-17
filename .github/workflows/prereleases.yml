@@ -46,28 +46,20 @@ jobs:
           release_name: ${{ env.RELEASE_VERSION }}
           prerelease: true
 
-      - name: Prepare report generation
-        id: reports
-        run: |
-          echo "::set-output name=PPS_REPORT_MERGED::$(printf '"%s" ' src/markdown/pps-report/*.md)"
-          echo "::set-output name=LSS_REPORT_MERGED::$(printf '"%s" ' src/markdown/lss-report/*.md)"
-          echo "::set-output name=APPENDIX_MERGED::$(printf '"%s" ' src/markdown/appendix/*.md)"
-          mkdir report
-
       - name: Generate PPS report
-        uses: docker://pandoc/latex:2.11.3.2
+        uses: docker://pandoc/latex:2.11.4
         with:
-          args: -F pandoc-crossref --output=report/PPSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.PPS_REPORT_MERGED }}
+          args: -d ./src/markdown/pps-report/pps-latex-default.yml -o report/PPSReport-${{ env.RELEASE_VERSION }}.pdf
 
       - name: Generate LSS report
-        uses: docker://pandoc/latex:2.11.3.2
+        uses: docker://pandoc/latex:2.11.4
         with:
-          args: -F pandoc-crossref --output=report/LSSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.LSS_REPORT_MERGED }}
+          args: -d ./src/markdown/lss-report/lss-latex-default.yml -o report/LSSReport-${{ env.RELEASE_VERSION }}.pdf
 
       - name: Generate appendix documents
-        uses: docker://pandoc/latex:2.11.3.2
+        uses: docker://pandoc/latex:2.11.4
         with:
-          args: -F pandoc-crossref --output=report/Appendix-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.APPENDIX_MERGED }}
+          args: -d ./src/markdown/appendix/appendix-latex-default.yml -o report/Appendix-${{ env.RELEASE_VERSION }}.pdf
 
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1

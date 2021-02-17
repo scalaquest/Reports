@@ -1,0 +1,11 @@
+from: markdown
+
+defaults:
+  - ./src/markdown/lss-report/lss-default
+
+output-file: LSSReport.html
+
+metadata:
+  title: ScalaQuest LSS Report
+
+template: ./template/template.html

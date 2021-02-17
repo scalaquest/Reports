@@ -1,0 +1,22 @@
+from: markdown
+
+input-files:
+  - ./src/markdown/appendix/sprints-historical-overview.md
+
+metadata:
+  author:
+    - Thomas Angelini
+    - Jacopo Corina
+    - Francesco Gorini
+    - Riccardo Maldini
+    - Filippo Nardini
+  autoSectionLabels: true
+  chapters: true
+
+filters:
+  - pandoc-crossref
+table-of-contents: true
+toc-depth: 2
+number-sections: true
+resource-path: ['./src/markdown/appendix']
+top-level-division: chapter

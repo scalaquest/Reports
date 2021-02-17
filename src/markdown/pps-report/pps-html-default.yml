@@ -1,0 +1,11 @@
+from: markdown
+
+defaults:
+  - ./src/markdown/pps-report/pps-default
+
+output-file: PPSReport.html
+
+metadata:
+  title: ScalaQuest PPS Report
+
+template: ./template/template.html

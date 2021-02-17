@@ -1,0 +1,22 @@
+from: markdown
+
+input-files:
+  - ./src/markdown/lss-report/1-introduzione.md
+
+metadata:
+  author:
+    - Thomas Angelini
+    - Jacopo Corina
+    - Francesco Gorini
+    - Riccardo Maldini
+    - Filippo Nardini
+  autoSectionLabels: true
+  chapters: true
+
+filters:
+  - pandoc-crossref
+table-of-contents: true
+toc-depth: 2
+number-sections: true
+resource-path: ['./src/markdown/lss-report']
+top-level-division: chapter

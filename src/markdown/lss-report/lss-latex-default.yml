@@ -1,0 +1,12 @@
+from: markdown
+
+defaults:
+  - ./src/markdown/lss-report/lss-default
+
+output-file: LSSReport.pdf
+
+metadata:
+  title: ScalaQuest LSS Report
+  subtitle: ScalaQuest
+  lang: it-IT
+  date: 20 Febbraio 2021

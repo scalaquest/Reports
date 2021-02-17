@@ -1,0 +1,12 @@
+from: markdown
+
+defaults:
+  - ./src/markdown/pps-report/pps-default
+
+output-file: PPSReport.pdf
+
+metadata:
+  title: ScalaQuest
+  subtitle: PPS Report
+  lang: it-IT
+  date: 20 Febbraio 2021

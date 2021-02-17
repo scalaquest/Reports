@@ -1,0 +1,12 @@
+from: markdown
+
+defaults:
+  - ./src/markdown/appendix/appendix-default
+  appendix-default
+
+output-file: Appendix.html
+
+metadata:
+  title: ScalaQuest Appendix Documents
+
+template: ./template/template.html

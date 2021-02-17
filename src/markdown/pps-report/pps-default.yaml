@@ -1,0 +1,29 @@
+from: markdown
+
+input-files:
+  - ./src/markdown/pps-report/1-introduzione.md
+  - ./src/markdown/pps-report/2-processo-sviluppo-adottato.md
+  - ./src/markdown/pps-report/3-requisiti.md
+  - ./src/markdown/pps-report/4-design-architetturale.md
+  - ./src/markdown/pps-report/5-design-di-dettaglio.md
+  - ./src/markdown/pps-report/6-implementazione.md
+  - ./src/markdown/pps-report/7-retrospettiva-conclusioni.md
+
+metadata:
+  author:
+    - Thomas Angelini
+    - Jacopo Corina
+    - Francesco Gorini
+    - Riccardo Maldini
+    - Filippo Nardini
+  autoSectionLabels: true
+  chapters: true
+
+
+filters:
+  - pandoc-crossref
+table-of-contents: true
+toc-depth: 2
+number-sections: true
+resource-path: ['./src/markdown/pps-report']
+top-level-division: chapter
