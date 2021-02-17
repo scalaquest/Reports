@@ -84,20 +84,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
+
       - name: Generate PPS report
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/pps-report/pps-latex-default.yml -o report/PPSReport-${{ env.RELEASE_VERSION }}.pdf
+          args: -d ./src/markdown/pps-report/pps-latex-default.yml -o report/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
       - name: Generate LSS report
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/lss-report/lss-latex-default.yml -o report/LSSReport-${{ env.RELEASE_VERSION }}.pdf
+          args: -d ./src/markdown/lss-report/lss-latex-default.yml -o report/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
       - name: Generate appendix documents
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./src/markdown/appendix/appendix-latex-default.yml -o report/Appendix-${{ env.RELEASE_VERSION }}.pdf
+          args: -d ./src/markdown/appendix/appendix-latex-default.yml -o report/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1
