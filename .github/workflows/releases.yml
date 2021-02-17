@@ -29,7 +29,7 @@ jobs:
 
       - name: Checkout web template
         run: |
-          git clone https://github.com/scalaquest/pandoc-bootstrap.git ./template
+          git clone https://github.com/scalaquest/PandocBootstrap.git ./template
 
       - name: Extract version from branch name (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/')
