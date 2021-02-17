@@ -1,7 +1,7 @@
 # ScalaQuest Final Reports
 
-![Reports Generation](https://github.com/scalaquest/Reports/workflows/Reports%20Generation/badge.svg?branch=main)
-![Markdown lint](https://github.com/scalaquest/Reports/workflows/Markdown%20lint/badge.svg?branch=main)
+![CI](https://github.com/scalaquest/Reports/workflows/CI/badge.svg)
+![Release](https://img.shields.io/github/v/release/scalaquest/Reports?label=Release)
 
 This is the entry point for PPS and LSS reports. We decided to set them in a
 separate repository, as the structure of them begun to rise in complexity.
