@@ -9,6 +9,9 @@ I requisiti di business sono descritti di seguito.
 
 - Permettere ad un utente di creare dei giochi del tipo Interactive Fiction.
 
+- Creare un sistema di Natural Language Processing in grado di comprendere ed
+  estrarre significato dalla frase inserita dall'utente.
+
 - Fornire un'interfaccia a linea di comando attraverso la quale un giocatore può
   interagire con il sistema.
 
@@ -65,3 +68,6 @@ I requisiti di implementazione possono essere riassunti nei punti seguenti.
 - Utilizzo di **Gradle** come sistema di build automation.
 
 - Sistema di testing usando **Scalatest** e **jUnit**.
+
+- Utilizzo del linguaggio **Prolog** per implementare il sistema di elaborazione
+  del linguaggio naturale.
