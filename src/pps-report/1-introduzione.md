@@ -1,12 +1,3 @@
----
-autoSectionLabels: true
-title: PPS Report
-author:
-  Thomas Angelini, Jacopo Corina, Francesco Gorini, Riccardo Maldini, Filippo
-  Nardini
-numbersections: true
----
-
 # Introduzione
 
 L'obiettivo di questo progetto è quello di realizzare un framework per

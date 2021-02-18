@@ -10,7 +10,7 @@ on:
       - 'hotfix/**'
 
 jobs:
-  prerelease:
+  Deploy:
     name: Opt-in pre-release
     if: contains(github.event.head_commit.message, '[prerelease]')
     runs-on: ubuntu-18.04
@@ -46,28 +46,28 @@ jobs:
           release_name: ${{ env.RELEASE_VERSION }}
           prerelease: true
 
-      - name: Prepare report generation
-        id: reports
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
+
+      - name: Prepare environment
         run: |
-          echo "::set-output name=PPS_REPORT_MERGED::$(printf '"%s" ' src/markdown/pps-report/*.md)"
-          echo "::set-output name=LSS_REPORT_MERGED::$(printf '"%s" ' src/markdown/lss-report/*.md)"
-          echo "::set-output name=APPENDIX_MERGED::$(printf '"%s" ' src/markdown/appendix/*.md)"
-          mkdir report
+          mkdir docs
 
-      - name: Generate PPS report
-        uses: docker://pandoc/latex:2.11.3.2
+      - name: Generate PPS report PDF
+        uses: docker://pandoc/latex:2.11.4
         with:
-          args: -F pandoc-crossref --output=report/PPSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.PPS_REPORT_MERGED }}
+          args: -d ./pandoc/pps-report/latex.yaml -o docs/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
-      - name: Generate LSS report
-        uses: docker://pandoc/latex:2.11.3.2
+      - name: Generate LSS report PDF
+        uses: docker://pandoc/latex:2.11.4
         with:
-          args: -F pandoc-crossref --output=report/LSSReport-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.LSS_REPORT_MERGED }}
+          args: -d ./pandoc/lss-report/latex.yaml -o docs/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
-      - name: Generate appendix documents
-        uses: docker://pandoc/latex:2.11.3.2
+      - name: Generate appendix documents PDF
+        uses: docker://pandoc/latex:2.11.4
         with:
-          args: -F pandoc-crossref --output=report/Appendix-${{ env.RELEASE_VERSION }}.pdf  ${{ steps.reports.outputs.APPENDIX_MERGED }}
+          args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1
@@ -75,4 +75,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: ${{ steps.create-release.outputs.id }}
-          assets_path: ./report
+          assets_path: ./docs
