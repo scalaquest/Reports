@@ -32,7 +32,27 @@ I requisiti utente sono descritti di seguito.
 
 ## Requisiti funzionali
 
+I requisiti funzionali di questo progetto sono descritti di seguito.
+
+- Creazione di un framework che permetta ad uno story teller di creare un gioco
+  personalizzabile.
+
+- Creazione di un'interfaccia di gioco attraverso la quale è possibile giocare,
+  nel nostro caso si tratta di un'interfaccia a linea di comando.
+
+- Creazione di due esempi che permettano di mostrare le funzionalità
+  implementate.
+
 ## Requisiti non funzionali
+
+Sono stati individuati i seguenti requisiti non funzionali.
+
+- Sviluppo di una applicazione seguendo i principi del paradigma Agile con
+  elementi di DevOps, in modo da creare un sistema corretto, ma allo stesso
+  tempo con qualità e conciso.
+
+- Utilizzo della metodologia Scrum, in modo più puntuale possibile, definendo
+  ciascun ruolo e organizzando correttamente il tempo.
 
 ## Requisiti di implementazione
 
@@ -43,3 +63,5 @@ I requisiti di implementazione possono essere riassunti nei punti seguenti.
 - Utilizzo del linguaggio di programmazione **Scala**.
 
 - Utilizzo di **Gradle** come sistema di build automation.
+
+- Sistema di testing usando **Scalatest** e **jUnit**.
