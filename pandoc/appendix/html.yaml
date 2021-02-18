@@ -1,5 +1,5 @@
 defaults:
-  - ./src/lss-report/index
+  - ./src/appendix/index
   - ./pandoc/defaults/html
 
 output-file: Appendix.html

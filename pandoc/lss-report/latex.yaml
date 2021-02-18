@@ -1,5 +1,5 @@
 defaults:
-  - ./src/pps-report/index
+  - ./src/lss-report/index
   - ./pandoc/defaults/latex
 
 output-file: LSSReport.pdf

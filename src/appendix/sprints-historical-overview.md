@@ -139,7 +139,7 @@ Useful links:
 - [(Issue) Dependabot](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/64)
 - [(Pull Request) Release with GitFlow and semantic versioning](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/63)
 
-# Sprint 7 (7th February - 14th February)
+## Sprint 7 (7th February - 14th February)
 
 In this Sprint we continued working divided in groups. **Team 1** we
 re-organized the commons package, by splitting common reactions from the

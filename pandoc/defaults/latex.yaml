@@ -19,3 +19,5 @@ metadata:
     - Filippo Nardini
   autoSectionLabels: true
   chapters: true
+  classoption:
+    - oneside

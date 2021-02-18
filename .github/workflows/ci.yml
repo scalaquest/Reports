@@ -80,7 +80,8 @@ jobs:
         with:
           args: -d ./pandoc/appendix/html.yaml -o docs/Appendix.html
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: reports-${{ steps.date.outputs.date }}
           path: docs
