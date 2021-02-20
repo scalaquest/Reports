@@ -1,17 +1,20 @@
 # Implementazione
 
-<!--Implementazione
+<!--
+Implementazione
 (per ogni studente,
 una sotto-sezione descrittiva di cosa fatto/co-fatto e con chi,
 descrizione di aspetti implementativi importanti
-non già presenti nel design)-->
+non già presenti nel design)
+-->
 
-## Angelini Thomas
+## Aspetti trattati in comune
 
-## Corina Jacopo
+## Aspetti trattati in sub-team
 
-## Gorini Francesco
+### Team 1 (Maldini, Corina, Angelini)
 
-## Maldini Riccardo
+<!-- Anche specializzazioni e aspetti approfonditi più da un solo componente che da
+un altro.-->
 
-## Nardini Filippo
+### Team 2 (Nardini, Gorini)
