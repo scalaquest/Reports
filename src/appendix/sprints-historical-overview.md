@@ -138,3 +138,28 @@ Useful links:
 - [(Issue) Reports in a separate repository](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/54)
 - [(Issue) Dependabot](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/64)
 - [(Pull Request) Release with GitFlow and semantic versioning](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/63)
+
+## Sprint 7 (7th February - 14th February)
+
+In this Sprint we continued working divided in groups. **Team 1** we
+re-organized the commons package, by splitting common reactions from the
+behaviors, we added some utility builders, and worked hard on the CI, by
+enabling a well-defined release workflow (with automatic scalaDoc generation and
+deploy at the end of the process), and by enabling coverage threshold, both on
+GH Actions and with the QA tool SonarCloud. **Team 2** worked into the CLI, by
+enabling a specific test framework for ZIO. In addition, they worked into the
+resolver, in order to manage ambiguous description. Then, in a common meeting
+with all members, we work into the Escape Room example, by creating a real story
+with our framework. We also created our first stable releases.
+
+Useful links:
+
+- [(Pull request) Release 0.2.0](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/89)
+- [(Pull request) Common reactions and builder-based behaviors](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/87)
+- [(Pull request) Escape room tests](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/86)
+- [(Pull request) Allow resolver to better manage ambiguous descriptions](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/79)
+- [(Pull request) Generate html on release workflow](https://github.com/scalaquest/reports/pull/13)
+- [(Issue) Better Model API and DSL for the Storyteller](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/66)
+- [(Pull request) Minor workflow optimizations, readme badges](https://github.com/scalaquest/reports/pull/83)
+- [(Pull request) Sonarqube Scoverage integration](https://github.com/scalaquest/reports/pull/77)
+- [(Pull request) Improve CLI prompt](https://github.com/scalaquest/reports/pull/80)

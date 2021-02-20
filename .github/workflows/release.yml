@@ -1,0 +1,133 @@
+name: Release
+
+# Generates a new release, after a release/* branch is successfully
+# merged into main. The tag name is inferred from the branch name.
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  Deploy:
+
+    # only merged pull requests must trigger this job
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: Extract version from branch name (for release branches)
+        if: startsWith(github.event.pull_request.head.ref, 'release/')
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#release/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Extract version from branch name (for hotfix branches)
+        if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#hotfix/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Add tag
+        run: |
+          git config user.name releaserbot
+          git config user.email github-actions@github.com
+          git tag ${{ env.RELEASE_VERSION }} -a -m "Release ${{ env.RELEASE_VERSION }}"
+          git push --follow-tags
+
+      - name: Create release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          prerelease: false
+
+      - name: Create "merge into dev" pull request
+        uses: thomaseizinger/create-pull-request@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          head: main
+          base: dev
+          title: Merge main into dev branch
+          body: |
+            This PR merges the main branch back into dev. This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates, are also present on the dev branch.
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
+
+      - name: Prepare environment
+        run: |
+          mkdir docs
+
+      - name: Generate PPS report PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/pps-report/latex.yaml -o docs/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate LSS report PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/lss-report/latex.yaml -o docs/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate appendix documents PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Upload release assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create-release.outputs.id }}
+          assets_path: ./docs
+
+      - name: Checkout GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: ./gh-pages
+
+      - name: Prepare gh-pages environment
+        run: |
+          rm -rf gh-pages/reports
+          mkdir gh-pages/reports -p
+
+      - name: Generate PPS report HTML
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/reports/pps.html
+
+      - name: Generate LSS report HTML
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/reports/lss.html
+
+      - name: Generate Appendix documents HTML
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/reports/appendix.html
+
+      - name: Push reports to gh-pages
+        run: |
+          cd gh-pages
+          git config user.name Reportbot
+          git config user.email github-actions@github.com
+          git add reports
+          git commit -m "Update reports to version ${{ env.RELEASE_VERSION }}"
+          git push

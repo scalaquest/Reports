@@ -1,10 +1,3 @@
----
-autoSectionLabels: true
-title: Pandoc cross-ref demo
-author: Scalaquest group
-numbersections: true
----
-
 # Introduzione
 
 L'obiettivo di questo progetto è quello di realizzare un framework per
