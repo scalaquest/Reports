@@ -1,9 +1,10 @@
 # Processo di sviluppo adottato
 
-Scriviamo robe relative a Scrum meeting e pianificazione settimanale/scrum
+<!-- Scriviamo robe relative a Scrum meeting e pianificazione settimanale/scrum
 review, retrospettiva, utilizzo di github projects, divisone in due sottogruppi
 principali, ma alcune cose anche portate avanti singolarmente, Gradle con
 scalatest, wordSpec, QA con scoveragev+ somnarcloud, release automatizzate...
+-->
 
 Il processo di sviluppo adottato rispecchia i principi del framework Scrum, nel
 quale vengono definite un insieme di regole basate sulla metodologia Agile. In
