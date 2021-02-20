@@ -1,5 +1,13 @@
 # Design architetturale
 
+<!-- Design a alto livello, intesto come pattern flux, la pipeline, il concetto
+di core e cli un po' approfondito ma non troppo, e la struttura multiprogetto per
+la loro realizzazione, gli esempi,
+come ereditano core e cli come dipendenze, qualche diagramma che esplicita le dipendenze
+a alto livello (core > cli > examples), i package principali del core, a alto livello
+senza approfondirli troppo ma dando un'idea di massima.
+-->
+
 Il progetto ha avuto inizio con una profonda analisi del problema, cercando di
 evidenziare da subito eventuali problematiche.
 
