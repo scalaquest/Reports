@@ -10,7 +10,7 @@ repositories {
 spotless {
     // markdown format with Prettier
     format("styling") {
-        target("**/*.md")
+        target("src/**/*.md")
 
         // auto format markdown with to 80 characters
         prettier().configFile(rootDir.absolutePath + "/.prettierrc.yml")
