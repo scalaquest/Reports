@@ -1,0 +1,21 @@
+from: markdown
+table-of-contents: true
+toc-depth: 2
+number-sections: true
+top-level-division: chapter
+template: template.html
+data-dir: pandoc
+
+metadata:
+  author:
+    - Thomas Angelini
+    - Jacopo Corina
+    - Francesco Gorini
+    - Riccardo Maldini
+    - Filippo Nardini
+  autoSectionLabels: true
+  chapters: true
+
+filters:
+  - pandoc-crossref
+

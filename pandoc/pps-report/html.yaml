@@ -1,0 +1,10 @@
+defaults:
+  - ./src/pps-report/index
+  - ./pandoc/defaults/html
+
+output-file: PPSReport.html
+resource-path: ['./src/pps-report']
+
+metadata:
+  title: ScalaQuest PPS Report
+
