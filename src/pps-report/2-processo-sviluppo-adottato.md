@@ -148,27 +148,26 @@ GitFlow, ma presenta alcune caratteristiche in contrapposizione allo stesso, che
 lo rendono più flessibile e semplice.
 
 Il modello richiede ad esempio che la versione stabile del software sia
-mantenuta su un branch **master** (o main), senza però la necessità di un branch
-**dev** parallelo. Ciò ha permesso di avere nella fase iniziale un **flusso di
-sviluppo meno rigido e più agile**: non avendo software abbastanza stabile da
-poter essere rilasciato, né tantomeno pipeline di deploy attive, ci si è potuto
-concentrare sullo sviluppo delle funzionalità di base. Allo stesso tempo, però,
-GitHub Flow suggerisce di organizzare il lavoro in feature branch, come in
-GitFlow, i quali confluiscono nel main a seguito di revisione.
+mantenuta su un branch `main` (o `master`), senza però la necessità di un branch
+`dev` parallelo. Ciò ha permesso di avere nella fase iniziale un **flusso di
+sviluppo meno rigido**: non avendo in principio software abbastanza stabile da
+poter essere rilasciato, né tantomeno pipeline di deploy attive, ci si è
+concentrati sullo sviluppo delle funzionalità di base. Allo stesso tempo, però,
+GitHub Flow suggerisce di organizzare il lavoro in `feature/*` branch, come in
+GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo
+utente.
 
 ### GitFlow a regime
 
 Una volta predisposta una codebase sufficientemente stabile, e una volta
 abilitate le pipeline di deploy, si è migrato al più strutturato modello
-**GitFlow**. Questo permette di avere all'interno del branch **main** la
-versione stabile, indipendente dal branch di lavoro principale, denominato
-**dev**. I vari **feature branch** confluiscono ora nel branch dev. Il main
-viene aggiornato tramite delle pull request sullo stesso originate da release (o
-hotfix) branch, i quali in linea di massima dovrebbero partire dal dev. Pipeline
-di CI e CD automatizzate permettono di gestire il rilascio del software e della
-documentazione associata negli appositi spazi, e ne garantiscono qualità e
-"rilasciabilità" ad ogni singolo push. Regole di protezione aggiuntive sono
-inoltre state predisposte per il branch main.
+**GitFlow**. Questo permette di avere nel branch `main` la versione ufficiale e
+stabile. A ogni push nel `main` deve corrispondere un tag, associato a sua volta
+a un numero di versione. La versione "di lavoro" del codice, stabile ma
+potenzialmente parziale, risiede nel branch `dev`. I vari `feature/*` branch
+confluiscono ora in `dev`. Il `main` viene aggiornato tramite delle pull request
+sullo stesso originate da branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati
+dal `dev`, e con `X.Y.Z` numero di versione secondo semantic versioning.
 
 ## Strumenti di test, build e CI
 
@@ -186,21 +185,21 @@ stata utilizzata per il testing del framework funzionale ZIO.
 ### Continuous Integration
 
 Particolare attenzione è stata posta nell'individuazione di misure per
-assicurare la qualità del codice. Pipeline a garanzia di Continuous Integration
-e Quality Assurance sono state predisposte tramite il tool **GitHub Actions**,
-con criteri di qualità man mano più stringenti e vincolanti, col crescere della
-stabilità dei branch. In generale, il branch main non può essere modificato
-senza che il codice passi tutti i controlli di CI/QA, e senza che la Pull
-Request venga prima revisionata da un ulteriore componente del team, mentre per
-il branch dev vengono generati warning in caso il codice non rispetti i
-requisiti qualitativi proposti.
+assicurare la qualità del codice. Sono stati predisposti dei workflow a garanzia
+di Continuous Integration e Quality Assurance, costruiti con il tool **GitHub
+Actions**. Sono stati posti criteri di qualità man mano più stringenti e
+vincolanti, a seconda del grado di stabilità del branch. In generale, `main` non
+può essere modificato senza che il codice passi tutti i controlli di CI/QA, e
+senza che la pull request venga prima revisionata da un ulteriore componente del
+team, mentre per il branch `dev` vengono generati warning nel caso in cui il
+codice non rispetti i requisiti qualitativi proposti.
 
 In primo luogo, ogni push o pull request genera un controllo tramite il tool
 esterno **SonarCloud**, il quale definisce soglie qualitative basate su
-coverage, manutenibilità, debito tecnico e molto altro. Sono stati introdotti
-inoltre ulteriori controlli basati su delle **pipeline di CI custom**, nelle
-quali viene effettuato il lint del codice tramite il plugin Spotless, poste
-ulteriori condizioni di coverage, effetuati test e compilato il codice su
+coverage, manutenibilità, code smells, presenza di bug conosciuti e molto altro.
+Sono presenti inoltre ulteriori controlli basati su **workflow CI/QA custom**,
+nei quali viene effettuato il lint del codice tramite il plugin Spotless, poste
+ulteriori soglie di coverage, effettuati test e compilato il codice su
 molteplici piattaforme.
 
 Tutti gli accorgimenti vengono approfonditi in maniera più dettagliata nel
@@ -208,8 +207,21 @@ report di LSS.
 
 ### Automazione della delivery
 
-Sono state inoltre predisposte delle pipeline per la generazione e il deploy
-delle release, strutturate in maniera tale da rispettare i requisiti imposti da
+Sono state inoltre predisposte dei workflow per la generazione e il deploy delle
+release, strutturate in maniera tale da rispettare i requisiti imposti da
 GitFlow, apportandone importanti caratteristiche di automazione.
 
-<!-- todo! -->
+Nel momento in cui si desideri generare una release, il nostro flusso di lavoro
+GitFlow-based prevede che venga generato un branch `release/X.Y.Z`, e che venga
+aperta una pull request su `main` a partire da questa. Quanto detto è l'unica
+operazione manuale da effettuare: una volta chiusa la pull request, revisionata
+la stessa e passati i controlli di CI, un workflow genera il tag della versione,
+inferendolo dal nome del branch. Vengono quindi generati gli asset collegati
+alla release, e resi disponibili nella sezione Release di GitHub. Vengono
+inoltre generati ScalaDoc, report di coverage e di test, resi disponibili
+all'interno dello spazio web GH Pages associato al progetto.
+
+Un meccanismo equivalente è stato sviluppato per la repository che ospita le
+relazioni di progetto. Al momento della release, vengono generate le relazioni
+(a partire da codice Markdown) in formato PDF LaTeX e HTML, tramite il tool
+Pandoc.
