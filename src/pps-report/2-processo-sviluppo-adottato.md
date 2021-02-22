@@ -187,19 +187,20 @@ stata utilizzata per il testing del framework funzionale ZIO.
 
 Particolare attenzione è stata posta nell'individuazione di misure per
 assicurare la qualità del codice. Pipeline a garanzia di Continuous Integration
-e Quality Assurance sono state predisposte tramite il tool GitHub Actions, con
-criteri di qualità man mano più stringenti e vincolanti, col crescere del "grado
-di stabilità" del branch. In generale, il branch main non può essere modificato
-senza che il codice passi tutti i controlli di CI, mentre per il branch dev
-vengono generati warning in caso il codice non rispetti i requisiti qualitativi
-proposti.
+e Quality Assurance sono state predisposte tramite il tool **GitHub Actions**,
+con criteri di qualità man mano più stringenti e vincolanti, col crescere della
+stabilità dei branch. In generale, il branch main non può essere modificato
+senza che il codice passi tutti i controlli di CI/QA, e senza che la Pull
+Request venga prima revisionata da un ulteriore componente del team, mentre per
+il branch dev vengono generati warning in caso il codice non rispetti i
+requisiti qualitativi proposti.
 
 In primo luogo, ogni push o pull request genera un controllo tramite il tool
 esterno **SonarCloud**, il quale definisce soglie qualitative basate su
 coverage, manutenibilità, debito tecnico e molto altro. Sono stati introdotti
-inoltre ulteriori controlli basati su delle** pipeline di CI custom**, nelle
+inoltre ulteriori controlli basati su delle **pipeline di CI custom**, nelle
 quali viene effettuato il lint del codice tramite il plugin Spotless, poste
-ulteriori condizioni di Ccoverage, effetuati test e compilato il codice su
+ulteriori condizioni di coverage, effetuati test e compilato il codice su
 molteplici piattaforme.
 
 Tutti gli accorgimenti vengono approfonditi in maniera più dettagliata nel
