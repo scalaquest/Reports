@@ -217,9 +217,11 @@ aperta una pull request su `main` a partire da questa. Quanto detto è l'unica
 operazione manuale da effettuare: una volta chiusa la pull request, revisionata
 la stessa e passati i controlli di CI, un workflow genera il tag della versione,
 inferendolo dal nome del branch. Vengono quindi generati gli asset collegati
-alla release, e resi disponibili nella [sezione Release](https://github.com/scalaquest/PPS-19-ScalaQuest/releases) del progetto. Vengono
-inoltre generati ScalaDoc, report di coverage e di test, resi disponibili
-all'interno dello [spazio web GH Pages associato al progetto](https://scalaquest.github.io/PPS-19-ScalaQuest).
+alla release, e resi disponibili nella
+[sezione Release](https://github.com/scalaquest/PPS-19-ScalaQuest/releases) del
+progetto. Vengono inoltre generati ScalaDoc, report di coverage e di test, resi
+disponibili all'interno dello
+[spazio web GH Pages associato al progetto](https://scalaquest.github.io/PPS-19-ScalaQuest).
 
 Un meccanismo equivalente è stato sviluppato per la repository che ospita le
 relazioni di progetto. Al momento della release, vengono generate le relazioni
