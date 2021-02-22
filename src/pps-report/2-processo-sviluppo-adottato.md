@@ -52,7 +52,7 @@ Per approfondire e delineare l'effettiva interazione e evoluzione del progetto,
 sono stati utilizzati estensivamente Issue e Pull Request di GitHub. Consultando
 Issue e PR chiuse all'interno delle singole repository, e possibile ricostruire
 interamente il processo di sviluppo. Un "indice" dei principali Issue e PR sono
-contenuti all'interno del sopracitato documento di Scrum Overview (§ @sec:sod).
+contenuti all'interno del sopracitato documento di Scrum Overview (@sec:sod).
 
 ### Discord
 
@@ -93,7 +93,7 @@ seguito la seguente scaletta:
    Sprint corrente.
 
 4. **Assegnamento dei task**: i task individuati vengono quindi assegnati ai
-   componenti del team, o ad eventuali team interni (§ @sec:team).
+   componenti del team, o ad eventuali team interni (@sec:team).
 
 ### Meeting di aggiornamento periodici
 
@@ -217,11 +217,11 @@ aperta una pull request su `main` a partire da questa. Quanto detto è l'unica
 operazione manuale da effettuare: una volta chiusa la pull request, revisionata
 la stessa e passati i controlli di CI, un workflow genera il tag della versione,
 inferendolo dal nome del branch. Vengono quindi generati gli asset collegati
-alla release, e resi disponibili nella sezione Release di GitHub. Vengono
+alla release, e resi disponibili nella [sezione Release](https://github.com/scalaquest/PPS-19-ScalaQuest/releases) del progetto. Vengono
 inoltre generati ScalaDoc, report di coverage e di test, resi disponibili
-all'interno dello spazio web GH Pages associato al progetto.
+all'interno dello [spazio web GH Pages associato al progetto](https://scalaquest.github.io/PPS-19-ScalaQuest).
 
 Un meccanismo equivalente è stato sviluppato per la repository che ospita le
 relazioni di progetto. Al momento della release, vengono generate le relazioni
-(a partire da codice Markdown) in formato PDF LaTeX e HTML, tramite il tool
+(a partire da codice Markdown) in formato `PDF LaTeX` e `HTML`, tramite il tool
 Pandoc.
