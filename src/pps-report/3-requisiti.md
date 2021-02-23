@@ -1,11 +1,19 @@
 # Requisiti
 
-I requisiti sono stati definiti in fase di progettazione iniziale. Questi son
-stati considerati come immutabili nel corso della progettazione.
+## Sessioni di Knowledge Crunching
+I requisiti sono stati individuati attraverso sessioni di **knowledge crunching**.
+In tali sessioni erano presenti tutti i membri del team, per definire la semantica 
+degli elementi di modellazione fondamentali e come essi fossero collegati. In tal senso, il Product Owner ha spiegato 
+quale sarebbe stata la terminologia da adottare, ed attraverso confronti con gli altri membri,
+si sono apportati raffinamenti iterativi ed incrementali.
+Una volta confermati unimamente, tali concetti si sono tradotti nella base di partenza
+per la loro modellazione in codice, e si è cercato di mantenerli stabili,
+senza ulteriori evoluzioni.
 
 ## Requisiti di business
 
-I requisiti di business sono descritti di seguito.
+
+I requisiti di business che sono stati individuati consistono in:
 
 - Permettere ad un utente di creare dei giochi del tipo Interactive Fiction.
 
@@ -20,18 +28,18 @@ I requisiti di business sono descritti di seguito.
 
 ## Requisiti utente
 
-I requisiti utente sono descritti di seguito.
+Riguardo ad i requisiti utente, sono stati individuati in base ai 2 ruoli che
+caratterizzano l'interazione con il framework:
 
-- **Story teller**: con questo termine viene definito l'utente che utilizzerà il
-  Domain Specific Language per creare storie personalizzate. Il framework mette
-  a disposizione un API minimale ma completa, in grado di avere un'espressività
-  sufficiente per definire giochi custom.
+- **Story teller**: viene messa a sua disposizione una interfaccia, minimale ma
+completa, la quale fornisce espressività sufficiente per la creazione di giochi
+  custom. Questo grazie anche alla disponibilità di una linguaggio apposito, volto
+  a facilitare la scrittura del gioco.
+  
 
-- **Player**: questo utente rappresenta un giocatore che interagisce con il
-  framework per giocare. Il progetto prevede la creazione di un'interfaccia a
-  linea di comando per questo tipo di interazione. L'utente sarà in grado,
-  dunque, in ogni momento di capire come interagire con il sistema e quindi di
-  utilizzare lo strumento correttamente.
+- **Player**: viene messa a sua disposizione un' interfaccia a linea di comando,
+che permette di eseguire azioni all' interno della storia del gioco.
+  
 
 ## Requisiti funzionali
 
