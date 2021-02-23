@@ -16,9 +16,9 @@ I requisiti fondamentali che caratterizzano il cuore del framework sono
 descritti di seguito:
 
 - L'utente deve aver la possibilità di definire giochi di tipo Interactive Fiction,
-e poter giocare con essi una volta definiti.
+sia dal punto di vista del player, sia da quello del creatore degli aspetti modellistici.
   
-- L'utente esprime i comandi attraverso frasi, quindi in linguaggio naturale.
+- L'utente esprime i comandi di gioco attraverso frasi, quindi in linguaggio naturale.
   Ciò rende necessaria un' interpretazione lessicale e sintattica.
 
 - Il processo di gioco è strutturato in varie fasi sequenziali, seguendo un' idea finish-to-start,
@@ -52,16 +52,17 @@ che l' utente può assumere nell'interazione con il framework:
 
 ## Requisiti funzionali
 
-I requisiti funzionali di questo progetto sono descritti di seguito.
+I requisiti funzionali sono descritti di seguito.
 
-- Creazione di un framework che permetta ad uno story teller di creare un gioco
-  personalizzabile.
+- Possibilità di definire la terminologia ammessa all' interno del gioco
+  
+- Interpretazione dei comandi di gioco, in modo tale da riconoscere ed
+  elaborare frasi di complessità crescente
+  
+- Possibilità di modellare gli oggetti che popolano un match del gioco, ed
+il loro comportamento con il resto dell' ambiente.
+  
 
-- Creazione di un'interfaccia di gioco attraverso la quale è possibile giocare,
-  nel nostro caso si tratta di un'interfaccia a linea di comando.
-
-- Creazione di due esempi che permettano di mostrare le funzionalità
-  implementate.
 
 ## Requisiti non funzionali
 
