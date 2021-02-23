@@ -7,7 +7,14 @@ magica di Reaction, dettaglio del parsing/lexer
 
 Suddividerei i capitoli common/parser, ecc.. dentro a organizzazione
 del codice
+
+Il design di dettaglio "esplode" (dettaglia) l'architettura, ma viene
+concettualmente prima dell'implementazione, quindi non metteteci diagrammi
+ultra-dettagliati estratti dal codice, quelli vanno nella parte di
+implementazione eventualmente.
 -->
+
+
 
 ## Scelte rilevanti
 
