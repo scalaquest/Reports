@@ -12,8 +12,19 @@ senza ulteriori evoluzioni.
 
 ## Requisiti di business
 
+I requisiti fondamentali che caratterizzano il cuore del framework sono 
+descritti di seguito:
 
-I requisiti di business che sono stati individuati consistono in:
+- L'utente deve aver la possibilità di definire giochi di tipo Interactive Fiction,
+e poter giocare con essi una volta definiti.
+  
+- L'utente esprime i comandi attraverso frasi, quindi in linguaggio naturale.
+  Ciò rende necessaria un' interpretazione lessicale e sintattica.
+
+- Il processo di gioco è strutturato in varie fasi sequenziali, seguendo un' idea finish-to-start,
+in quanto la fase successiva necessita dell' output della precedente. Ciò facilita la 
+  separazione dei concetti e la verificabilità
+<!---I requisiti di business che sono stati individuati consistono in:
 
 - Permettere ad un utente di creare dei giochi del tipo Interactive Fiction.
 
@@ -24,21 +35,19 @@ I requisiti di business che sono stati individuati consistono in:
   interagire con il sistema.
 
 - Creare un framework estenbile e ben sviluppato in ogni modulo, in modo da
-  fornire un API chiara e facilmente utilizzabile.
+  fornire un API chiara e facilmente utilizzabile. --->
 
 ## Requisiti utente
 
-Riguardo ad i requisiti utente, sono stati individuati in base ai 2 ruoli che
-caratterizzano l'interazione con il framework:
+Essi sono stati individuati in base ai 2 ruoli 
+che l' utente può assumere nell'interazione con il framework:
 
-- **Story teller**: viene messa a sua disposizione una interfaccia, minimale ma
-completa, la quale fornisce espressività sufficiente per la creazione di giochi
-  custom. Questo grazie anche alla disponibilità di una linguaggio apposito, volto
-  a facilitare la scrittura del gioco.
+- **Story teller (creatore del gioco)**: deve aver la possibilità di creazione giochi
+  personalizzati attraverso un' interfaccia, minimale ma completa, con l'agevolazione
+  di un linguaggio che semplifichi tale interfacciamento.
   
-
-- **Player**: viene messa a sua disposizione un' interfaccia a linea di comando,
-che permette di eseguire azioni all' interno della storia del gioco.
+- **Player**: deve aver la possibilità di eseguire azioni all' interno della storia del gioco
+  tramite un' interfaccia a linea di comando.
   
 
 ## Requisiti funzionali
@@ -73,7 +82,7 @@ I requisiti di implementazione possono essere riassunti nei punti seguenti.
 
 - Utilizzo del linguaggio di programmazione **Scala**.
 
-- Utilizzo di **Gradle** come sistema di build automation.
+- Utilizzo del sistema di build automation **Gradle**.
 
 - Sistema di testing usando **Scalatest** e **jUnit**.
 
