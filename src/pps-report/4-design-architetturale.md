@@ -64,6 +64,8 @@ Questo è stato diviso in diversi sotto-progetti, ciascuno rappresentante una pa
 
 ### CLI
 
+Un esempio di implementazione delle "strutture" definite in core.
+
 ### Examples
 
 
@@ -71,7 +73,7 @@ Questo è stato diviso in diversi sotto-progetti, ciascuno rappresentante una pa
 
 L'intero progetto è stata organizzato prendendo spunto dall'application structure **Flux**, 
 
- del pattern **pipeline**, il quale prevede
+L'idea di base è quella di creare una **pipeline**, ovvero
 l'utilizzo di vari elementi posti in sequenza in modo da comporre un algoritmo.
 Nel nostro caso la pipeline risulta uno strumento particolarmente utile in
 quanto abbiamo ipotizzato che in questo modo si potesse definire correttamente
@@ -92,6 +94,9 @@ Nel nostro caso le componenti della pipeline sono:
 ## Componenti del sistema distribuito
 
 ## Scelte tecnologiche
+
+- TuProlog (vantaggi -> Scala) (svantaggi (?) -> prestazioni)
+
 
 scelte tecnologiche cruciali ai fini architetturali -- corredato da pochi ma
 efficaci diagrammi
