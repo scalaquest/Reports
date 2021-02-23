@@ -1,29 +1,40 @@
 # Requisiti
 
-## Sessioni di Knowledge Crunching
-I requisiti sono stati individuati attraverso sessioni di **knowledge crunching**.
-In tali sessioni erano presenti tutti i membri del team, per definire la semantica 
-degli elementi di modellazione fondamentali e come essi fossero collegati. In tal senso, il Product Owner ha spiegato 
-quale sarebbe stata la terminologia da adottare, ed attraverso confronti con gli altri membri,
-si sono apportati raffinamenti iterativi ed incrementali.
-Una volta confermati unimamente, tali concetti si sono tradotti nella base di partenza
-per la loro modellazione in codice, e si è cercato di mantenerli stabili,
-senza ulteriori evoluzioni.
+I requisiti sono stati individuati a seguito di diverse sessioni di **knowledge
+crunching**, nelle primissime iterazioni di progetto. Queste sono state portate
+avanti congiuntamente da tutti i componenti del team, con lo scopo di definire
+glossario, elementi di modellazione di base e le loro interazioni.
+
+In linea di massima, durante le sessioni i requisiti sono andati delienandosi,
+grazie al confronto tra la visione di base proposta dal Product Owner e le
+proposte costruttive dei vari membri del team. Sulla base dei concetti
+individuati si sono andate a creare le entità alla base dell'implementazione
+concreta di progetto.
+
+Si è data molta importanza a tale fase iniziale, tanto da portarla avanti per
+quasi due iterazioni complete di Sprint. Ciò allo scopo di creare dei requisiti
+il più possibile stabili. A seguire, sono stati elencati i requisiti
+individuati.
 
 ## Requisiti di business
 
-I requisiti fondamentali che caratterizzano il cuore del framework sono 
-descritti di seguito:
+<!-- Requisiti core, qualunque cosa significhi -->
 
-- L'utente deve aver la possibilità di definire giochi di tipo Interactive Fiction,
-sia dal punto di vista del player, sia da quello del creatore degli aspetti modellistici.
-  
-- L'utente esprime i comandi di gioco attraverso frasi, quindi in linguaggio naturale.
-  Ciò rende necessaria un' interpretazione lessicale e sintattica.
+Per requisiti di business si intende i requisiti tali da delineare l'idea alla
+base del progetto:
 
-- Il processo di gioco è strutturato in varie fasi sequenziali, seguendo un' idea finish-to-start,
-in quanto la fase successiva necessita dell' output della precedente. Ciò facilita la 
-  separazione dei concetti e la verificabilità
+- Il progetto deve consistere in un framework utilizzabile da sviluppatori terzi
+  (storyteller, nel nostro glossario) di **creare e giochi di tipo Interactive
+  Fiction**;
+
+- L'utilizzatore del gioco (user, nel nostro glossario) esprime i comandi di
+  gioco attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
+  un'interpretazione lessicale e sintattica delle stesse.
+
+- Il gioco è strutturato in **iterazioni successive**: ogni comando inserito
+  dallo user modifica lo stato del gioco, generando un output che lo descrive;
+  sulla base di questo lo user prenderà una decisione sul comando successivo.
+
 <!---I requisiti di business che sono stati individuati consistono in:
 
 - Permettere ad un utente di creare dei giochi del tipo Interactive Fiction.
@@ -34,37 +45,40 @@ in quanto la fase successiva necessita dell' output della precedente. Ciò facil
 - Fornire un'interfaccia a linea di comando attraverso la quale un giocatore può
   interagire con il sistema.
 
-- Creare un framework estenbile e ben sviluppato in ogni modulo, in modo da
+- Creare un framework estensibile e ben sviluppato in ogni modulo, in modo da
   fornire un API chiara e facilmente utilizzabile. --->
 
 ## Requisiti utente
 
-Essi sono stati individuati in base ai 2 ruoli 
-che l' utente può assumere nell'interazione con il framework:
+<!-- Cosa si aspetta l'utente dal programma? -->
 
-- **Story teller (creatore del gioco)**: deve aver la possibilità di creazione giochi
-  personalizzati attraverso un' interfaccia, minimale ma completa, con l'agevolazione
-  di un linguaggio che semplifichi tale interfacciamento.
-  
-- **Player**: deve aver la possibilità di eseguire azioni all' interno della storia del gioco
-  tramite un' interfaccia a linea di comando.
-  
+Essi sono stati individuati in base ai 2 ruoli che l' utente può assumere
+nell'interazione con il framework:
+
+- **Story teller (creatore del gioco)**: deve aver la possibilità di creazione
+  giochi personalizzati attraverso un' interfaccia, minimale ma completa, con
+  l'agevolazione di un linguaggio che semplifichi tale interfacciamento.
+
+- **User**: deve aver la possibilità di eseguire azioni all' interno della
+  storia del gioco tramite un' interfaccia a linea di comando.
 
 ## Requisiti funzionali
+
+<!-- Quali funzioni deve fornire il framework all'utente -->
 
 I requisiti funzionali sono descritti di seguito.
 
 - Possibilità di definire la terminologia ammessa all' interno del gioco
-  
-- Interpretazione dei comandi di gioco, in modo tale da riconoscere ed
-  elaborare frasi di complessità crescente
-  
-- Possibilità di modellare gli oggetti che popolano un match del gioco, ed
-il loro comportamento con il resto dell' ambiente.
-  
 
+- Interpretazione dei comandi di gioco, in modo tale da riconoscere ed elaborare
+  frasi di complessità crescente
+
+- Possibilità di modellare gli oggetti che popolano un match del gioco, ed il
+  loro comportamento con il resto dell' ambiente.
 
 ## Requisiti non funzionali
+
+<!-- Cosa deve fornire il framework, come "side effect" -->
 
 Sono stati individuati i seguenti requisiti non funzionali.
 
@@ -76,6 +90,8 @@ Sono stati individuati i seguenti requisiti non funzionali.
   ciascun ruolo e organizzando correttamente il tempo.
 
 ## Requisiti di implementazione
+
+<!-- Cosa deve essere utilizzato per l'implementazione, punti dai quali non possiamo prescindere -->
 
 I requisiti di implementazione possono essere riassunti nei punti seguenti.
 
@@ -89,3 +105,6 @@ I requisiti di implementazione possono essere riassunti nei punti seguenti.
 
 - Utilizzo del linguaggio **Prolog** per implementare il sistema di elaborazione
   del linguaggio naturale.
+
+- todo fasi sequenziali // Tale struttura facilita la separazione dei concetti e
+  la testabilità.
