@@ -6,6 +6,9 @@ la loro realizzazione, gli esempi,
 come ereditano core e cli come dipendenze, qualche diagramma che esplicita le dipendenze
 a alto livello (core > cli > examples), i package principali del core, a alto livello
 senza approfondirli troppo ma dando un'idea di massima.
+
+Ricordate che una scelta architetturale può ritenersi giustificata o meno solo a fronte dei requirement che avete indicato; viceversa, ogni requirement "critico" dovrebbe influenzare qualcuna della scelte architetturali effettuate e descritte.
+L'architettura deve spiegare quali sono i sotto-componenti del sistema (da 5 a 15, diciamo), ognuno cosa fa, chi parla con chi e per dirsi cosa -- i diagrammi aiutano, ma poi la prosa deve chiaramente indicare questi aspetti.
 -->
 
 Il progetto ha avuto inizio con una profonda analisi del problema, cercando di
