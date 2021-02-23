@@ -24,10 +24,10 @@ Per requisiti di business si intende i requisiti tali da delineare l'idea alla
 base del progetto:
 
 - Il progetto deve consistere in un framework utilizzabile da sviluppatori terzi
-  (storyteller, nel nostro glossario) di **creare e giochi di tipo Interactive
+  (_storyteller_, nel nostro glossario) di **creare e giochi di tipo Interactive
   Fiction**;
 
-- L'utilizzatore del gioco (user, nel nostro glossario) esprime i comandi di
+- L'utilizzatore del gioco (_user_, nel nostro glossario) esprime i comandi di
   gioco attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
   un'interpretazione lessicale e sintattica delle stesse.
 
@@ -52,15 +52,32 @@ base del progetto:
 
 <!-- Cosa si aspetta l'utente dal programma? -->
 
-Essi sono stati individuati in base ai 2 ruoli che l' utente può assumere
-nell'interazione con il framework:
+Per requisiti utente si intende i requisiti che l'utente si aspetta dal sistema.
+Sono due le categorie di utenti target del sistema, ognuna con i propri
+requisiti caratteristici.
 
-- **Story teller (creatore del gioco)**: deve aver la possibilità di creazione
-  giochi personalizzati attraverso un' interfaccia, minimale ma completa, con
-  l'agevolazione di un linguaggio che semplifichi tale interfacciamento.
+### Storyteller
 
-- **User**: deve aver la possibilità di eseguire azioni all' interno della
-  storia del gioco tramite un' interfaccia a linea di comando.
+Il termine storyteller identifica i soggetti che utilizzano il sistema per la
+creazione di giochi.
+
+- Al soggetto deve essere reso possibile **realizzare giochi di categoria
+  Interactive Fiction**.
+- A tale scopo, il sistema deve **esporre un'API minimale ma completa**,
+  accessibile tramite un linguaggio di programmazione idoneo.
+
+### User
+
+Il termine user identifica i soggetti che utilizzano giochi creati tramite il
+sistema. Tale soggetto va considerato nell'analisi dei requisiti utente al pari
+dello storyteller, in quanto esso rappresenta sia un utente indiretto (essendo
+il fruitore di storie create dallo storyteller) che diretto (dovendo il sistema
+includere degli esempi di utilizzo).
+
+- Al soggetto deve essere data la possibilità d'**interagire con le storie
+  generate dagli storyteller**.
+- A tale scopo, il sistema deve fornire per rendere possibile l'interazione
+  un'**interfaccia grafica a linea di comando**.
 
 ## Requisiti funzionali
 
