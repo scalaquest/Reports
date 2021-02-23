@@ -7,11 +7,11 @@ come ereditano core e cli come dipendenze, qualche diagramma che esplicita le di
 a alto livello (core > cli > examples), i package principali del core, a alto livello
 senza approfondirli troppo ma dando un'idea di massima.
 
-Ricordate che una scelta architetturale può ritenersi giustificata o meno solo a fronte 
-dei requirement che avete indicato; viceversa, ogni requirement "critico" dovrebbe influenzare 
+Ricordate che una scelta architetturale può ritenersi giustificata o meno solo a fronte
+dei requirement che avete indicato; viceversa, ogni requirement "critico" dovrebbe influenzare
 qualcuna della scelte architetturali effettuate e descritte.
-L'architettura deve spiegare quali sono i sotto-componenti del sistema (da 5 a 15, diciamo), 
-ognuno cosa fa, chi parla con chi e per dirsi cosa -- 
+L'architettura deve spiegare quali sono i sotto-componenti del sistema (da 5 a 15, diciamo),
+ognuno cosa fa, chi parla con chi e per dirsi cosa --
 i diagrammi aiutano, ma poi la prosa deve chiaramente indicare questi aspetti.
 -->
 
@@ -43,24 +43,47 @@ giocatore.
 
 ## Architettura complessiva
 
-L'architettura complessiva è stata organizzata con i seguenti sotto-componenti del sistema, i quali dialogano tra di loro in diverso modo e scambiando informazioni. 
+L'architettura complessiva è stata organizzata con i seguenti sotto-componenti
+del sistema, i quali dialogano tra di loro in diverso modo e scambiando
+informazioni.
+
+Ogni membro del team ha cercato di rispettare quanto più possibile le invarianti
+dettate dal paradigma di programmazione funzionale. Ciò significa, ad esempio,
+di demandare quanto più possibile i side-effects, preferendo immutabilità di
+ciascun componente. In ogni parte del progetto, dunque, la comunicazione tra i
+vari componenti avviene passando classi immutabili e non richiamando metodi
+delle stesse.
+
+I componenti principali sono definiti di seguito.
 
 ### Core
 
-Il componente **core** rappresenta l'elemento centrale del sistema, nella quale è presente, dunque, la business logic dell'intero progetto.
+Il componente **core** rappresenta l'elemento centrale del sistema, nella quale
+è presente, dunque, la business logic dell'intero progetto. Le sezioni più
+interessanti sono:
 
-Questo è stato diviso in diversi sotto-progetti, ciascuno rappresentante una parte autonoma e a sè stante:
+- **modello**: contiene tutte le informazioni che modellano il problema;
 
-- **application**
+- **pipeline**: con questo costrutto viene definita la sequenza di componenti
+  del sistema che permettono di interpretare i comandi e generare il risultato.
+  Le strutture che compongono la pipeline sono:
 
-- **dictonary**
+  1. **lexer**: il primo tassello rappresenta il componente che permette di
+     iniziare il processo di Natural Language Process. Iniziamente, la stringa
+     inserita dall'utente viene sottoposta ad un'analisi lessicale. Nel nostro
+     caso consiste nella creazione di uno stream di token, il quale corrisponde
+     ad una singola parola della frase inserita dall'utente. Banalmente questa
+     divisione avviene in base alla presenza di uno spazio tra le parole;
 
-- **model**
+  2. **parser**: in un secondo momento viene fatta l'analisi sintattica. Viene
+     preso in carico lo stream di token, risultato del lexer, e viene restituito
+     un Abstract Syntax Tree.
 
-- **parsing**
+  3. **resolver**
 
-- **pipeline**
+  4. **interpreter**
 
+  5. **reducer**
 
 ### CLI
 
@@ -68,35 +91,22 @@ Un esempio di implementazione delle "strutture" definite in core.
 
 ### Examples
 
-
 ## Pattern architetturali
 
-L'intero progetto è stata organizzato prendendo spunto dall'application structure **Flux**, 
+L'intero progetto è stata organizzato prendendo spunto dall'application
+structure **Flux**,
 
-L'idea di base è quella di creare una **pipeline**, ovvero
-l'utilizzo di vari elementi posti in sequenza in modo da comporre un algoritmo.
-Nel nostro caso la pipeline risulta uno strumento particolarmente utile in
-quanto abbiamo ipotizzato che in questo modo si potesse definire correttamente
-un gioco interattivo.
-
-Nel nostro caso le componenti della pipeline sono:
-
-1. **Lexer**
-
-2. **Parser**
-
-3. **Resolver**
-
-4. **Interpreter**
-
-5. **Reducer**
+L'idea di base è quella di creare una **pipeline**, ovvero l'utilizzo di vari
+elementi posti in sequenza in modo da comporre un algoritmo. Nel nostro caso la
+pipeline risulta uno strumento particolarmente utile in quanto abbiamo
+ipotizzato che in questo modo si potesse definire correttamente un gioco
+interattivo.
 
 ## Componenti del sistema distribuito
 
 ## Scelte tecnologiche
 
 - TuProlog (vantaggi -> Scala) (svantaggi (?) -> prestazioni)
-
 
 scelte tecnologiche cruciali ai fini architetturali -- corredato da pochi ma
 efficaci diagrammi
