@@ -17,5 +17,5 @@ You can examine the web version of reports and the appendix document from the
 [LSS report website](https://scalaquest.github.io/Reports/docs/lss-report.html) and
 [appendix website](https://scalaquest.github.io/Reports/docs/appendix.html).
 
-If you prefer a LaTex PDF version, you can download the latest release 
+If you prefer a LaTeX PDF version, you can download the latest release 
 [from here](https://github.com/scalaquest/Reports/releases/latest).
