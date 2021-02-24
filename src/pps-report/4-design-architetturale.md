@@ -49,7 +49,7 @@ informazioni.
 
 Ogni membro del team ha cercato di rispettare quanto più possibile le invarianti
 dettate dal paradigma di programmazione funzionale. Ciò significa, ad esempio,
-di demandare quanto più possibile i side-effects, preferendo immutabilità di
+di demandare quanto più possibile i side-effects, preferendo immutabilità in
 ciascun componente. In ogni parte del progetto, dunque, la comunicazione tra i
 vari componenti avviene passando classi immutabili e non richiamando metodi
 delle stesse.
@@ -59,10 +59,49 @@ I componenti principali sono definiti di seguito.
 ### Core
 
 Il componente **core** rappresenta l'elemento centrale del sistema, nella quale
-è presente, dunque, la business logic dell'intero progetto. Le sezioni più
-interessanti sono:
+è presente, dunque, la business logic dell'intero progetto. Le sezioni
+principali sono:
 
-- **modello**: contiene tutte le informazioni che modellano il problema;
+- **model**: contiene tutte le informazioni che modellano il problema, tra cui:
+
+  - **state**: questo concetto definisce una sorta di snapshot del gioco ad un
+    alto livello di astrazione.
+  - **???**
+
+- **game**:
+
+- **parser**: come già descritto nelle sezioni precedenti, all'interno di questo
+  progetto è necessario creare una parte di Natural Language Processing. Questa
+  ha lo scopo di fare consecutivamente una fase di analisi lessicale e,
+  successivamente, una di analisi sintattica. La prima risulta essere
+  particolarmente banale in quanto il problema è stato semplificato e la
+  soluzione si limita a separare ogni sequenza di caratteri divisa da spazio.
+  Diversamente la fase di parsing non risulta essere altrettanto immediata.
+
+  Per poter realizzare questa parte in maniera completa è stato deciso di
+  utilizzare il linguaggio Prolog in quanto è particolarmente adatto a questo
+  scopo. Nello specifico è stata utilizzata la grammatica Prologo chiamata
+  **DCG** (Definite Clause Grammar). Con questa grammatica è possibile definire
+  delle clausole del primo ordine in maniera alquanto immediata e semplice da
+  comprendere. Tutto questo non andando ad intaccare l'espressività e la potenza
+  del linguaggio Prolog.
+
+  In questo progetto, dunque, una frase viene definita "corretta" quando ci sarà
+  una corrispondenza con gli assiomi definiti da noi come clausole DCG.
+
+  In particolare la gramattica è stata divisa in due parti:
+
+  - una parte **statica**, all'interno della quale vengono definite le regole
+    grammaticali che specificano come devono essere formate delle frasi
+    corrette. In particolare questa è stata definita all'interno del modulo core
+    in maniera statica, ovvero non viene modificata in alcun modo dalla storia
+    che viene creata, grazie alla sua natura general purpose;
+
+  - e una parte **dinamica**, che varia in base alla storia definita dallo story
+    teller. Ogni oggetto, azione, verbo o aggettivo che caratterizza una storia
+    personalizzata viene inserito sotto forma di clausola Prolog all'interno
+    della grammatica. Questo permette di interagire con gli elementi del
+    sistema.
 
 - **pipeline**: con questo costrutto viene definita la sequenza di componenti
   del sistema che permettono di interpretare i comandi e generare il risultato.
@@ -87,26 +126,88 @@ interessanti sono:
 
 ### CLI
 
-Un esempio di implementazione delle "strutture" definite in core.
+Il modulo definito **CLI** rappresenta un esempio di implementazione di ogni
+elemento definito all'interno del modulo core. In particolare questa sezione
+descrive come creare una applicazione che usi una sorta di REPL o di linea di
+comando.
+
+Prendendo le informazioni legate al concetto di model e di game definiti in
+core, in questo modulo viene definito il funzionamento dell'applicazione, che
+implementa le fasi di gioco prima definite in questo modo:
+
+1. viene letta la frase inserita da linea di comando da parte dell'utente
+   player;
+2. viene messa in azione la pipeline che restituisce un risultato;
+3. viene creato il messaggio di risposta in base a ciò che restituisce la
+   pipeline;
+4. viene stampato a video il messaggio di risposta;
+5. se il gioco è terminato, viene chiusa la sessione, altrimenti torna al
+   punto 1. e ricomincia il ciclo.
+
+All'interno del modulo CLI viene anche inserita una parte di logica allo scopo
+di interpretare le modifiche che vengono fatte a state. In particolare occorre
+modellare le Reaction , in quanto da queste vengono poi generati i messaggi in
+risposta all'utente.
+
+<!--Parlare di ZIO qui ?-->
 
 ### Examples
 
 ## Pattern architetturali
 
 L'intero progetto è stata organizzato prendendo spunto dall'application
-structure **Flux**,
+structure **Flux**, framework moderno e molto utilizzato anche da colossi come
+Facebook.
 
-L'idea di base è quella di creare una **pipeline**, ovvero l'utilizzo di vari
-elementi posti in sequenza in modo da comporre un algoritmo. Nel nostro caso la
-pipeline risulta uno strumento particolarmente utile in quanto abbiamo
-ipotizzato che in questo modo si potesse definire correttamente un gioco
-interattivo.
+Il flusso di dati di questa applicazione può seguire un percorso unidirezionale
+oppure avere un comportamento ciclico. Quest'ultima soluzione in particolare,
+risulta essere molto efficace con il problema definito in questo progetto.
 
-## Componenti del sistema distribuito
+In questo paradigma viene considerato come punto centrale il nodo
+**Dispatcher**, attraverso il quale fluiscono tutti i flussi di dati. Nel nostro
+caso questo concetto è stato esploso ed è stato implementato attraverso la
+creazione della pipeline.
 
 ## Scelte tecnologiche
 
-- TuProlog (vantaggi -> Scala) (svantaggi (?) -> prestazioni)
+<!-- scelte tecnologiche cruciali ai fini architetturali -- corredato da pochi ma
+efficaci diagrammi -->
 
-scelte tecnologiche cruciali ai fini architetturali -- corredato da pochi ma
-efficaci diagrammi
+Le principali scelte tecnologiche possono essere riassunte nelle seguenti
+sezioni.
+
+### tuProlog
+
+<!-- TuProlog (vantaggi  > Scala) (svantaggi (?) > prestazioni)-->
+
+**TuProlog** rappresenta la libreria su cui è ricaduta la scelta per quanto
+concerne la creazione del motore Prolog di Natural Language Processing.
+
+Le motivazioni per cui è stata scelta sono molteplici:
+
+- durante le lezioni del corso è stato presentata questa libreria quindi tutti i
+  membri del team avevano familiarità con tale libreria;
+
+- perfetta integrazione tra tuProlog e il mondo JVM. Nel nostro progetto quindi
+  ha permesso di utilizzare Prolog all'interno del linguaggio Scala senza
+  particolari problematiche dovute alla comunicazione tra i due costrutti;
+
+- possibilità di utilizzare la grammatica Prolog **DCG** importando una piccola
+  parte aggiuntiva alla libreria.
+
+Tra i possibili svantaggi derivanti dall'utilizzo della libreria tuProlog vi
+potrebbe essere un problema legato alle prestazioni. Essendo sviluppata in Java
+e quindi su JVM, potrebbero non essere ottimizzati i tempi attraverso i quali
+vengono esplorate le soluzioni Prolog.
+
+Tuttavia nel nostro progetto il Prolog non viene richiamato in maniera
+intensiva, ma il suo utilizzo si limita alla parte della pipeline che esegue
+l'analissi sintattica della frase inserita dal player. Per questo motivo, non è
+stato importante fare una analisi degli eventuali problemi di prestazione legati
+alla libreria utilizzata.
+
+## ZIO
+
+Per quanto riguarda ...
+
+## Lens
