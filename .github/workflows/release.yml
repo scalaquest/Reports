@@ -105,23 +105,23 @@ jobs:
 
       - name: Prepare gh-pages environment
         run: |
-          rm -rf gh-pages/reports
-          mkdir gh-pages/reports -p
+          rm -rf gh-pages/docs
+          mkdir gh-pages/docs -p
 
       - name: Generate PPS report HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/reports/pps.html
+          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/docs/pps-report.html
 
       - name: Generate LSS report HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/reports/lss.html
+          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/docs/lss-report.html
 
       - name: Generate Appendix documents HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/reports/appendix.html
+          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/docs/appendix.html
 
       - name: Push reports to gh-pages
         run: |
