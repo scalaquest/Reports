@@ -5,11 +5,11 @@ crunching**, nelle primissime iterazioni di progetto. Queste sono state portate
 avanti congiuntamente da tutti i componenti del team, con lo scopo di definire
 glossario, elementi di modellazione di base e le loro interazioni.
 
-In linea di massima, durante le sessioni i requisiti sono andati delienandosi,
+In linea di massima, durante le sessioni i requisiti sono andati delineandosi,
 grazie al confronto tra la visione di base proposta dal Product Owner e le
-proposte costruttive dei vari membri del team. Sulla base dei concetti
-individuati si sono andate a creare le entità alla base dell'implementazione
-concreta di progetto.
+proposte costruttive dei vari membri del team. Partendo dai concetti individuati
+si sono andate a creare le entità alla base per l'implementazione concreta di
+progetto.
 
 Si è data molta importanza a tale fase iniziale, tanto da portarla avanti per
 quasi due iterazioni complete di Sprint. Ciò allo scopo di creare dei requisiti
@@ -18,110 +18,123 @@ individuati.
 
 ## Requisiti di business
 
-<!-- Requisiti core, qualunque cosa significhi -->
+Per requisiti di business si intendono i requisiti che delineano la base del
+progetto:
 
-Per requisiti di business si intende i requisiti tali da delineare l'idea alla
-base del progetto:
-
-- Il progetto deve consistere in un framework utilizzabile da sviluppatori terzi
+- Il progetto consiste in un framework utilizzabile da sviluppatori terzi
   (_storyteller_, nel nostro glossario) di **creare e giochi di tipo Interactive
   Fiction**;
 
 - L'utilizzatore del gioco (_user_, nel nostro glossario) esprime i comandi di
   gioco attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
-  un'interpretazione lessicale e sintattica delle stesse.
+  un'interpretazione lessicale e sintattica delle stesse;
 
 - Il gioco è strutturato in **iterazioni successive**: ogni comando inserito
-  dallo user modifica lo stato del gioco, generando un output che lo descrive;
-  sulla base di questo lo user prenderà una decisione sul comando successivo.
-
-<!---I requisiti di business che sono stati individuati consistono in:
-
-- Permettere ad un utente di creare dei giochi del tipo Interactive Fiction.
-
-- Creare un sistema di Natural Language Processing in grado di comprendere ed
-  estrarre significato dalla frase inserita dall'utente.
-
-- Fornire un'interfaccia a linea di comando attraverso la quale un giocatore può
-  interagire con il sistema.
-
-- Creare un framework estensibile e ben sviluppato in ogni modulo, in modo da
-  fornire un API chiara e facilmente utilizzabile. --->
+  dallo _user_ modifica lo stato corrente del gioco, generando un output che lo
+  descrive; sulla base di questo lo user prende una decisione su quale sarà il
+  comando successivo.
 
 ## Requisiti utente
 
-<!-- Cosa si aspetta l'utente dal programma? -->
-
-Per requisiti utente si intende i requisiti che l'utente si aspetta dal sistema.
-Sono due le categorie di utenti target del sistema, ognuna con i propri
+Per requisiti utente si intendono i requisiti che l'utente si aspetta dal
+sistema. Le categorie di utenti target del sistema sono due, ognuna con i propri
 requisiti caratteristici.
 
 ### Storyteller
 
 Il termine storyteller identifica i soggetti che utilizzano il sistema per la
-creazione di giochi.
+creazione di giochi. Sono date lui le seguenti possibilità:
 
-- Al soggetto deve essere reso possibile **realizzare giochi di categoria
-  Interactive Fiction**.
-- A tale scopo, il sistema deve **esporre un'API minimale ma completa**,
-  accessibile tramite un linguaggio di programmazione idoneo.
+- **Realizzare giochi di categoria Interactive Fiction**. A tale scopo, il
+  sistema deve **esporre un'API minimale ma completa**, accessibile tramite un
+  linguaggio di programmazione idoneo;
+
+- Modellare la propria storia, e i componenti che la caratterizzano;
+
+- Definire dei comportamenti associati a tali componenti, intesi come delle
+  funzioni in grado di modificare lo stato del gioco e l'output mostrato allo
+  user;
+
+- Definire le parole chiave (come nomi e verbi) che lo user può utilizzare,
+  combinati in frasi anche complesse, per dettare comandi al motore di gioco.
 
 ### User
 
 Il termine user identifica i soggetti che utilizzano giochi creati tramite il
-sistema. Tale soggetto va considerato nell'analisi dei requisiti utente al pari
-dello storyteller, in quanto esso rappresenta sia un utente indiretto (essendo
-il fruitore di storie create dallo storyteller) che diretto (dovendo il sistema
-includere degli esempi di utilizzo).
+framework. Tale soggetto va considerato nell'analisi dei requisiti utente al
+pari dello storyteller, in quanto esso rappresenta sia un utente indiretto
+(essendo il fruitore di storie create dallo storyteller) che diretto (dovendo il
+sistema includere degli esempi di utilizzo). Sono date lui le seguenti
+possibilità:
 
-- Al soggetto deve essere data la possibilità d'**interagire con le storie
-  generate dagli storyteller**.
-- A tale scopo, il sistema deve fornire per rendere possibile l'interazione
-  un'**interfaccia grafica a linea di comando**.
+- **Interagire con le storie** generate dagli storyteller, tramite
+  un'**interfaccia grafica a linea di comando**; questa deve supportare l'input
+  di frasi in linguaggio naturale, e fornirne un output testuale in risposta.
 
 ## Requisiti funzionali
 
-<!-- Quali funzioni deve fornire il framework all'utente -->
+Per requisiti funzionali si intendono le funzionalità che caratterizzano il
+progetto:
 
-I requisiti funzionali sono descritti di seguito.
+- Fornire un modello sul quale rendere possibile costruire storie di tipo
+  Interactive Fiction;
 
-- Possibilità di definire la terminologia ammessa all' interno del gioco
+- Fornire una piattaforma sulla quale lanciare le storie, agente da linea di
+  comando;
 
-- Interpretazione dei comandi di gioco, in modo tale da riconoscere ed elaborare
-  frasi di complessità crescente
+- Fornire la possibilità di creare piattaforme anche differenti da quella
+  standard (ad es. da interfaccia web);
 
-- Possibilità di modellare gli oggetti che popolano un match del gioco, ed il
-  loro comportamento con il resto dell' ambiente.
+- Fornire un engine **Prolog** in grado d'interpretare semplici comandi in
+  linguaggio naturale in lingua inglese, mappandoli in azioni applicabili sulla
+  storia;
+
+- Fornire dei costrutti comuni per la definizione della storia, già modellati e
+  potenzialmente riutilizzabili, al fine di rendere più agevole il compito dello
+  storyteller;
+
+- Esporre un set di esempi (almeno due), utili come spunto di partenza per la
+  creazione, da parte dello storyteller, della propria storia giocabile.
 
 ## Requisiti non funzionali
 
-<!-- Cosa deve fornire il framework, come "side effect" -->
+Per requisiti non funzionali si intendono caratteristiche del progetto utili a
+minimizzare le problematiche d'integrazione tra le varie componenti del
+framework, verificarne i comportamenti e garantire uno stile di scrittura
+conforme alle convenzioni adottate.
 
-Sono stati individuati i seguenti requisiti non funzionali.
+- **Effettuare test** per verificare il comportamento del codice, ponendo
+  particolare attenzione ai componenti core;
 
-- Sviluppo di una applicazione seguendo i principi del paradigma Agile con
-  elementi di DevOps, in modo da creare un sistema corretto, ma allo stesso
-  tempo con qualità e conciso.
+- Introdurre **procedure DevOps**, volte ad automatizzare la verifica del
+  codice, porre forti condizioni di QA, compilare il codice ed eseguire i test
+  su differenti sistemi operativi, e adottare workflow di Continuous Delivery;
 
-- Utilizzo della metodologia Scrum, in modo più puntuale possibile, definendo
-  ciascun ruolo e organizzando correttamente il tempo.
+- Velocizzare lo sviluppo di codice attraverso l'adozione del **paradigma
+  Agile**;
 
-## Requisiti di implementazione
+- Utilizzare la **metodologia Scrum**, cercando di restare più fedeli possibile
+  al principio originale, definendo ruoli e Sprint settimanali al fine di
+  raggiungere una corretta organizzazione temporale.
 
-<!-- Cosa deve essere utilizzato per l'implementazione, punti dai quali non possiamo prescindere -->
+## Requisiti d'implementazione
 
-I requisiti di implementazione possono essere riassunti nei punti seguenti.
+<!-- Cosa deve essere utilizzato per l' implementazione, punti dai quali non possiamo prescindere -->
 
-- Uso del paradigma di programazzione **funzionale**.
+Per requisiti d'implementazione si intendono tutte le tecnologie e le soluzioni
+d'implementazione considerate imprescindibili nella realizzazione del progetto.
 
-- Utilizzo del linguaggio di programmazione **Scala**.
+- Applicare il paradigma di **programmazione funzionale**;
 
-- Utilizzo del sistema di build automation **Gradle**.
+- Utilizzare il linguaggio di programmazione **Scala**, con garanzia di
+  compatibilità sulla versione 2.13 (Java 11);
 
-- Sistema di testing usando **Scalatest** e **jUnit**.
+- Utilizzare il sistema di build automation **Gradle**;
 
-- Utilizzo del linguaggio **Prolog** per implementare il sistema di elaborazione
-  del linguaggio naturale.
+- Utilizzare **GitHub** come servizio di repository per il progetto;
 
-- todo fasi sequenziali // Tale struttura facilita la separazione dei concetti e
-  la testabilità.
+- Utilizzare **GitHub Actions** per CI e CD;
+
+- Utilizzare **ScalaTest**, **jUnit** e **WordSpec** come specifica di test;
+
+- Utilizzare il linguaggio **Prolog** per implementare l'engine.
