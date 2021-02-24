@@ -1,7 +1,8 @@
 input-files:
-  - ./src/pps-report/1-processo-sviluppo-adottato.md
-  - ./src/pps-report/2-requisiti.md
-  - ./src/pps-report/3-design-architetturale.md
-  - ./src/pps-report/4-design-di-dettaglio.md
-  - ./src/pps-report/5-implementazione.md
-  - ./src/pps-report/6-retrospettiva-conclusioni.md
+  - ./src/pps-report/1-introduzione.md
+  - ./src/pps-report/2-processo-sviluppo-adottato.md
+  - ./src/pps-report/3-requisiti.md
+  - ./src/pps-report/4-design-architetturale.md
+  - ./src/pps-report/5-design-di-dettaglio.md
+  - ./src/pps-report/6-implementazione.md
+  - ./src/pps-report/7-retrospettiva-conclusioni.md

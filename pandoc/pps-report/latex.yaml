@@ -8,15 +8,3 @@ resource-path: ['./src/pps-report']
 metadata:
   title: ScalaQuest
   subtitle: PPS Report
-  abstract: |
-    L'obiettivo di questo progetto è quello di realizzare un framework per
-    l'implementazione di giochi del genere Interactive Fiction (come ad esempio
-    Zork), nel quale il giocatore può utilizzare comandi di testo per influenzare
-    l’ambiente e proseguire nel gioco.
-
-    Il framework metterà a disposizione una parte principale definita "core"
-    attraverso la quale è possibile gestire i comandi inseriti dall'utente e, di
-    conseguenza, modificare lo stato di gioco.
-
-    Il giocatore si interfaccerà attraverso una CLI, senza escludere una possibile
-    soluzione che utilizzi un'altra tecnologia come ad esempio un'interfaccia web.
