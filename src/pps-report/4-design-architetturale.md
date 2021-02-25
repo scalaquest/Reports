@@ -261,13 +261,14 @@ Il tutto può essero vista come una versione con side-effect di una funzione `R
 
 ## Lens
 
-Le **Lens** sono una libreria realizzata per Scala da Monocle. Monocle mette a
-disposizione un' API a semplice e potente per accedere e modificare dati
-immutabili.
+Al fine di leggere e trasformare oggetti immutabili si è scelto di utilizzare la
+libreria **Monocle**, in particolare il costrutto `Lens`, le quali metttono a
+disposizione un'API semplice e componibile per modificare oggetti anche
+innestati, senza dover ricorrere all'uso del metodo `copy`. La libreria fornisce
+una macro `GenLens`, che consente la creazione di `Lens` a partire da una *case
+class*, rendendo questa fase molto semplice.
 
-Nello specifico, le `Lens` (la cui traduzione è "lente") permettono di
-semplificare la manipolazione di dati immutabili. Questo particolare nel
-progetto è risultato molto utile soprattutto nelle modifiche a strutture quali
-`State` e `Room`.
+L'uso di questi costrutti è risultato molto utile soprattutto nelle modifiche a
+strutture quali `State` e `Room`.
 
 <!-- todo riguardare il capitolo, vantaggi/svantaggi -->
