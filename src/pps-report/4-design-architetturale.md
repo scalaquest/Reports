@@ -197,11 +197,11 @@ tramite l'utilizzo del modulo `cli`:
 La gestione dello stato all'interno del progetto è stata ideata prendendo spunto
 dall'application structure **Flux**.
 
-Il flusso di dati di questa applicazione può seguire un percorso unidirezionale
-oppure avere un comportamento ciclico. Quest'ultima soluzione in particolare,
-risulta essere molto efficace con il problema definito in questo progetto in
-quanto ad ogni input generato dallo user viene aggiornato lo stato. Il prossimo
-input utente viene valutato a partire del nuovo stato attuale.
+Il flusso di dati di questa applicazione segue un percorso unidirezionale
+ciclico. Quest'ultima soluzione in particolare, risulta essere molto efficace
+con il problema definito in questo progetto in quanto ad ogni input generato
+dallo user viene aggiornato lo stato. Il prossimo input utente viene valutato a
+partire del nuovo stato attuale.
 
 In questo paradigma viene considerato come punto centrale il nodo
 **Dispatcher**, attraverso il quale fluiscono tutti i flussi di dati. Nel nostro
@@ -229,7 +229,7 @@ Le motivazioni per cui è stata scelta sono molteplici:
 
 - perfetta integrazione tra `tuProlog` e il mondo JVM e questo ha consentito di
   utilizzare Prolog all'interno del linguaggio Scala senza particolari
-  problematiche dovute alla comunicazione tra i due costrutti;
+  problematiche dovute all'integrazione di API diverse;
 
 - possibilità di utilizzare la grammatica Prolog **DCG** importando una piccola
   parte aggiuntiva alla libreria.
@@ -246,6 +246,7 @@ sussistono problemi di prestazione legati alla libreria utilizzata.
 
 ## ZIO
 
+<!-- Perche zio e non cats-effect -->
 Per quanto riguarda la gestione di side effect e azioni asincrone si è scelto di
 utilizzare **ZIO**, una libreria che fornisce costrutti per la manipolazione di effetti
 utilizzando un approccio funzionale, in maniera _type-safe_, quindi facilmente
