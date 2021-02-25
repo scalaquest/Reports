@@ -246,7 +246,18 @@ sussistono problemi di prestazione legati alla libreria utilizzata.
 
 ## ZIO
 
-Per quanto riguarda ... <!-- todo signor nardini, vuole favorire??? -->
+Per quanto riguarda la gestione di side effect e azioni asincrone si è scelto di
+utilizzare **ZIO**, una libreria che fornisce costrutti per la manipolazione di effetti
+utilizzando un approccio funzionale, in maniera _type-safe_, quindi facilmente
+componibili e testabili.
+
+Il nucleo di ZIO è definito dal tipo `ZIO[R, E, A]`, nel quale: 
+- `R` rappresenta l'ambiente necessario affinché l'effetto possa essere eseguito;
+- `E` rappresenta il tipo dell'errore che la computazione potrebbe causare;
+- `A` rappresenta il tipo di ritorno nel caso in cui l'effetto vada a buon fine.
+
+Il tutto può essero vista come una versione con side-effect di una funzione `R
+=> Either[E, A]`.
 
 ## Lens
 
