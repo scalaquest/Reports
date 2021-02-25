@@ -44,6 +44,8 @@ di una sequenza di token.
 
 ## Generator e GeneratorK
 
+## Reactions
+
 ## Common
 ## Scelte rilevanti
 
@@ -54,6 +56,7 @@ di una sequenza di token.
 organizzazione del codice -- corredato da pochi ma efficaci diagrammi)
 
 <!--
+Secondo me i dependent types è meglio che stanno nel 4
 Approfondimento su model, da path dependent types ->
 a dependent types, diagramma trait di commons, l'implementazione
 magica di Reaction, dettaglio del parsing/lexer
