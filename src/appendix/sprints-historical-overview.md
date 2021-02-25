@@ -164,16 +164,18 @@ Useful links:
 - [(Pull request) Sonarqube Scoverage integration](https://github.com/scalaquest/reports/pull/77)
 - [(Pull request) Improve CLI prompt](https://github.com/scalaquest/reports/pull/80)
 
-
 ## Sprint 8 (14th February - 20th February)
 
-The sprint 8 started with an important refactor of the model, carried out jointly from all members of the team. This was
-an important modification, regarding the split between `State` and `Message`s, that are separate entities actually,
-involved at different abstraction levels. In this joint group configuration, we also finished the second example, called
-PokeQuest. In the second part of the week, resuming the sub-team organization, we finished some minor tasks like a re-organization 
-of the Reports' CI
-and the common package based on the new State-Message configuration (in **Team 1**), and a refactoring/scaladoc addition
-for parser` and `dictionary` packages (in **Team 2**).
+The sprint 8 started with an important refactor of the model, carried out
+jointly from all members of the team. This was an important modification,
+regarding the split between `State` and `Message`s, that are separate entities
+actually, involved at different abstraction levels. In this joint group
+configuration, we also finished the second example, called PokeQuest. In the
+second part of the week, resuming the sub-team organization, we finished some
+minor tasks like a re-organization of the Reports' CI and the common package
+based on the new State-Message configuration (in **Team 1**), and a
+refactoring/scaladoc addition for parser`and`dictionary` packages (in **Team
+2**).
 
 Useful links:
 
