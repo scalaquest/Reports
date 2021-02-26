@@ -43,6 +43,29 @@ di una sequenza di token.
 
 ## Application Structure
 
+Giunti alla definizione degli esempi, ci siamo accorti che occorreva strutturare
+il software in maniera migliore. Ogni volta che si andava ad instanziare una
+nuova storia, infatti, era necessario scrivere del codice che poteva essere
+comune tra tutte gli esempi.
+
+Per questo motivo è stato deciso di raffinare la scrittura degli esempi
+importando quanto più possibile elementi comuni su `Core`. All'interno di questa
+sezione son confluiti anche delle implementazioni di default, volte ad aumentare
+ancora l'efficienza e la modularità del software.
+
+Inoltre son stati aggiunti anche metodi di utility, particolarmente importanti
+per fornire delle funzionalità che potrebbero essere adatti ad ogni esempio.
+
+In definitiva, questo processo ha portato notevoli miglioramenti:
+
+- modularità del codice maggiore;
+
+- eliminazione di parti comuni a tutti gli esempi;
+
+- maggiore velocità nel definire nuove storie;
+
+- minore possibilità di errore per lo story teller.
+
 ## Generator e GeneratorK
 
 Tra i principali obiettivi preposti, vi è sicuramente quello di evitare che ci
