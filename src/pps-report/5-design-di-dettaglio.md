@@ -18,18 +18,19 @@ con i risultati del `Parser`.
 
 ## Prolog parser
 
-Un'ideale che è stato perseguito durante lo sviluppo di tutto il software è
+Un ideale che è stato perseguito durante lo sviluppo di tutto il software è
 stato quello della realizzazione di componenti riusabili, per questo abbiamo
 cercato di astrarre, quando possibile, dalle specifiche implementazioni e di
 descrivere interfacce attraverso le quali rappresentare le realizzazioni
 concrete. Per il componente `Parser` questo è riuscito attraverso la
 realizzazione di interfacce volte a rappresentare componenti generici, in
 particolare:
+
 - `Library`: che rappresenta una generica libreria Prolog;
 - `Theory`: che rappresenta una generica teoria Prolog;
 - `Engine`: che rappresenta un generico motore Prolog il quale, inizializzato
-con una teoria e un insieme di librerie, è in grado di rispondere a
-interrogazioni;
+  con una teoria e un insieme di librerie, è in grado di rispondere a
+  interrogazioni;
 
 Per comunicare con `Engine` si è scelto di utilizzare **Scalog**, in quanto
 agnostico a specifiche implementazioni e facilmente mappabile a costrutti di
@@ -44,9 +45,36 @@ di una sequenza di token.
 
 ## Generator e GeneratorK
 
+Tra i principali obiettivi preposti, vi è sicuramente quello di evitare che ci
+siano fonti di verità diverse. In particolare, questo problema è stato
+riscontrato in concomitanza della creazione della grammatica Prolog. Gli
+elementi del dominio devono essere utilizzati con due specifiche
+implementazioni: da una parte le strutture utili per modellare il dominio, e
+dall'altra la creazione di clause e costrutti Prolog.
+
+Per questo motivo, sono stati creati `Generator` e `GeneratorK`; si tratta di
+due wrapper componibili tra varie funzioni, particolarmente utili alla creazione
+delle strutture sopracitate.
+
+Nello specifico, `Generator` genera l'output come il risultato tra due funzioni,
+contrariamente a `GeneratorK`, il quale utilizza funzioni del primo ordine per
+produrre risultati più complessi. Ciò significa che:
+
+- `Generator` calcola funzioni da `A` a `B`;
+
+- `GeneratorK` calcolca funzioni da `F[A]` a `B`.
+
+<!--
+questo va su implementazione
+
+Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
+debba essere un monoide
+-->
+
 ## Reactions
 
 ## Common
+
 ## Scelte rilevanti
 
 ## Pattern di progettazione
@@ -69,8 +97,6 @@ concettualmente prima dell'implementazione, quindi non metteteci diagrammi
 ultra-dettagliati estratti dal codice, quelli vanno nella parte di
 implementazione eventualmente.
 -->
-
-
 
 ## Scelte rilevanti
 
