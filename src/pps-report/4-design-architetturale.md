@@ -263,7 +263,7 @@ Il tutto può essero vista come una versione con side-effect di una funzione `R
 ## Lens
 
 Al fine di leggere e trasformare oggetti immutabili si è scelto di utilizzare la
-libreria **Monocle**, in particolare il costrutto `Lens`, le quali metttono a
+libreria **Monocle**, in particolare il costrutto `Lens`, le quali mettono a
 disposizione un'API semplice e componibile per modificare oggetti anche
 innestati, senza dover ricorrere all'uso del metodo `copy`. La libreria fornisce
 una macro `GenLens`, che consente la creazione di `Lens` a partire da una *case
@@ -273,3 +273,9 @@ L'uso di questi costrutti è risultato molto utile soprattutto nelle modifiche a
 strutture quali `State` e `Room`.
 
 <!-- todo riguardare il capitolo, vantaggi/svantaggi -->
+
+## Cats
+
+In determinate circostanze durante il processo di sviluppo, è stato deciso di utilizzare `Cats`. Questa libreria mette a disposizione molti elementi che permettono di sfruttare al massimo le funzionalità della programmazione funzionale. In particolare, `Cats` è soprattutto usato per le sue implementazioni data level di strutture dati e classi. 
+
+Per curiosità e interesse è stata approfondita la conoscenza di questa libreria, portando a notevoli miglioramenti nella qualità del codice. In aggiunta son state rifenite con questa libreria anche sezioni del software che inizialmente non erano state progettate nel migliore dei modi.
