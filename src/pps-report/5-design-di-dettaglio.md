@@ -103,17 +103,14 @@ Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
 
 -->
 
+## Model
+
 ## Reactions
 
 ## Common
 
-## Scelte rilevanti
+## CLI 
 
-## Pattern di progettazione
-
-## Organizzazione del codice
-
-organizzazione del codice -- corredato da pochi ma efficaci diagrammi)
 
 <!--
 Secondo me i dependent types è meglio che stanno nel 4
@@ -128,12 +125,13 @@ Il design di dettaglio "esplode" (dettaglia) l'architettura, ma viene
 concettualmente prima dell'implementazione, quindi non metteteci diagrammi
 ultra-dettagliati estratti dal codice, quelli vanno nella parte di
 implementazione eventualmente.
--->
 
-## Scelte rilevanti
+##Scelte rilevanti
 
 ## Pattern di progettazione
 
 ## Organizzazione del codice
 
 organizzazione del codice -- corredato da pochi ma efficaci diagrammi)
+
+-->
