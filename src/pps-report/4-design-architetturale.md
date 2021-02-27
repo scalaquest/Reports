@@ -97,6 +97,8 @@ una storia;
   di base alle storie, facilitandone la costruzione, e la generazione delle
   regole grammaticali Prolog utili alla fase di parsing;
 
+<!-- app e dictonary andrebbero separati perchè Dictonary è imp!-->
+
 <!-- sarebbe meglio metterlo nella parte di implementazione!
 
 come già descritto nelle sezioni precedenti, all'interno di questo
