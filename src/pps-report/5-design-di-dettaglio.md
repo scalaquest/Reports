@@ -128,13 +128,49 @@ componenti (astraendo dalle strutture dati utilizzate):
 - il set di `item`: per item si intende un qualunque componente con il quale il
   player può interagire durante il gioco. Essi devono essere definiti nella fase
   iniziale del gioco, anche se possono essere inizialmente come non visibili
-  (non è possibile, in sostanza, generarne di nuovi a runtime).
+  (non è possibile, in sostanza, generarne di nuovi a runtime);
 
-- il set di rooms...
-- un'indicazione riguardo al fatto che il gioco sia finito oppure no...
-- bag del player e potenzialmente altre caratteristiche..
+- il set di `rooms`: per room si intende un qualunque luogo dove il player può
+  risiedere. Il player inizia un match di gioco da una determinata room e si può
+  muovere nelle altre stanze attraverso spostamenti indicatigli dallo user. Lo
+  storyteller a inizio partita deve scegliere una stanza iniziale, e per ogni
+  room, viene definita una mappa `Direzione => RoomRef` che indica per ogni
+  direzione una stanza considerata limitrofa;
+
+- un'indicazione riguardo al fatto che il gioco sia finito oppure no;
+
+- `bag` del player: per bag si intende una borsa in cui il player può
+  trasportare tutti gli item trasportabili che ritiene opportuno (non si pone un
+  limite per il numero massimo). Gli item contenuti saranno utilizzabili dal
+  player in momenti successivi della storia:
+
+- potenzialmente altre caratteristiche.
 
 ### Behavior based Model
+
+In questo modulo si introduce il concetto di `Behavior` che coniugato ad un item
+o al ground conferisce a quell'item o ground un determinato comportamento.
+
+### Trigger
+
+I Behaviors sfruttano il concetto di `Trigger` i quali all'accadere di una
+determinata azione, nello stato corrente, producono una specifica `Reaction`.
+
+Esistono diversi tipi di trigger:
+
+- `GroundTriggers`: sono tutti i trigger riferiti al ground, ovvero tutte le
+  azioni intransitive le qualinon prendono in considerazione alcun item (es: go
+  north). Nel codice vengono implementati come
+  `PartialFunction[(Action, S), Reaction]`.
+
+- `ItemTriggers`: sono tutti i trigger creati appositamente per gestire azioni
+  transitive o ditransitive. Le azioni transitive si riferiscono ad uno
+  specifico item (es: takeTheItem(item: Item)). Le ditransitive sono azioni che
+  coinvolgono due item (es: openTheDoorWithKey(door: Item, key:Item)). Nel
+  codice vengono implementati come
+  `PartialFunction[(Action, Option[Item], S), Reaction]`.
+
+Con il concetto di Behavior sono state implementate alcune estensioni le quali
 
 ### Modifica dello stato
 
@@ -143,7 +179,7 @@ Lens.... e reaction
 ## Reactions
 
 Il concetto di `Reaction` è un wrapper di una funzione
-`State => (State, Seq[Message])`, uche, preso lo stato attuale, ne produce una
+`State => (State, Seq[Message])`, che, preso lo stato attuale, ne produce una
 nuova istanza e una sequenza di messaggi. Rappresenta un cambiamento allo stato
 della partita e una notifica di avvenuto evento. Possibili implementazioni
 potrebbero essere `takeTheItem(i: Item)`, `move(direction: Dir)`, ecc.
@@ -163,14 +199,13 @@ Scala.
 
 ## Commons
 
-Il modulo `Commons` contiene implementazioni di
-`Items,`Action`,`Verb` ,``Reaction `, `Ground` e `Pusher` ritenute comuni e alla
-base di molte possibili storie al fine di agevolare il compito dello
-storyteller.
+Il modulo `Commons` contiene alcuni implementazioni di concetti quali `Items`,
+`Action`, `Verb`, `Reaction`, `Ground` e `Pusher` ritenute comuni per molte
+possibili storie. Il fine del modulo è quello di agevolare il compito dello
+storyteller fornendo elementi pronti all'uso, inoltre tali componenti possono
+essere tratti come spunto per nuove funzionalità.
 
-I verb ritenuti comuni
-
-Vengono predisposti tutti i verbi atti a risolvere il movimento in direzioni.
+Commons usufruisce spesso del concetto di Behavior introdotto precedentemente.
 
 ## CLI
 
@@ -195,6 +230,23 @@ operazioni descritte nel capitolo precedente.
 
 3. **Creazione del messaggio in output**: in base al risultato restituito dalla
    `Pipeline`, viene creato il messaggio da restituire un'uscita sulla console.
+   In particolare, se si è verificato un errore, viene ritornato un avviso che
+   lo descrive, altrimenti viene restituita la sequenza di messaggi. In
+   quest'ultimo caso viene anche aggiornato lo stato.
+
+4. **Stampa del messaggio in uscita**: viene stampato su console il messaggio o
+   la sequenza di messaggi calcolati nel punto 3.
+
+5. **Controllo di terminazione**: infine viene controllato se il gioco è
+   terminato, e qualora non fosse così, viene richiamato ricorsivamente questo
+   schema, ritornando al punto 1. precedente.
+
+I risultati del punto 2. e 3. vengono mappati all'interno di un `UIO`, ovvero
+uno **ZIO** particolare in quanto non può fallire. L'utilizzo di tale
+implementazione è stata dettata dal fatto che abbiamo gestito gli errori
+derivanti dalla `Pipeline` come messaggi, in quanto in questa metodologia di
+interazione con il software, i refusi (intesi come ad esempio "input non
+capito") sono considerati come parte integrante del sistema.
 
 <!--
 Secondo me i dependent types è meglio che stanno nel 4
