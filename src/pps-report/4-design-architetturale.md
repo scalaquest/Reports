@@ -247,18 +247,21 @@ sussistono problemi di prestazione legati alla libreria utilizzata.
 ## ZIO
 
 <!-- Perche zio e non cats-effect -->
-Per quanto riguarda la gestione di side effect e azioni asincrone si è scelto di
-utilizzare **ZIO**, una libreria che fornisce costrutti per la manipolazione di effetti
-utilizzando un approccio funzionale, in maniera _type-safe_, quindi facilmente
-componibili e testabili.
 
-Il nucleo di ZIO è definito dal tipo `ZIO[R, E, A]`, nel quale: 
-- `R` rappresenta l'ambiente necessario affinché l'effetto possa essere eseguito;
+Per quanto riguarda la gestione di side effect e azioni asincrone si è scelto di
+utilizzare **ZIO**, una libreria che fornisce costrutti per la manipolazione di
+effetti utilizzando un approccio funzionale, in maniera _type-safe_, quindi
+facilmente componibili e testabili.
+
+Il nucleo di ZIO è definito dal tipo `ZIO[R, E, A]`, nel quale:
+
+- `R` rappresenta l'ambiente necessario affinché l'effetto possa essere
+  eseguito;
 - `E` rappresenta il tipo dell'errore che la computazione potrebbe causare;
 - `A` rappresenta il tipo di ritorno nel caso in cui l'effetto vada a buon fine.
 
-Il tutto può essero vista come una versione con side-effect di una funzione `R
-=> Either[E, A]`.
+Il tutto può essero vista come una versione con side-effect di una funzione
+`R => Either[E, A]`.
 
 ## Lens
 
@@ -266,8 +269,8 @@ Al fine di leggere e trasformare oggetti immutabili si è scelto di utilizzare l
 libreria **Monocle**, in particolare il costrutto `Lens`, le quali mettono a
 disposizione un'API semplice e componibile per modificare oggetti anche
 innestati, senza dover ricorrere all'uso del metodo `copy`. La libreria fornisce
-una macro `GenLens`, che consente la creazione di `Lens` a partire da una *case
-class*, rendendo questa fase molto semplice.
+una macro `GenLens`, che consente la creazione di `Lens` a partire da una _case
+class_, rendendo questa fase molto semplice.
 
 L'uso di questi costrutti è risultato molto utile soprattutto nelle modifiche a
 strutture quali `State` e `Room`.
@@ -276,6 +279,13 @@ strutture quali `State` e `Room`.
 
 ## Cats
 
-In determinate circostanze durante il processo di sviluppo, è stato deciso di utilizzare `Cats`. Questa libreria mette a disposizione molti elementi che permettono di sfruttare al massimo le funzionalità della programmazione funzionale. In particolare, `Cats` è soprattutto usato per le sue implementazioni data level di strutture dati e classi. 
+In determinate circostanze durante il processo di sviluppo, è stato deciso di
+utilizzare `Cats`. Questa libreria mette a disposizione molti elementi che
+permettono di sfruttare al massimo le funzionalità della programmazione
+funzionale. In particolare, `Cats` è soprattutto usato per le sue
+implementazioni data level di strutture dati e classi.
 
-Per curiosità e interesse è stata approfondita la conoscenza di questa libreria, portando a notevoli miglioramenti nella qualità del codice. In aggiunta son state rifenite con questa libreria anche sezioni del software che inizialmente non erano state progettate nel migliore dei modi.
+Per curiosità e interesse è stata approfondita la conoscenza di questa libreria,
+portando a notevoli miglioramenti nella qualità del codice. In aggiunta son
+state rifenite con questa libreria anche sezioni del software che inizialmente
+non erano state progettate nel migliore dei modi.
