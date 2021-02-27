@@ -106,11 +106,95 @@ Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
 
 ## Model
 
+Uno dei requisiti centrali alla base del progetto è quello di fornire allo
+storyteller un'API che lo aiuti a creare le proprie storie. In quest'ottica, il
+package `model` nel `core` contiene tutti i componenti utili alla creazione di
+una storia. Durante le sessioni di DDD, siamo arrivati a definire il model come
+"l'insieme di tutti e soli componenti utilizzabili dallo storyteller per
+costruire la propria storia".
+
+Il componente chiave attorno al quale il `Model` si fonda è lo `State`. Esso può
+essere assimilato a una sorta di "punto di salvataggio": a partire dalla
+configurazione iniziale (la storia), essa va evolvendosi ad ogni iterazione,
+lasciando l'utente proseguire nel gioco. Lo `State` si compone dei seguenti
+componenti (astraendo dalle strutture dati utilizzate):
+
+- il set di `Action` e dei `Verb` ad essi associati. Questi entrano in gioco
+  nelle fasi parser/reducer della pipeline, permettendo di creare degli
+  `Statement` (es. "take the key", open the door with the key"..."), applicabili
+  a loro volta allo scopo di modificare `State`. Una volta definiti, non
+  dovrebbero essere modificabili durante il gioco;
+
+- il set di `item`: per item si intende un qualunque componente con il quale il
+  player può interagire durante il gioco. Essi devono essere definiti nella fase
+  iniziale del gioco, anche se possono essere inizialmente come non visibili
+  (non è possibile, in sostanza, generarne di nuovi a runtime).
+
+- il set di rooms...
+- un'indicazione riguardo al fatto che il gioco sia finito oppure no...
+- bag del player e potenzialmente altre caratteristiche..
+
+### Behavior based Model
+
+### Modifica dello stato
+
+Lens.... e reaction
+
 ## Reactions
 
-## Common
+Il concetto di `Reaction` è un wrapper di una funzione
+`State => (State, Seq[Message])`, uche, preso lo stato attuale, ne produce una
+nuova istanza e una sequenza di messaggi. Rappresenta un cambiamento allo stato
+della partita e una notifica di avvenuto evento. Possibili implementazioni
+potrebbero essere `takeTheItem(i: Item)`, `move(direction: Dir)`, ecc.
+
+È un concetto chiave utilizzato all'interno del `Reducer`, componente che agisce
+in coda alla `Pipeline`, dopo l'`Interpreter` e che si occupa di restituire lo
+stato aggiornato, insieme alle notifiche sugli effetti prodotti dal comando
+sulla partita.
+
+Il concetto di `Reaction` è stato ampliato inizialmente con un metodo `combine`
+che consente di combinarne una coppia, in modo che lo stato risultante della
+prima sia passato come argomento della seconda e che i messaggi siano
+concatenati. Successivamente sono stati introdotti altri metodi che semplificano
+un approccio funzionale, il più importante dei quali è `flatMap`, che abilita la
+creazione e concatenazione di più reazioni utilizzando le _for comprehension_ di
+Scala.
+
+## Commons
+
+Il modulo `Commons` contiene implementazioni di
+`Items,`Action`,`Verb` ,``Reaction `, `Ground` e `Pusher` ritenute comuni e alla
+base di molte possibili storie al fine di agevolare il compito dello
+storyteller.
+
+I verb ritenuti comuni
+
+Vengono predisposti tutti i verbi atti a risolvere il movimento in direzioni.
 
 ## CLI
+
+Questo modulo rappresenta di fatto un'implementazione che fa uso dei concetti
+presenti in `ApplicationStructure`. Dentro _cli_ viene definito un game loop
+utilizzando **ZIO** come strumento per la gestione delle interazioni con la
+console, che in questo modo risultano essere type safe.
+
+Il game loop viene implementato attraverso uno schema ricorsivo che svolge le
+operazioni descritte nel capitolo precedente.
+
+1. **Lettura della frase inserita**: questa parte viene gestita attraverso
+   **ZIO**, il quale si occupa della lettura dalla console in maniera type safe.
+
+2. **Messa in azione della pipeline**: la frase letta dalla console viene
+   inoltrata alla `Pipeline`. Questa si occupa di elaborare il risultato che
+   risulta essere nella forma:
+
+   - messaggio di errore (qualora non fosse andato a buon fine);
+   - nuovo stato aggiornato;
+   - sequenza di messaggi da restituire in uscita.
+
+3. **Creazione del messaggio in output**: in base al risultato restituito dalla
+   `Pipeline`, viene creato il messaggio da restituire un'uscita sulla console.
 
 <!--
 Secondo me i dependent types è meglio che stanno nel 4
