@@ -42,3 +42,5 @@ racchiuse nei seguenti package:
 - `application`
 
 - `parsing`
+
+Gorini si è concentrato maggiormente su alcuni aspetti ...
