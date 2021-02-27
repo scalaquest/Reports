@@ -46,52 +46,61 @@ di una sequenza di token.
 Giunti alla definizione degli esempi, ci siamo accorti che occorreva strutturare
 il software in maniera migliore. Ogni volta che si andava ad instanziare una
 nuova storia, infatti, era necessario scrivere del codice che poteva essere
-comune tra tutte gli esempi.
-
-Per questo motivo è stato deciso di raffinare la scrittura degli esempi
-importando quanto più possibile elementi comuni su `Core`. All'interno di questa
-sezione son confluiti anche delle implementazioni di default, volte ad aumentare
-ancora l'efficienza e la modularità del software.
+comune tra tutte gli esempi. Questo include principalmente la creazione della
+pipeline e del dizionario della storia, che in mancanza di particolari
+necessità, avvengono sempre allo stesso modo. Per questo motivo è stato deciso
+di rifattorizzare quanto più possibile gli elementi comuni, inserendoli
+all'interno del package `application` dentro al modulo _core_. Questo package,
+quindi, fornisce un insieme di costrutti che consentono con poche istruzioni
+aggiuntive di creare una storia. All'interno di questo package son confluite
+anche delle implementazioni di default, volte ad aumentare maggiormente
+l'efficienza nella scrittura della singola storia.
 
 Inoltre son stati aggiunti anche metodi di utility, particolarmente importanti
-per fornire delle funzionalità che potrebbero essere adatti ad ogni esempio.
+per fornire delle funzionalità adatte ad ogni storia.
 
-In definitiva, questo processo ha portato notevoli miglioramenti:
+In definitiva, questo processo di refactoring ha portato notevoli miglioramenti:
 
-- modularità del codice maggiore;
+- maggiore modularità tra i componenti;
 
-- eliminazione di parti comuni a tutti gli esempi;
+- eliminazione di codice ripetuto in tutti gli esempi;
 
-- maggiore velocità nel definire nuove storie;
+- minore possibilità di errore per lo story teller;
 
-- minore possibilità di errore per lo story teller.
+- maggiore velocità nel definire nuove storie.
 
 ## Generator e GeneratorK
+Tra i principali obiettivi preposti, vi è sicuramente quello di definire una
+sola volta gli elementi che compongono il dizionario di una storia e, a partire
+da questo, generare tutte le strutture dati necessarie ai componenti della
+`Pipeline`. In particolare è necessario generare clausole Prolog che serviranno
+al parser per svolgere l'analisi sintattica, e una struttura dati in grado di
+mappare in maniera biunivoca il nome di un elemento con il riferimento
+all'oggetto che lo descrive.
 
-Tra i principali obiettivi preposti, vi è sicuramente quello di evitare che ci
-siano fonti di verità diverse. In particolare, questo problema è stato
-riscontrato in concomitanza della creazione della grammatica Prolog. Gli
-elementi del dominio devono essere utilizzati con due specifiche
-implementazioni: da una parte le strutture utili per modellare il dominio, e
-dall'altra la creazione di clause e costrutti Prolog.
+Questa necessità di generare strutture dati diverse, utilizzando un isomorfismo,
+a partire da un elemento A che può essere `Item` o `Verb`, si è rivelata essere
+un pattern fattorizzabile in un concetto più astratto e riusabile che è stato
+chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta di un wrapper
+di una funzione `A => B`.
 
-Per questo motivo, sono stati creati `Generator` e `GeneratorK`; si tratta di
-due wrapper componibili tra varie funzioni, particolarmente utili alla creazione
-delle strutture sopracitate.
+All'interno del dizionario, però, gli elementi sono contenuti all'interno di una
+collezione. È stato quindi introdotto il concetto di `GeneratorK[F[_], A, B]`,
+che rappresenta un wrapper di una funzione `F[A] => B`, quindi una funzione in
+cui la `A` è all'interno di un contesto `F[_]`. La scelta del nome è stata
+ispirata dai nomi utilizzati dalle type class di **Cats**, le quali presentano
+una lettera _K_ nelle versioni delle type class che operano sugli _higher-kinded
+types_.
 
-Nello specifico, `Generator` genera l'output come il risultato tra due funzioni,
-contrariamente a `GeneratorK`, il quale utilizza funzioni del primo ordine per
-produrre risultati più complessi. Ciò significa che:
-
-- `Generator` calcola funzioni da `A` a `B`;
-
-- `GeneratorK` calcolca funzioni da `F[A]` a `B`.
+Tramite l'uso di queste due astrazioni combinate è possibile fattorizzare
+funzioni come `List[A] => List[B]` o `List[A] => Map[K, V]` in
+un'implementazione comune.
 
 <!--
 questo va su implementazione
 
 Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
-debba essere un monoide
+
 -->
 
 ## Reactions
