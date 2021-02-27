@@ -93,9 +93,13 @@ una storia;
   pipeline, ovvero ciò che concerne l'interpretazione dell'input testuale
   dell'utente tramite l'interprete Prolog.
 
-- **Application e Dictionary**: comprendono delle utility per dare un "template"
+- **Application**: comprendono delle utility per dare un "template"
   di base alle storie, facilitandone la costruzione, e la generazione delle
   regole grammaticali Prolog utili alla fase di parsing;
+
+- **Dictionary**: contiene tutti gli elementi che definiscono il vocabolario
+  utilizzato dal giocatore all'interno di una storia. In particolare è composto
+  da un insieme di oggetti e un insieme di verbi;
 
 <!-- app e dictonary andrebbero separati perchè Dictonary è imp!-->
 
