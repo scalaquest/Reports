@@ -279,13 +279,21 @@ strutture quali `State` e `Room`.
 
 ## Cats
 
-In determinate circostanze durante il processo di sviluppo, è stato deciso di
-utilizzare `Cats`. Questa libreria mette a disposizione molti elementi che
-permettono di sfruttare al massimo le funzionalità della programmazione
-funzionale. In particolare, `Cats` è soprattutto usato per le sue
-implementazioni data level di strutture dati e classi.
+Durante la fase di analisi è emersa la necessità di accordarsi su quale
+implementazione di type classes utilizzare nel caso in cui si volessero scrivere
+algoritmi o strutture dati utilizzando un approccio funzionale. È stato deciso
+di utilizzare **Cats**, in quanto mette a disposizione un insieme di astrazioni,
+ispirate alla teoria delle categorie, che permettono di sfruttare al massimo le
+caratteristiche della programmazione funzionale. La scelta di **Cats** piuttosto
+che **Scalaz** è stata dettata principalmente dal fatto che la prima è una
+libreria più nuova, che in poco tempo è riuscita a guadagnare molta popolarità
+nella comunità di Scala (4.2k stars su GitHub per **Cats** alla sua release
+2.4.2 contro 4.4k per **Scalaz** alla sua release 7.3.3), in quanto per i casi
+d'uso delineati durante la fase di analisi le due sarebbero equivalenti.
 
 Per curiosità e interesse è stata approfondita la conoscenza di questa libreria,
-portando a notevoli miglioramenti nella qualità del codice. In aggiunta son
-state rifenite con questa libreria anche sezioni del software che inizialmente
-non erano state progettate nel migliore dei modi.
+portando a notevoli miglioramenti nella qualità del codice. Nelle fasi avanzate
+dello sviluppo sono state rifattorizzate attraverso le astrazioni fornite da
+**Cats** (quali `Foldable`, `Monoid`, ecc.) sezioni del software che
+inizialmente non erano state progettate con i concetti di componibilità e
+riusabilità in mente.
