@@ -70,6 +70,7 @@ In definitiva, questo processo di refactoring ha portato notevoli miglioramenti:
 - maggiore velocità nel definire nuove storie.
 
 ## Generator e GeneratorK
+
 Tra i principali obiettivi preposti, vi è sicuramente quello di definire una
 sola volta gli elementi che compongono il dizionario di una storia e, a partire
 da questo, generare tutte le strutture dati necessarie ai componenti della
@@ -81,8 +82,8 @@ all'oggetto che lo descrive.
 Questa necessità di generare strutture dati diverse, utilizzando un isomorfismo,
 a partire da un elemento A che può essere `Item` o `Verb`, si è rivelata essere
 un pattern fattorizzabile in un concetto più astratto e riusabile che è stato
-chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta di un wrapper
-di una funzione `A => B`.
+chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta di un
+wrapper di una funzione `A => B`.
 
 All'interno del dizionario, però, gli elementi sono contenuti all'interno di una
 collezione. È stato quindi introdotto il concetto di `GeneratorK[F[_], A, B]`,
@@ -109,8 +110,7 @@ Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
 
 ## Common
 
-## CLI 
-
+## CLI
 
 <!--
 Secondo me i dependent types è meglio che stanno nel 4
