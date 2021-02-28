@@ -1,5 +1,13 @@
 # Design di dettaglio
 
+## Pipeline?
+
+<!--
+Forse una descrizione del design della pipeline ci andrebbe, con un eventuale schemino;
+Porla direttamente nell'implementazione non mi sembra del tutto corretto, anche nell'ottica
+di definire alcuni concetti che poi ci servono per il design di dettaglio di altri componenti.
+-->
+
 ## Manipolazione di espressioni Prolog
 
 Un problema evidente che è emerso durante la fase di prototipazione del progetto
@@ -108,45 +116,70 @@ Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
 
 Uno dei requisiti centrali alla base del progetto è quello di fornire allo
 storyteller un'API che lo aiuti a creare le proprie storie. In quest'ottica, il
-package `model` nel `core` contiene tutti i componenti utili alla creazione di
-una storia. Durante le sessioni di DDD, siamo arrivati a definire il model come
-"l'insieme di tutti e soli componenti utilizzabili dallo storyteller per
-costruire la propria storia".
+package `model` del modulo `Core` contiene tutti i componenti utili alla
+creazione di una storia. Più precisamente, il **modello** può essere definito
+come l'insieme di tutti e soli componenti utilizzabili dallo storyteller per
+costruire la propria storia.
 
-Il componente chiave attorno al quale il `Model` si fonda è lo `State`. Esso può
-essere assimilato a una sorta di "punto di salvataggio": a partire dalla
-configurazione iniziale (la storia), essa va evolvendosi ad ogni iterazione,
-lasciando l'utente proseguire nel gioco. Lo `State` si compone dei seguenti
-componenti (astraendo dalle strutture dati utilizzate):
+Il componente chiave attorno al quale il modello si fonda è lo **stato**. Esso
+può essere assimilato a una sorta di "punto di salvataggio": a partire dal
+salvataggio iniziale (ciò che indichiamo con il termine **storia**), essa va
+evolvendosi ad ogni iterazione, lasciando l'utente proseguire nel gioco.
+L'entità che implementa il concetto di stato prende appunto nome di `State`.
 
-- il set di `Action` e dei `Verb` ad essi associati. Questi entrano in gioco
-  nelle fasi parser/reducer della pipeline, permettendo di creare degli
-  `Statement` (es. "take the key", open the door with the key"..."), applicabili
-  a loro volta allo scopo di modificare `State`. Una volta definiti, non
-  dovrebbero essere modificabili durante il gioco;
+A un livello più pratico, i vari componenti dello `State` sono propedeutici alla
+messa in atto della pipeline, permettendo la trasformazione i comandi sotto
+forma di stringhe testuali in comandi comprensibili dal modello (`Statement`),
+applicabili a loro volta sullo `State`, modificandolo. Lo `State` deve contenere
+indicazioni riguardo ai seguenti componenti (astraendo dalle strutture dati
+utilizzate):
 
-- il set di `item`: per item si intende un qualunque componente con il quale il
-  player può interagire durante il gioco. Essi devono essere definiti nella fase
-  iniziale del gioco, anche se possono essere inizialmente come non visibili
-  (non è possibile, in sostanza, generarne di nuovi a runtime);
+- l'insieme di `Action` e dei `Verb` ad essi associati. Questi permettono di
+  associare i verbi che lo user include all'interno dei comandi testuali, a
+  delle entità comprensibili dal modello. Una volta definiti, non dovrebbero
+  essere modificabili durante il gioco;
 
-- il set di `rooms`: per room si intende un qualunque luogo dove il player può
-  risiedere. Il player inizia un match di gioco da una determinata room e si può
-  muovere nelle altre stanze attraverso spostamenti indicatigli dallo user. Lo
-  storyteller a inizio partita deve scegliere una stanza iniziale, e per ogni
-  room, viene definita una mappa `Direzione => RoomRef` che indica per ogni
-  direzione una stanza considerata limitrofa;
+- l'insieme di `Item` disponibili: per `Item` si intende un qualunque componente
+  con il quale il player può interagire durante il gioco. Essi devono essere
+  definiti nella fase iniziale del gioco, anche se possono non essere
+  inizialmente visibili. L'unico vincolo è quindi quello di non poterne generare
+  di nuovi a runtime;
 
-- un'indicazione riguardo al fatto che il gioco sia finito oppure no;
+- L'insieme di `Room`: una `Room` rappresenta una porzione geografica della
+  mappa del gioco. Il player durante il gioco deve avere la possibilità di
+  muoversi tra le `Room`; può concettualmente contenere dinamicamente degli
+  `Item` a runtime; deve contenere un'indicazione riguardo alle `Room` limitrofe
+  (direttamente raggiungibili dalla `Room` corrente, con un passo in direzione
+  di un punto cardinale);
 
-- `bag` del player: per bag si intende una borsa in cui il player può
-  trasportare tutti gli item trasportabili che ritiene opportuno (non si pone un
-  limite per il numero massimo). Gli item contenuti saranno utilizzabili dal
-  player in momenti successivi della storia:
+- la "bag" del player: la bag è un'astrazione per indicare un insieme di `Item`
+  che il player porta con sé; non corrisponde necessariamente a una vera e
+  propria borsa. Gli `Item` contenuti saranno utilizzabili dal player in momenti
+  successivi della storia;
 
-- potenzialmente altre caratteristiche.
+- Varie altre indicazioni rappresentative dello stato, potenzialmente
+  espandibili.
 
-### Behavior based Model
+Porre in atto un'implementazione per queste entità non è banale. Le principali
+problematiche sono legate a:
+
+- **Dipendenze incrociate**: lo `State` contiene concettualmente degli `Item`,
+  ma all'atto pratico anche gli `Item` devono venire a conoscenza dello `State`;
+  stesso ragionamento vale per le `Room`;
+- **Evoluzione dello stato**: lo `State` è un'entità immutabile; per poterla
+  aggiornare, è necessario crearne una copia modificata, e per far ciò è
+  necessario conoscere il tipo concreto alla base di ogni entità. A causa delle
+  dipendenze incrociate, ogni entità deve conoscere il tipo concreto di ognuna.
+
+La miglior soluzione a cui siamo giunti è stata quella di definire le interfacce
+base di `State`, `Item` e `Room` all'interno di un trait `Model`, e di
+implementarle facendo uso dei **path dependent types**. Sulla base di ciò sono
+state poi definite delle `Lens` per rendere possibile la modifica delle singole
+entità.
+
+### Behavior-based Model
+
+Uno dei principali problemi derivanti dalla definizione del `Model` è rappre
 
 In questo modulo si introduce il concetto di `Behavior` che coniugato ad un item
 o al ground conferisce a quell'item o ground un determinato comportamento.
