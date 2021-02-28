@@ -1,14 +1,8 @@
 # Design di dettaglio
 
-## Pipeline?
+## Il motore semantico
 
-<!--
-Forse una descrizione del design della pipeline ci andrebbe, con un eventuale schemino;
-Porla direttamente nell'implementazione non mi sembra del tutto corretto, anche nell'ottica
-di definire alcuni concetti che poi ci servono per il design di dettaglio di altri componenti.
--->
-
-## Manipolazione di espressioni Prolog
+### Manipolazione di espressioni Prolog
 
 Un problema evidente che è emerso durante la fase di prototipazione del progetto
 è stato quello della manipolazione delle espressioni Prolog, che all'interno del
@@ -24,7 +18,7 @@ possibile la sintassi originale. Inoltre consente di effettuare pattern matching
 contro espressioni esistenti, in modo da agevolare il processo dell'interazione
 con i risultati del `Parser`.
 
-## Prolog parser
+### Prolog parser
 
 Un ideale che è stato perseguito durante lo sviluppo di tutto il software è
 stato quello della realizzazione di componenti riusabili, per questo abbiamo
@@ -112,7 +106,7 @@ Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
 
 -->
 
-## Model
+## Il modello
 
 Uno dei requisiti centrali alla base del progetto è quello di fornire allo
 storyteller un'API che lo aiuti a creare le proprie storie. In quest'ottica, il
@@ -152,11 +146,9 @@ utilizzate):
   (direttamente raggiungibili dalla `Room` corrente, con un passo in direzione
   di un punto cardinale);
 
-- la "bag" del player: la bag è un'astrazione per indicare un insieme di `Item`
-  che il player porta con sé; non corrisponde necessariamente a una vera e
-  propria borsa. Gli `Item` contenuti saranno utilizzabili dal player in momenti
-  successivi della storia;
-
+- Il `Ground`: esso rappresenta un'entità in grado di gestire i verbi
+  intransitivi nella modifica dello stato; concetto approfondito nella sezione
+  #;
 - Varie altre indicazioni rappresentative dello stato, potenzialmente
   espandibili.
 
@@ -166,6 +158,7 @@ problematiche sono legate a:
 - **Dipendenze incrociate**: lo `State` contiene concettualmente degli `Item`,
   ma all'atto pratico anche gli `Item` devono venire a conoscenza dello `State`;
   stesso ragionamento vale per le `Room`;
+  
 - **Evoluzione dello stato**: lo `State` è un'entità immutabile; per poterla
   aggiornare, è necessario crearne una copia modificata, e per far ciò è
   necessario conoscere il tipo concreto alla base di ogni entità. A causa delle
@@ -177,13 +170,63 @@ implementarle facendo uso dei **path dependent types**. Sulla base di ciò sono
 state poi definite delle `Lens` per rendere possibile la modifica delle singole
 entità.
 
-### Behavior-based Model
+### Aggiornamento dello stato e behavior-based model
 
-Uno dei principali problemi derivanti dalla definizione del `Model` è rappre
+Un altro importante sfida nella definizione del modello riguarda la messa in
+atto di un meccanismo tale da consentire allo stato di "reagire" ai comandi
+utente.
 
-In questo modulo si introduce il concetto di `Behavior` che coniugato ad un item
-o al ground conferisce a quell'item o ground un determinato comportamento.
+Nel capitolo precedente si è utilizzato il `Statement` per indicare l'output
+della fase di resolving della pipeline. Tale output rappresenta un
+comando **interpretabile dal modello**. Ciò significa che al
+termine della fase di risoluzione, si ha conoscenza riguardo a quali sono gli
+`Item` e le `Action` coinvolti nel comando. 
 
+La fase di interpretazione della
+pipeline è quella predisposta all'individuazione delle modifiche da applicare
+allo stato. L'output della fase è una `Reaction`, ovvero un'entità comprendente
+funzione in grado di applicare allo stato le modifiche necessarie, e un'insieme
+di informazioni da mostrare in output all'utente (concetto approfondito nella
+sezione #). La fase viene posta in atto come segue:
+
+- nel caso di **comandi intransitivi** (`Statement` composto da una sola
+  `Action`), l'`Action` viene applicata direttamente a un'entità interna allo
+  stato, responsabile di gestire comportamenti intransitivi. Tale entità prende 
+  il nome di `Ground`, e deve esporre un metodo `Ground::use(action)`, con output la
+  rispettiva `Reaction`;
+  
+- nel caso di **comandi transitivi e ditransitivi** (`Statement` composto da una
+  `Action`, un `Item` sottoposto a tale azione, e un eventuale `Item`
+  indirettamente coinvolto) l'`Action` viene applicata all'`Item` oggetto
+  dell'azione, passandogli un'eventuale indicazione riguardo all'item
+  indirettamente coinvolto. Di conseguenza anche gli `Item` devono esporre un
+  metodo `Item::use(azione, itemIndiretto)`, e ritornare la rispettiva `Reaction`.
+
+Alla luce di ciò, si è reso necessario un meccanismo flessibile, modulare,
+facilmente utilizzabile dallo storyteller, che permettesse di definire il
+comportamento della funzione `::use`.
+
+L'idea a cui si è giunti si basa sul concetto di **behavior**. Essi sono
+delle proprietà, proprie degli `Item` e del `Ground`, tali da permettere di
+aggiungere in maniera modulare a un `Item` (o un `Ground`) la gestione di
+determinate combinazioni `Action-Item`.
+
+Ad esempio, aggiungendo all'oggetto `apple` il comportamento `Takeable`, diventa
+possibile durante il gioco prendere la mela (comando `take the apple`),
+restituendo la `Reaction` corrispondente.
+
+La potenza di tale meccanismo risiede nella sua **estendibilità**: ogni
+behavior può facilmente essere esteso, integrando ulteriori combinazioni
+all'interno degli stessi, o sovrascrivendo eventuali comportamenti predefiniti.
+
+All'atto pratico, ciò è stato reso possibile definendo un ulteriore trait che
+estende il `Model` di base:
+- estendendo il concetto di `Item` e `Ground`, integrando ad essi la possibilità di integrare loro
+  dei behavior (`BehaviorBasedItem` e `BehaviorBassedGround`);
+- fornendo un'implementazione flessibile del concetto di behavior, (`GroundBehavior` e `ItemBehavior`);
+- fornendo un costrutto in grado di definire combinazioni action-item (`GroundTrigger` e `ItemTrigger`).
+
+<!--
 ### Trigger
 
 I Behaviors sfruttano il concetto di `Trigger` i quali all'accadere di una
@@ -204,12 +247,9 @@ Esistono diversi tipi di trigger:
   `PartialFunction[(Action, Option[Item], S), Reaction]`.
 
 Con il concetto di Behavior sono state implementate alcune estensioni le quali
+-->
 
-### Modifica dello stato
-
-Lens.... e reaction
-
-## Reactions
+### Reaction
 
 Il concetto di `Reaction` è un wrapper di una funzione
 `State => (State, Seq[Message])`, che, preso lo stato attuale, ne produce una
@@ -230,7 +270,7 @@ un approccio funzionale, il più importante dei quali è `flatMap`, che abilita 
 creazione e concatenazione di più reazioni utilizzando le _for comprehension_ di
 Scala.
 
-## Commons
+### Commons
 
 Il modulo `Commons` contiene alcuni implementazioni di concetti quali `Items`,
 `Action`, `Verb`, `Reaction`, `Ground` e `Pusher` ritenute comuni per molte
