@@ -255,11 +255,14 @@ Con il concetto di Behavior sono state implementate alcune estensioni le quali
 
 ### Reaction
 
-Il concetto di `Reaction` è un wrapper di una funzione
+Nelle sezioni precedenti si è spesso fatto riferimento al termine `Reaction`,
+come una funzione in grado di modificare lo stato e di tener traccia dell'output
+da mostrare all'utente. Nella pratica, ciò si concretizza in una funzione
 `State => (State, Seq[Message])`, che, preso lo stato attuale, ne produce una
-nuova istanza e una sequenza di messaggi. Rappresenta un cambiamento allo stato
-della partita e una notifica di avvenuto evento. Possibili implementazioni
-potrebbero essere `takeTheItem(i: Item)`, `move(direction: Dir)`, ecc.
+nuova istanza e una sequenza di messaggi. Permette quindi sia di rappresentare
+un cambiamento nello stato della partita, che la notifica di avvenuto evento.
+Possibili implementazioni potrebbero essere `takeTheItem(i: Item)`,
+`move(direction: Dir)`, ecc.
 
 È un concetto chiave utilizzato all'interno del `Reducer`, componente che agisce
 in coda alla `Pipeline`, dopo l'`Interpreter` e che si occupa di restituire lo
@@ -271,18 +274,47 @@ che consente di combinarne una coppia, in modo che lo stato risultante della
 prima sia passato come argomento della seconda e che i messaggi siano
 concatenati. Successivamente sono stati introdotti altri metodi che semplificano
 un approccio funzionale, il più importante dei quali è `flatMap`, che abilita la
-creazione e concatenazione di più reazioni utilizzando le _for comprehension_ di
-Scala.
+creazione e concatenazione di più reazioni utilizzando le **for comprehension**
+di Scala.
+
+### I Message e il Pusher
+
+Si è fatto riferimento, nelle sezioni precedenti, alla necessità di avere un
+qualche output, da poter mostrare all'utente, al termine dell'esecuzione della
+pipeline. Come scelta progettuale, si è deciso di separare l'output vero e
+proprio, da delle **notifiche di avvenuto evento**, che fanno scaturire lo
+stesso. Ciò permette di avere una separazione più netta dei concetti,
+supportando potenzialmente diverse tipologie di output (non soltanto testuale).
+
+La pipeline, oltre a fornire come output lo stato aggiornato, restituisce
+infatti una sequenza di notifiche. Esempi di notifiche potrebbero essere
+l'apertura di una porta, l'uccisione di un avversario, l'aver mangiato una mela.
+Nella nostra implementazione, tali notifiche prendono il nome di `Message`.
+
+Al di fuori della pipeline è quindi necessario un componente in grado di
+associare ad ogni `Message`, il corrispondente output, facilmente
+personalizzabile dallo storyteller. A tale scopo, nella nostra implementazione è
+presente il componente `Pusher`. Esso viene implementato come un'abstract class,
+permette di definire una mappatura tra dei `Message` in input, con un output di
+tipo generico. `StringPusher` è un'abstract class che estende poi il `Pusher`,
+supportando output di tipo `String`.
+
+Il `Pusher` è facilmente personalizzabile dall'utente. Per essere utilizzato,
+deve essere esteso, andandone a implementare i ::messageTriggers. Un
+`MessageTriggers` altro non è che una `PartialFunction`, che permette di
+definire le varie corrispondenze tra `Message` e output.
 
 ### Commons
 
-Il modulo `Commons` contiene alcuni implementazioni di concetti quali `Items`,
-`Action`, `Verb`, `Reaction`, `Ground` e `Pusher` ritenute comuni per molte
-possibili storie. Il fine del modulo è quello di agevolare il compito dello
-storyteller fornendo elementi pronti all'uso, inoltre tali componenti possono
-essere tratti come spunto per nuove funzionalità.
-
-Commons usufruisce spesso del concetto di Behavior introdotto precedentemente.
+Il package `model` contiene, tra gli altri, anche delle implementazioni "pronte
+all'uso" di vari `Item`, `Action`, `Verb`, `Reaction`, `Ground` e `Pusher`, di
+uso comune nell'implementazione di storie. Questi sono contenuti all'interno del
+package `commons`. È possibile integrare questi ultimi nel trait
+`BehaviorBasedModel` mixandoli all'interno dello stesso: si è infatti
+strutturato il package in maniera tale da contenere le implementazioni in
+differenti trait. Nel progetto, in generale, i trait marcati con il suffisso
+`Ext` possono essere mixati al model principale; quelli che iniziano con il
+prefisso `C` sono inoltre dei trait facenti parte di `commons`.
 
 ## CLI
 
