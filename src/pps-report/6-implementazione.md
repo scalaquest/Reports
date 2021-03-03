@@ -245,16 +245,16 @@ task principali del team, ma non esclusivamente:
 
 Le parti a cui abbiamo partecipato insieme sono:
 
-- Package `Core`:
+- Package `core`:
 
-  - `dictonary` con tutti i suoi elementi;
+  - `dictionary` con tutti i suoi elementi;
   - `pipeline` in particolare gli elementi `Lexer` e `Parser`;
   - `application` con tutti i suoi elementi;
   - `parsing` con tutti i suoi elementi.
 
-- Package `Cli`.
+- Package `cli`.
 
-Occorre sottolineare che i concetti son stati svilupatti totalmente in "pair
+Occorre sottolineare che i concetti son stati sviluppati totalmente in "pair
 programming". Tuttavia, successivamente, vengono descritti quali sono le parti
 di cui personalmente un membro del team è responsabile.
 
@@ -313,10 +313,12 @@ implemtanzione di zio con game loop
 ###### Struttura di default dell'applicazione
 
 All'interno del package `application`, tra i dettagli implementativi più
-interessanti vi è l'utilizzo del pattern "Template Method" all'intero di
+interessanti vi è l'utilizzo del pattern "Template Method" all'interno di
 `DefaultPipelineProvider` per creare la pipeline di default. In particolare è
-interessante notare che passando come parametro solamente una teoria Prolog,
-oltre naturalmente al `model`, sia possibile instanziare una nuova pipeline.
+interessante notare che definendo solamente una teoria Prolog, sia possibile 
+fruire di una pipeline pronta all'uso.
+
+<!-- diagramma delle classi -->
 
 ##### Parser
 
@@ -330,6 +332,24 @@ maniera molto semplice ed in poco tempo, è possibile implementare un altro
 motore Prolog, che ad esempio lavora con **SWI-Prolog**.
 
 ##### Natural Language Processing in Prolog
+
+Il riconoscimento del linguaggio naturale in Prolog è basato su regole in forma
+_definite clause grammar_. Questa modalità di esprimere regole consente di
+definire facilmente un parser in Prolog.
+
+Tramite l'uso di una semplice grammatica DCG come quella in listato
+@lst:nlp_grammar è possibile riconoscere frasi in linguaggio naturale.
+
+~~~{#lst:nlp_grammar .txt caption="Una semplice grammatica per riconoscere frasi in lingua inglese. Fonte: https://en.wikipedia.org/wiki/Definite_clause_grammar"}
+sentence(s(NP,VP)) --> noun_phrase(NP), verb_phrase(VP).
+noun_phrase(np(D,N)) --> det(D), noun(N).
+verb_phrase(vp(V,NP)) --> verb(V), noun_phrase(NP).
+det(d(the)) --> [the].
+det(d(a)) --> [a].
+noun(n(bat)) --> [bat].
+noun(n(cat)) --> [cat].
+verb(v(eats)) --> [eats].
+~~~
 
 frase imperative (verbo senza soggetto) tutto sulla grammatica
 
