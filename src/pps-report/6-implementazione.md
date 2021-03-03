@@ -41,9 +41,6 @@ differenti.
 
 ### Team 1
 
-<!-- Anche specializzazioni e aspetti approfonditi più da un solo componente che da
-un altro.-->
-
 Il team 1 è composto dai membri Riccardo Maldini, Jacopo Corina, Thomas
 Angelini. Sono stati trattati specifici aspetti del `Core`, legati in generale
 alla definizione del modello. Nello specifico:
@@ -58,7 +55,7 @@ alla definizione del modello. Nello specifico:
 
 ##### Model
 
-Riguardo alla definizione del model, vanno sottolineate le seguenti scelte
+Riguardo alla definizione del modello, vanno sottolineate le seguenti scelte
 implementative:
 
 - A causa delle dipendenze circolari tra `Room`, `Item` e `State`, tali entità
@@ -67,16 +64,17 @@ implementative:
   scelta ha influenzato il resto dell'implementazione, determinando la necessità
   di espandere l'implementazione in una gerarchia che parte da essa.
 
-- L'implementazione del model basata sul meccanismo dei behavior viene integrata
-  tramite l'utilizzo dell'abstract class `BehaviorBasedModel`. All'interno di
-  questa vengono definiti i concetti di `BehaviorBasedItem`, `ItemBehavior`,
-  `BehaviorBasedGround`, `GroundBehavior`. Le "combinazioni" di `Action` e
-  `Item` in grado di far scattare comportamenti vengono definiti in dei `Set`
-  interni agli stessi, contenenti dei `GroundTriggers` e `ItemTriggers`. Questi
-  non sono altro che wrapper per `PartialFunction[(Action, State), Reaction]` e
+- L'implementazione del `Model` basata sul meccanismo dei behavior viene
+  integrata tramite l'utilizzo dell'abstract class `BehaviorBasedModel`.
+  All'interno di questa vengono definiti i concetti di `BehaviorBasedItem`,
+  `ItemBehavior`, `BehaviorBasedGround`, `GroundBehavior`. Le "combinazioni" di
+  `Action` e `Item` in grado di far scattare comportamenti vengono definiti in
+  dei `Set` interni agli stessi, contenenti dei `GroundTriggers` e
+  `ItemTriggers`. Questi non sono altro che wrapper per
+  `PartialFunction[(Action, State), Reaction]` e
   `PartialFunction[(Action, Option[Item], State), Reaction]`, sulla base dei
   quali vengono implementati i metodi `BehaviorBasedGround::use()` e
-  `BehaviorBasedItem::use()`, combinando tra loro tramite ::lift tutti i
+  `BehaviorBasedItem::use()`, combinando tra loro tramite `::lift()` tutti i
   triggers propri di un certo behavior.
 
 - Internamente, `Room` e `Item` sono completamente descritti dal proprio
@@ -104,8 +102,6 @@ implementative:
 
 ##### Commons
 
-<!-- diagramma delle classi dei trait di commons -->
-
 Tale package è formato da alcuni sotto-package i quali si basano su un pattern
 comune, ovvero molto spesso le classi sono interne a un trait il quale estende
 `BehaviorBasedModel`. Questa scelta implementativa deriva dal fatto che le
@@ -128,7 +124,7 @@ I package da `commons` contenuti sono i seguenti:
   utilizzabili da un `Ground`. Tali `Behavior` sono:
 
   - `GenericGroundBehavior` che rappresenta una comoda opzione anziché creare
-    completamente un `Behavior` Tale classe contiene solamente il trigger;
+    completamente un `Behavior`. Tale classe contiene solamente il trigger;
   - `InspectableBag` che fornisce all'utente la possibilità di guardare gli
     elementi presenti all'interno della `Bag`;
   - `InspectableLocation` che fornisce all'utente la possibilità di vedere gli
@@ -141,40 +137,96 @@ I package da `commons` contenuti sono i seguenti:
 
 - `itemBehavior` è un package contente alcune implementazioni di `Behavior`
   utilizzabili per un `Item`. Tali `Behavior` sono:
+
   - `GenericItemBehavior` che rappresenta una comoda opzione anziché creare
-    completamente un `Behavior` Tale classe contiene solamente il trigger;
+    completamente un `Behavior`. Tale classe contiene solamente il trigger;
   - `Takeable` che fornisce all'`Item` la possibilità di essere inserito dal
     `Player` all'interno della `Bag`;
   - `Eatable` che fornisce all'`Item` la possibilità di essere mangiato dal
     `Player`;
   - `Openable` che fornisce all'`Item` la possibilità di essere aperto dal
-    `Player`;
+    `Player`. Esistono due tipi di `Openable`:
+    - `Item` che possono essere aperti solamente da una specifica chiave;
+    - `Item` che possono essere sempre aperti.
   - `RoomLink` che fornisce all'`Item` la possibilità di essere da tramite tra
     due `Room`. Molto spesso questo concetto è legato anche al comportamento
-    `Openable`;
+    `Openable`, ovvero all'apertura di un `Openable Item` viene attivato anche
+    l'effetto di `RoomLink`;
   - `Container` che fornisce all'`Item` la possibilità di contenere altri
     `Item`, i quali saranno nascosti al `Player` fin tanto che non viene aperto
     l'`Item` container.
 
-* `items` è un package contente alcune a di `Item` che possono contenere gli
-  `itemBehavior` creati precedentemente;
+- `items` è un package contente alcune a di `Item` che possono contenere gli
+  `itemBehavior` creati precedentemente. Tali `Item` sono:
 
-* `pushing` è un package contente alcune implementazioni di `Message` e un
-  implementazione di `Pusher` che produce risposte sotto forma di stringa e che
-  riconosce già tutti i `Message` di `pushing`. Tali messaggi sono considerati
-  base, ovvero è fornita una risposta ai messaggi di base, ma tale risposta può
-  anche essere personalizzata dallo storyteller;
+  - `GenericItem` rappresenta una comoda opzione per generare un `Item` non
+    specifico. Al suo interno contiene un `ItemDescription`, un `ItemRef` e una
+    sequenza di builder per generare un `ItemBehavior`;
+  - `Chest` è una tipologia di `Item` che contiene il comportamento `Container`;
+  - `Food` è una tipologia di `Item` che contiene il comportamento `Eatable`;
+  - `Door` è una tipologia di `Item` che contiene il comportamento `Openable`
+    all'interno di `RoomLink`;
+  - `Key` è una tipologia di `Item` che può aprire `Item` di tipo `Openable` che
+    non sono apribili altrimenti. Un `Item` di tipo `Key` può essere:
+    - `disposable` se scompare all'uso (default);
+    - non `disposable` se rimane nel gioco dopo l'uso.
 
-* `reactions` è un package contenente alcune implementazioni di `Reaction`
-  sviluppate in base ai `Behavior` dei package `itemBehavior` e
+- `pushing` è un package contente alcune implementazioni di `Message` e una per
+  `Pusher` la quale produce risposte sotto forma di stringa e che riconosce già
+  tutti i `Message` del package `pushing`. Tali messaggi sono già gestiti dal
+  `Pusher`, ma tale risposta può anche essere personalizzata dallo storyteller;
+
+- `reactions` è un package contenente alcune implementazioni di `Reaction`
+  sviluppate in base ai `Behavior` presenti nei package `itemBehavior` e
   `groundBehavior`.
 
-Inoltre `commons` contiene anche un trait `CommonsExt` che fornisce tutti gli
-elementi del package stesso se adoperato attraverso il meccanismo dei mixin con
-la classe `BehaviorBasedModel` dalla quale estrae i tipi. Tale trait permette di
-evitare di effettuare il mixin di ogni singolo trait specifico.
+`commons` contiene anche un trait `CommonsExt` che fornisce tutti gli elementi
+del package stesso se adoperato attraverso il meccanismo dei mixin con la classe
+`BehaviorBasedModel` dalla quale estrae i tipi.
 
-##### Interpreter, resolver, reducer
+![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/trait-diagram.png)
+
+##### Resolver, interpreter, reducer
+
+- **Resolver**: Una classe astratta `AbstractSyntaxTreeResolver`, utilizzando il
+  pattern "template method", fornisce una gestione completa delle possibili
+  casistiche ottenibili dal risultato della parte di parsing `ParsingResult`: l'
+  abstract syntax tree contenuto nel risultato viene distinto mediante pattern
+  matching. In ultimo caso, se la classe non fosse di una delle ammesse,
+  verrebbe restituita una stringa, contenente potenzialmente il messaggio di
+  errore, ed essa sarà propagata come risultato alternativo del ciclo di
+  pipeline. Nei casi ammessi, vengono estratti gli attributi presenti e si
+  verifica se essi sono presenti tra le `actions` e gli `items` ammessi,
+  tornando in caso affermativo uno `Statement` di tipo corrispondente a quello
+  matched, che sarà wrappato da un oggetto `ResolverResult`. Se vi fossero
+  mancate corrispondenze, al pari della casistica di errore precedente, sarebbe
+  restituita una stringa di errore. La classe `Resolver` fornisce una possibile
+  implementazione di `AbstractSyntaxTreeResolver`, definendo nel metodo
+  `actions` se la action passata è tra quelle definite nello stato, e definendo
+  nel metodo `items` la ricerca di essi nello scope di gioco (insieme degli
+  oggetti presenti nella bag o nella location del player) basandosi su un
+  **criterio di confronto** tra `ItemDescription` dell' oggetto con quella degli
+  altri nello scope, secondo il quale per poter avere un match, il nome deve
+  essere il medesimo ed eventuali aggettivi dell' oggetto ricercato devono
+  essere un sottoinsieme dell' altro oggetto preso in considerazione. Per
+  esemplificare, se nello scope fosse presente una sola mela (senza aggettivi) e
+  si cercasse una mela verde, non si otterrebbe alcuna corrispondenza. Se fosse
+  presente una mela verde e si cercasse una mela rossa, non si avrebbe alcuna
+  corrispondenza, e così pure se fossero presenti entrambe le mele con aggettivi
+  e se ne cercasse una senza alcuno. In quest' ultimo caso vi sarebbero
+  corrispondenze multiple quindi si renderebbe necessaria una disambiguazione.
+
+- **Interpreter**: Utilizzando i `ResolverResult` ottenuti da `Resolver`, la
+  classe `Interpreter` si occupa di eseguire un pattern matching su di essi,
+  distinguendoli in base alla classe `Intransitive`, `Transitive`,
+  `Ditransitive`. In assenza di match, viene restituito, come nel caso riportato
+  in `Resolver`, una stringa di errore. Nel caso `Intransitive` il metodo
+  `::use` è invocato su un oggetto di tipo `Ground`, che rappresenta un sorta di
+  oggetto "virtuale" ed è contenuto all' interno dello stato. Nei casi
+  `Transitive` e `Ditransitive` è stata utilizzata una classe di utility
+  chiamata `RefToItem`, che consiste in un extractor da utilizzare per ottenere
+  l' `Item` partendo da `ItemRef`, reperendolo da un dato dizionario degli
+  elementi, in questo caso quello contenuto all' interno dello stato.
 
 #### Responsabilità personali
 
@@ -184,49 +236,16 @@ task principali del team, ma non esclusivamente:
 - **Thomas Angelini**: Il membro ha gestito lo sviluppo del sotto-modulo
   `commons` all'interno di `model.behaviorBased`.
 
-* **Jacopo Corina**: Oltre all' esplorazione di varie alternative per
-  predisporre la suddivisione dei workflow della CI ed alla successiva
-  predisposizione iniziale della generazione automatica dei report e della build
-  automation, successivamente evoluta assieme agli membri del team, il membro ha
-  proposto l' idea iniziale dell' utilizzo di behaviour e come essi dovessero
-  essere integrati con gli item, ossia non come estensione di funzionalità a
-  livello sintattico ma come proprietà, in quanto la gestione sarebbe risultata
-  semplificata, con i medesimi benefici. Le successive ottimizzazioni di tale
-  aspetto sono state svolte in cooperazione con gli altri membri. Si è
-  approfondita la realizzazione dei componenti della pipeline citati in
-  precedenza.
+* **Jacopo Corina**: Oltre alle parti svolte assieme agli altri membri, il
+  membro ha contribuito a creare la struttura base del meccanismo dei behavior e
+  alla relativa integrazione, per poi ulteriormente svilupparla assieme agli
+  altri membri. In particolare ha contribuito alla creazione dei vari item di
+  gioco con behavior annessi e alla parziale implementazione dlle componenti
+  `Resolver`, `Interpreter`, `Reducer`.
 
-  - Resolver Una classe astratta `AbstractSyntaxTreeResolver`, utilizzando il
-    pattern "template method" , fornisce una gestione completa delle possibili
-    casistiche ottenibili dal risultato della parte di parsing `ParsingResult`:
-    l' abstract syntax tree contenuto nel risultato viene distinto mediante
-    pattern matching in base alla classe `Intransitive`, `Transitive`,
-    `Ditransitive`. In ultimo caso, se la classe non fosse di una delle ammesse,
-    viene restituita una stringa, contenente potenzialmente il messaggio di
-    errore, ed essa sarà propagata come risultato alternativo del ciclo di
-    pipeline. Nei casi ammessi, vengono estratti gli attributi presenti e si
-    verifica se essi sono presenti tra le `actions` e gli `items` ammessi,
-    tornando in caso affermativo uno `statement` di tipo corrispondente a quello
-    matched, che sarà wrappato da un oggetto `ResolverResult`. Se vi fossero
-    mancate corrispondenze, al pari della casistica di errore precedente,
-    sarebbe restituita una stringa di errore. La classe `Resolver` fornisce una
-    possibile implementazione di `AbstractSyntaxTreeResolver`, definendo nel
-    metodo `actions` se la action passata è tra quelle definite nello stato, e
-    definendo nel metodo `items` la ricerca di essi nello scope di gioco
-    (insieme degli oggetti presenti nella bag o nella location del player)
-    basandosi su un **criterio di confronto** tra `ItemDescription` dell'
-    oggetto con quella degli altri nello scope, secondo il quale per poter avere
-    un match, il nome deve essere il medesimo ed eventuali aggettivi dell'
-    oggetto ricercato devono essere un sottoinsieme dell' altro oggetto preso in
-    considerazione. Per esemplificare, se nello scope fosse presente una sola
-    mela (senza aggettivi) e si cercasse una mela verde, non si otterrebbe
-    alcuna corrispondenza. Se fosse presente una mela verde e si cercasse una
-    mela rossa, non si avrebbe alcuna corrispondenza, e così pure se fossero
-    presenti entrambe le mele con aggettivi e se ne cercasse una senza alcuno.
-    In quest' ultimo caso vi sarebbero corrispondenze multiple quindi si
-    renderebbe necessaria una disambiguazione.
-
-* Interpreter
+  Inoltre, si è dedicato alla predisposizione iniziale ed all'ottimizzazione dei
+  workflow CI ed alla esplorazione dei possibili metodi di release e parziale
+  implementazione di quella relativa ai report
 
 - **Riccardo Maldini**: Il membro ha curato in particolare lo sviluppo delle
   entità di base del **model**, e parte della sua implementazione principale
@@ -241,9 +260,11 @@ task principali del team, ma non esclusivamente:
     plugin e submodule
   - Sviluppo di parte dei workflow di release.
 
-### Team 2 (Nardini, Gorini)
+### Team 2
 
-Le parti a cui abbiamo partecipato insieme sono:
+Il team 2 è composto dai membri Filippo Nardini, Francesco Gorini. Sono stati
+trattati specifici aspetti del `core`, legati in generale alla definizione
+dell'engine di gioco, e alla struttra di base del modulo `cli` Nello specifico:
 
 - Package `core`:
 
@@ -315,7 +336,7 @@ implemtanzione di zio con game loop
 All'interno del package `application`, tra i dettagli implementativi più
 interessanti vi è l'utilizzo del pattern "Template Method" all'interno di
 `DefaultPipelineProvider` per creare la pipeline di default. In particolare è
-interessante notare che definendo solamente una teoria Prolog, sia possibile 
+interessante notare che definendo solamente una teoria Prolog, sia possibile
 fruire di una pipeline pronta all'uso.
 
 <!-- diagramma delle classi -->
@@ -340,7 +361,7 @@ definire facilmente un parser in Prolog.
 Tramite l'uso di una semplice grammatica DCG come quella in listato
 @lst:nlp_grammar è possibile riconoscere frasi in linguaggio naturale.
 
-~~~{#lst:nlp_grammar .txt caption="Una semplice grammatica per riconoscere frasi in lingua inglese. Fonte: https://en.wikipedia.org/wiki/Definite_clause_grammar"}
+```{#lst:nlp_grammar .txt caption="Una semplice grammatica per riconoscere frasi in lingua inglese. Fonte: https://en.wikipedia.org/wiki/Definite_clause_grammar"}
 sentence(s(NP,VP)) --> noun_phrase(NP), verb_phrase(VP).
 noun_phrase(np(D,N)) --> det(D), noun(N).
 verb_phrase(vp(V,NP)) --> verb(V), noun_phrase(NP).
@@ -349,7 +370,7 @@ det(d(a)) --> [a].
 noun(n(bat)) --> [bat].
 noun(n(cat)) --> [cat].
 verb(v(eats)) --> [eats].
-~~~
+```
 
 frase imperative (verbo senza soggetto) tutto sulla grammatica
 
