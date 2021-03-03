@@ -15,8 +15,8 @@ autori che li hanno sviluppati.
 ## Aspetti trattati in comune
 
 Alcune sezioni del software hanno richiesto l'attenzione di tutti i membri del
-team, in sedute comuni di programmazione e di scambio di idee. Tali sezioni
-erano quelle incluse nelle seguenti categorie:
+team in sedute comuni di programmazione e di scambio di idee. Tali sezioni sono
+quelle incluse nelle seguenti categorie:
 
 - sezioni strategiche;
 - sezioni particolarmente complesse, tali da richiedere competenze possedute da
@@ -52,6 +52,9 @@ alla definizione del modello. Nello specifico:
   `interpreter` e `reducer`.
 
 #### Dettagli implementativi
+
+I dettagli implementativi degli aspetti principali trattati dal team 1 sono
+esposti quì di seguito.
 
 ##### Model
 
@@ -105,9 +108,10 @@ implementative:
 Tale package è formato da alcuni sotto-package i quali si basano su un pattern
 comune, ovvero molto spesso le classi sono interne a un trait il quale estende
 `BehaviorBasedModel`. Questa scelta implementativa deriva dal fatto che le
-classi interne devono avere necessariamente avere i type `I`, `G` legati al
-concetto di `Behavior`, da qui la necessità di ereditarli da una classe che li
-contenga entrambi, in questo caso `BehaviorBasedModel`.
+classi interne devono avere necessariamente avere i type `I`, `G` di un istanza
+model che usufruisce del concetto di `Behavior`, da qui la necessità di
+ereditarli da una classe che li contenga entrambi, in questo caso
+`BehaviorBasedModel`.
 
 Altrettanto spesso viene adoperato per ogni sotto-package un trait che sia
 formato dal mixin di tutti i trait specifici. Tale trait, quindi, permetterà col
@@ -123,66 +127,82 @@ I package da `commons` contenuti sono i seguenti:
 - `groundBehavior` è un package contente alcune implementazioni di `Behavior`
   utilizzabili da un `Ground`. Tali `Behavior` sono:
 
-  - `GenericGroundBehavior` che rappresenta una comoda opzione anziché creare
-    completamente un `Behavior`. Tale classe contiene solamente il trigger;
-  - `InspectableBag` che fornisce all'utente la possibilità di guardare gli
+  - `GenericGroundBehavior` è utilizzata per creare completamente un `Behavior`
+    generico. Tale classe contiene solamente il trigger;
+  - `InspectableBag` fornisce all'utente la possibilità d'ispezionare gli
     elementi presenti all'interno della `Bag`;
-  - `InspectableLocation` che fornisce all'utente la possibilità di vedere gli
+  - `InspectableLocation` fornisce all'utente la possibilità d'ispezionare gli
     elementi presenti all'interno di una `Room`;
-  - `Navigable` che fornisce all'utente la possibilità di muoversi attraverso le
+  - `Navigable` fornisce all'utente la possibilità di muoversi attraverso le
     `Room`.
 
 - `grounds` è un package contente un implementazione di un `Ground` tale che
-  abbia i `Behavior` precedenti;
+  contenga tutti i `Behavior` precedentemente descritti;
 
 - `itemBehavior` è un package contente alcune implementazioni di `Behavior`
   utilizzabili per un `Item`. Tali `Behavior` sono:
 
-  - `GenericItemBehavior` che rappresenta una comoda opzione anziché creare
-    completamente un `Behavior`. Tale classe contiene solamente il trigger;
-  - `Takeable` che fornisce all'`Item` la possibilità di essere inserito dal
+  - `GenericItemBehavior` è utilizzata per creare completamente un `Behavior`
+    generico. Tale classe contiene solamente il trigger;
+  - `Takeable` fornisce all'`Item` la possibilità di essere inserito dal
     `Player` all'interno della `Bag`;
-  - `Eatable` che fornisce all'`Item` la possibilità di essere mangiato dal
+  - `Eatable` fornisce all'`Item` la possibilità di essere mangiato dal
     `Player`;
-  - `Openable` che fornisce all'`Item` la possibilità di essere aperto dal
-    `Player`. Esistono due tipi di `Openable`:
-    - `Item` che possono essere aperti solamente da una specifica chiave;
-    - `Item` che possono essere sempre aperti.
-  - `RoomLink` che fornisce all'`Item` la possibilità di essere da tramite tra
-    due `Room`. Molto spesso questo concetto è legato anche al comportamento
-    `Openable`, ovvero all'apertura di un `Openable Item` viene attivato anche
+  - `Openable` fornisce all'`Item` la possibilità di essere aperto dal `Player`.
+    Esistono due tipi di `Openable`:
+    - `Item` apribili solamente da una specifica chiave;
+    - `Item` sempre apribili.
+  - `RoomLink` fornisce all'`Item` la possibilità di collegare due `Room`.
+    Questo conferisce la possibilità al `Player` di muoversi dalla prima alla
+    seconda stanza. Molto spesso questo concetto è legato anche al comportamento
+    `Openable`, in tal caso all'apertura di un `Openable Item` viene attivato
     l'effetto di `RoomLink`;
-  - `Container` che fornisce all'`Item` la possibilità di contenere altri
-    `Item`, i quali saranno nascosti al `Player` fin tanto che non viene aperto
-    l'`Item` container.
+  - `Container` fornisce all'`Item` la possibilità di contenere altri `Item`. Il
+    `Container` una volta aperto (comportamento `Openable`) inserisce gli `Item`
+    da lui contenuti all'interno della stanza dove risiede. Da questo momento in
+    poi gli `Item` diventano visibili dall'utente.
 
-- `items` è un package contente alcune a di `Item` che possono contenere gli
-  `itemBehavior` creati precedentemente. Tali `Item` sono:
+- `items` è un package contente alcune implementazioni di `Item`. Tali `Item`
+  sono:
 
-  - `GenericItem` rappresenta una comoda opzione per generare un `Item` non
-    specifico. Al suo interno contiene un `ItemDescription`, un `ItemRef` e una
-    sequenza di builder per generare un `ItemBehavior`;
+  - `GenericItem` è utilizzata per creare un `Item` generico, ovvero senza
+    `ItemBehavior` specifici. Al suo interno contiene un `ItemDescription`, un
+    `ItemRef` e una sequenza di builder per generare un `ItemBehavior`;
   - `Chest` è una tipologia di `Item` che contiene il comportamento `Container`;
   - `Food` è una tipologia di `Item` che contiene il comportamento `Eatable`;
   - `Door` è una tipologia di `Item` che contiene il comportamento `Openable`
     all'interno di `RoomLink`;
-  - `Key` è una tipologia di `Item` che può aprire `Item` di tipo `Openable` che
-    non sono apribili altrimenti. Un `Item` di tipo `Key` può essere:
+  - `Key` è una tipologia di `Item` utile ad aprire `Item` di tipo `Openable`
+    nel caso in cui questi non siano apribili altrimenti. Un `Item` di tipo
+    `Key` può essere:
     - `disposable` se scompare all'uso (default);
-    - non `disposable` se rimane nel gioco dopo l'uso.
+    - non `disposable` se rimane nel gioco nella `Room` corrente dopo l'uso.
 
 - `pushing` è un package contente alcune implementazioni di `Message` e una per
-  `Pusher` la quale produce risposte sotto forma di stringa e che riconosce già
-  tutti i `Message` del package `pushing`. Tali messaggi sono già gestiti dal
-  `Pusher`, ma tale risposta può anche essere personalizzata dallo storyteller;
+  `Pusher`. Quest'ultima riconosce tutti i `Message` del package `pushing` e
+  produce risposte sotto forma di stringa. Tali messaggi sono già gestiti dal
+  `Pusher`, ma la risposta può anche essere personalizzata dallo storyteller
+  all'interno della storia personale;
 
 - `reactions` è un package contenente alcune implementazioni di `Reaction`
-  sviluppate in base ai `Behavior` presenti nei package `itemBehavior` e
-  `groundBehavior`.
+  basate sui `Behavior` presenti nei package `itemBehavior` e `groundBehavior`.
+  Tali `Reaction` sono:
+  - `modifyBag` modifica gli `Item` presenti nella `Bag`;
+  - `modifyLocationItems` modifica tutti gli `Item` presenti nella location
+    `Room`;
+  - `switchLocation` cambia la location corrente del `Player`. Questo implica
+    che il player si sia spostato in un altra stanza;
+  - `addMessage` aggiunge un nuovo `Message`;
+  - `modifyRoomItems` modifica tutti gli `Item` presenti in una generica `Room`.
+    Questa `Reaction` generalizza `modifyLocationItems`;
+  - `addDirectionToLocation` aggiunge una nuova `Direction` verso la quale il
+    `Player` può muoversi.
+  - `finishGame` termina il gioco sia in caso di vittoria e sconfitta per il
+    `Player`.
 
 `commons` contiene anche un trait `CommonsExt` che fornisce tutti gli elementi
-del package stesso se adoperato attraverso il meccanismo dei mixin con la classe
-`BehaviorBasedModel` dalla quale estrae i tipi.
+del package stesso. Il trait deve essere adoperato attraverso il meccanismo dei
+mixin con la classe `BehaviorBasedModel` dalla quale estrae i tipi.
 
 ![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/trait-diagram.png)
 
@@ -234,13 +254,15 @@ Personalmente ogni elemento del team ha svolto dei task specifici, legati ai
 task principali del team, ma non esclusivamente:
 
 - **Thomas Angelini**: Il membro ha gestito lo sviluppo del sotto-modulo
-  `commons` all'interno di `model.behaviorBased`.
+  `commons` all'interno di `model.behaviorBased`, ha redatto una buona parte di
+  ScalaDoc e spesso coinvolto in molti test. La maggior parte del lavoro è stato
+  svolto in concomitanza con gli altri membri del team.
 
 * **Jacopo Corina**: Oltre alle parti svolte assieme agli altri membri, il
   membro ha contribuito a creare la struttura base del meccanismo dei behavior e
   alla relativa integrazione, per poi ulteriormente svilupparla assieme agli
   altri membri. In particolare ha contribuito alla creazione dei vari item di
-  gioco con behavior annessi e alla parziale implementazione dlle componenti
+  gioco con behavior annessi e alla parziale implementazione delle componenti
   `Resolver`, `Interpreter`, `Reducer`.
 
   Inoltre, si è dedicato alla predisposizione iniziale ed all'ottimizzazione dei
@@ -396,7 +418,7 @@ All'interno del team, le responsabilità di ognuno di noi sono:
 
 - **Filippo Nardini**:
 
-  1. sottoprogetto cli;
+  1. sotto-progetto cli;
   2. package scalog;
   3. package dictonary.
 
