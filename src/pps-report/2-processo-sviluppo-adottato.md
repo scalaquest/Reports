@@ -1,9 +1,231 @@
 # Processo di sviluppo adottato
 
-## Modalità di divisione in itinere dei task
+Il processo di sviluppo adottato rispecchia i principi della metodologia
+**Scrum**, basata su un approccio di tipo Agile.
 
-## Meeting e interazioni pianificate
+La metodologia richiede l'assegnamento di specifici ruoli, che sono stati
+distribuiti tra i componenti come di seguito specificato:
 
-## Modalità di revisione in itinere dei task
+- A Filippo Nardini è stato assegnato il ruolo di **Product Owner**:
+  responsabile per la massimizzazione del valore del progetto, in linea teorica
+  dovrebbe esprimere i requisiti del cliente. Nel nostro caso, non avendo un
+  vero e proprio committente, è stato assegnato lui il ruolo in quanto l'idea di
+  fondo è stata proposta e delineata dallo stesso;
 
-## Scelta degli strumenti di test, build e CI
+- A Riccardo Maldini è stato assegnato il ruolo di **Scrum Master**. Il suo
+  ruolo è quello di facilitare il lavoro di Project Owner e team, innalzandosi a
+  garante dei principi Scrum, e del delineare l'organizzazione di Sprint e
+  meeting;
+
+- A Tutti i componenti è stato assegnato il ruolo di **team di sviluppo**. Scrum
+  prevede che i ruoli di Project Owner e Scrum Master non debbano sovrapporsi
+  con il team di sviluppo; è stata però di fatto una scelta obbligata, visto le
+  dimensioni ridotte del team.
+
+Il lavoro è stato suddiviso in **Sprint settimanali**, ad eccezione delle
+primissime iterazioni che hanno richiesto del tempo aggiuntivo.
+
+## Strumenti a supporto di Scrum
+
+### GitHub Projects
+
+Si è tenuto traccia del Backlog di progetto grazie allo strumento **GitHub
+Projects**. Questo rappresenta di fatto una versione di Trello interna a GitHub,
+che ne eredita la maggior parte delle caratteristiche (ad esempio,
+l'organizzazione dei task in liste), aggiungendo a esso però importanti
+integrazioni con GitHub. È possibile ad esempio associare Issue e Pull Request
+direttamente ai task, automatizzarne e sincronizzarne apertura e chiusura con
+gli stessi. È possibile accedere alla backlog di progetto, essendo pubblica, a
+[questo indirizzo](https://github.com/orgs/scalaquest/projects/1).
+
+### Scrum Overview Document {#sec:sod}
+
+Si è tenuto traccia dei meeting settimanali e dei progressi grazie alla
+redazione di un documento denominato **Scrum Overview**, aggiornato dopo ogni
+meeting, accessibile a
+[questo indirizzo](https://scalaquest.github.io/Reports/reports/appendix.html).
+
+### GitHub Issues e Pull Request
+
+Per approfondire e delineare l'effettiva interazione e evoluzione del progetto,
+sono stati utilizzati estensivamente Issue e Pull Request di GitHub. Consultando
+le stesse, è possibile ricostruire interamente il processo di sviluppo. Un
+"indice" dal quale recuperare i principali Issue e PR è contenuto all'interno
+del sopracitato documento di Scrum Overview (@sec:sod).
+
+### Discord
+
+Si è utilizzato il software **Discord** per effettuare i meeting settimanali e
+quotidiani. Si è preferito questo strumento, rispetto ad altri simili quali
+Slack, Microsoft Teams, Google Meet o altri, per vari motivi:
+
+- per la buona qualità di videochiamata;
+- per la possibilità di lavorare in stanze differenti in contemporanea, e
+  passare facilmenta da una stanza all'altra;
+- per la possibilità di implementare hook integrati con GitHub, tali per cui
+  ogni modifica alle repository di progetto viene notificata a tutti i
+  componenti del gruppo, tramite un apposito canale.
+
+## Meeting e interazioni pianificate {#sec:meet}
+
+### Meeting settimanali
+
+Ad ogni fine settimana è stato portato avanti il **meeting settimanale**,
+durante il quale si sono effettuate le operazioni di Sprint Review,
+Retrospective e Planning. Nella pratica, tali meeting hanno seguito la seguente
+scaletta:
+
+1. **Retrospettiva**: ogni componente ha aggiornato i colleghi riguardo ciò che
+   è stato fatto durante lo Sprint precedente. Questo ha portato spesso a
+   importanti discussioni su tematiche emerse dal lavoro di ogni membro del
+   team.
+
+2. **Sincronizzazione del lavoro effettuato**: gran parte del lavoro è stato
+   effettuato in branch separati (feature branch); grazie a una buona
+   organizzazione, difficilmente il lavoro di un sotto-team è entrato in
+   conflitto con quello di un altro. Ad ogni modo, tipicamente, al termine dello
+   Sprint si è andati a chiudere le varie pull request aperte, gestendone
+   eventuali conflitti minori.
+
+3. **Definizione dei task dello Sprint successivo e aggiornamento del backlog**:
+   a questo punto del meeting si vanno a definire gli obiettivi della settimana
+   a venire, andando ad aggiornare di conseguenza il Backlog, trasferendo
+   inoltre i task completati nello Sprint corrente nella colonna dei task
+   completati negli Sprint precedenti. In questa fase si vanno inoltre a
+   definire gli obiettivi prioritari, spostandoli nella colonna di Backlog dello
+   Sprint corrente.
+
+4. **Assegnamento dei task**: i task individuati vengono quindi assegnati ai
+   componenti del team, o ad eventuali team interni (@sec:team).
+
+### Meeting di aggiornamento periodici
+
+Ogni due o tre giorni è stato effettuato un **meeting di aggiornamento** tra
+tutti i componenti del team. Per ragioni pratiche, non è stato possibile
+eseguire Daily Scrum giornalieri, sostituiti però da questi meeting a cadenza
+più flessibile. Al pari del Daily Scrum, durante questi meeting ci si è
+aggiornati riguardo i progressi attuati nei singoli team interni.
+
+Sulla base di questi meeting, si sono anche prese eventuali misure di revisione
+in itinere dei task: è ad esempio successo che in alcuni casi un sotto-team
+completasse tutti i task ad esso assegnati in anticipo, o che in alcuni altri
+casi ci si rendesse conto che il task sarebbe stato concluso nello Sprint
+successivo. In questi casi, si è aggiornato di conseguenza il Backlog.
+
+## Organizzazione in team interni {#sec:team}
+
+Il lavoro è stato sviluppato principalmente in team interni composti da due o
+tre componenti, seguendo la metodologia **pair programming**. Questa modalità,
+già utilizzata in altri progetti, pur portando iniziali rallentamenti dovuti a
+una minore parallelizzazione,porta ad un innalzamento della qualità del
+prodotto, e ad un minore debito tecnico, in quanto le scelte vengono discusse e
+revisionate in tempo reale dagli stessi membri del team. Essa porta inoltre i
+diversi componenti a comprendere meglio la parte sviluppata, e responsabilizza i
+singoli, dovendo a rotazione prendere il comando del team.
+
+In particolare:
+
+- Si è individuato un **sotto-team 1**, composto dai componenti Riccardo
+  Maldini, Jacopo Corina e Thomas Angelini. Tale team è stato responsabile in
+  particolare di aspetti relativi alla definizione del componente model
+  (approfondito in seguito);
+- Si è individuato un **sotto-team 2**, composto dai componenti Filippo Nardini
+  e Francesco Gorini. Il team ha approfondito i concetti legati al parsing del
+  testo, e all'interpretazione dello stesso tramite l'engine Prolog;
+- Task di importanza chiave sono stati portati avanti **in comune tra tutti i
+  componenti**;
+- Task minori sono stati portati avanti **singolarmente** da componenti del
+  team.
+
+## Modelli di sviluppo
+
+Durante lo svolgimento del progetto, non si è tenuto costantemente un singolo
+modello di sviluppo:
+
+### GitHub Flow in fase embrionale
+
+In una prima fase, all'interno dei singoli repository si è adottato come modello
+di sviluppo **GitHub Flow**. Tale modello, come intuibile dal nome, è ispirato a
+GitFlow, ma presenta alcune caratteristiche in contrapposizione allo stesso, che
+lo rendono più flessibile e semplice.
+
+Il modello richiede ad esempio che la versione stabile del software sia
+mantenuta su un branch `main` (o `master`), senza però la necessità di un branch
+`dev` parallelo. Ciò ha permesso di avere nella fase iniziale un **flusso di
+sviluppo meno rigido**: non avendo in principio software abbastanza stabile da
+poter essere rilasciato, né tantomeno pipeline di deploy attive, ci si è
+concentrati sullo sviluppo delle funzionalità di base. Allo stesso tempo, però,
+GitHub Flow suggerisce di organizzare il lavoro in `feature/*` branch, come in
+GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo
+utente.
+
+### GitFlow a regime
+
+Una volta predisposta una codebase sufficientemente stabile, e una volta
+abilitate le pipeline di deploy, si è migrato al più strutturato modello
+**GitFlow**. Questo permette di avere nel branch `main` la versione ufficiale e
+stabile. A ogni push nel `main` deve corrispondere un tag, associato a sua volta
+a un numero di versione. La versione "di lavoro" del codice, stabile ma
+potenzialmente parziale, risiede nel branch `dev`. I vari `feature/*` branch
+confluiscono ora in `dev`. Il `main` viene aggiornato tramite delle pull request
+sullo stesso originate da branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati
+dal `dev`, e con `X.Y.Z` numero di versione secondo semantic versioning.
+
+## Strumenti di test, build e CI
+
+Il progetto sfrutta **Gradle** come build automation tool. La scelta è dovuta
+primo luogo in quanto richiesto per l'integrazione con il corso di LSS. Ciò è
+comunque risultato molto utile per organizzare la build in maniera più
+strutturata, e per approfondirne gli strumenti di integrazione con Scala. A tal
+proposito, il codice è organizzato in più sotto-progetti, individuati a seguito
+di un'iniziale sessione DDD.
+
+È stato adottato per il testing del codice Scala il framework **ScalaTest**. Si
+è inoltre sperimentato **WordSpec** come stile di test. Un'ulteriore libreria è
+stata utilizzata per il testing del framework funzionale ZIO.
+
+### Continuous Integration
+
+Particolare attenzione è stata posta nell'individuazione di misure per
+assicurare la qualità del codice. Sono stati predisposti dei workflow a garanzia
+di Continuous Integration e Quality Assurance, costruiti con il tool **GitHub
+Actions**. Sono stati posti criteri di qualità man mano più stringenti e
+vincolanti, a seconda del grado di stabilità del branch. In generale, `main` non
+può essere modificato senza che il codice passi tutti i controlli di CI/QA, e
+senza che la pull request venga prima revisionata da un ulteriore componente del
+team, mentre per il branch `dev` vengono generati warning nel caso in cui il
+codice non rispetti i requisiti qualitativi proposti.
+
+In primo luogo, ogni push o pull request genera un controllo tramite il tool
+esterno **SonarCloud**, il quale definisce soglie qualitative basate su
+coverage, manutenibilità, code smells, presenza di bug conosciuti e molto altro.
+Sono presenti inoltre ulteriori controlli basati su **workflow CI/QA custom**,
+nei quali viene effettuato il lint del codice tramite il plugin Spotless, poste
+ulteriori soglie di coverage, effettuati test e compilato il codice su
+molteplici piattaforme.
+
+Tutti gli accorgimenti vengono approfonditi in maniera più dettagliata nel
+report di LSS.
+
+### Automazione della delivery
+
+Sono state inoltre predisposte dei workflow per la generazione e il deploy delle
+release, strutturate in maniera tale da rispettare i requisiti imposti da
+GitFlow, apportandone importanti caratteristiche di automazione.
+
+Nel momento in cui si desideri generare una release, il nostro flusso di lavoro
+GitFlow-based prevede che venga generato un branch `release/X.Y.Z`, e che venga
+aperta una pull request su `main` a partire da questa. Quanto detto è l'unica
+operazione manuale da effettuare: una volta chiusa la pull request, revisionata
+la stessa e passati i controlli di CI, un workflow genera il tag della versione,
+inferendolo dal nome del branch. Vengono quindi generati gli asset collegati
+alla release, e resi disponibili nella
+[sezione Release](https://github.com/scalaquest/PPS-19-ScalaQuest/releases) del
+progetto. Vengono inoltre generati ScalaDoc, report di coverage e di test, resi
+disponibili all'interno dello
+[spazio web GH Pages associato al progetto](https://scalaquest.github.io/PPS-19-ScalaQuest).
+
+Un meccanismo equivalente è stato sviluppato per la repository che ospita le
+relazioni di progetto. Al momento della release, vengono generate le relazioni
+(a partire da codice Markdown) in formato `PDF LaTeX` e `HTML`, tramite il tool
+Pandoc.
