@@ -14,24 +14,24 @@ autori che li hanno sviluppati.
 
 ## Aspetti trattati in comune
 
-Alcune sezioni del software hanno richiesto l'attenzione di tutti i membri del
-team in sedute comuni di programmazione e di scambio di idee. Tali sezioni sono
-quelle incluse nelle seguenti categorie:
+Alcuni task relativi allo sviluppo del software hanno richiesto l'attenzione di
+tutti i membri del team, in sedute comuni di programmazione e di scambio d'idee.
+Tra questi:
 
-- sezioni strategiche;
-- sezioni particolarmente complesse, tali da richiedere competenze possedute da
-  più sotto-team;
-- sezioni "cuscinetto" tra moduli differenti, tali da richiedere le conoscenze
-  di strutture sviluppate separatamente da sotto-team differenti.
+- task relativi a sezioni strategiche del software;
+- task particolarmente complessi, tali da richiedere competenze possedute da più
+  sotto-team;
+- task relativi allo sviluppo di sezioni "cuscinetto" tra moduli differenti,
+  tali da richiedere conoscenze riguardo a strutture sviluppate separatamente da
+  sotto-team differenti.
 
-Tra le parti aventi queste caratteristiche vi sono:
+È possibile individuare i seguenti task con queste caratteristiche:
 
 - Lo sviluppo degli esempi;
-- Il lavoro delle primissime iterazioni di progetto, nelle quali è stata posta
-  la base di progetto, basata sull suddivisione in più sotto-progetti Gradle;
-- Scelte chiave alla base dello sviluppo del model, come l'adozione dei path
-  dependent types;
-- Scalte chiave e strutture alla base dello sviluppo della pipeline.
+- Il lavoro delle primissime iterazioni, nelle quali è stata posta la base di
+  progetto, e la suddivisione in più sotto-progetti Gradle;
+- Lo sviluppo delle strutture alla base del model;
+- Lo sviluppo delle strutture alla base della pipeline.
 
 ## Aspetti trattati in sotto-team
 
