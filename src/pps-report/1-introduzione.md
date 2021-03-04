@@ -8,10 +8,9 @@ giocatore può utilizzare comandi di testo per influenzare l'ambiente e
 proseguire nel gioco.
 
 Esso dovrà in primis fornire una libreria, tale da permettere la **creazione di
-storie giocabili** da utenti terzi, tramite un modello di base per iniziarne la
-costruzione.
+storie giocabili** da utenti terzi, tramite un API facilmente accessibile.
 
-Dovrà inoltre fornire una **piattaforma per l'esecuzione dei giochi**, basata su
-un'interfaccia da linea di comando. Questa permetterà ad utenti terzi di
+Dovrà inoltre fornire una **piattaforma per l'esecuzione delle storie**, basata
+su un'interfaccia da linea di comando. Questa permetterà ad utenti terzi di
 interagire con le storie create precedentemente, modificando lo stato nel gioco
 e avanzando man mano nella storia.
