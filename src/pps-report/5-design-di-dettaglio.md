@@ -10,7 +10,7 @@ modulo del `Parser` è pervasivo. È stato fatto un primo tentativo di
 rappresentazione delle espressioni tramite l'uso di semplici stringhe, ma questa
 modalità si è rivelata presto inadatta e scomoda. A questo punto, date le
 caratteristiche di Scala, abbiamo pensato di implementare una libreria integrata
-all'interno del progetto che abbiamo chiamato **Scalog**. Questa consente
+all'interno del progetto, chiamata **Scalog**. Questa consente
 agevolmente di creare espressioni Prolog indipendenti dalla specifica
 implementazione del linguaggio, utilizzando un DSL intuitivo, i cui simboli sono
 ispirati direttamente a quelli del linguaggio Prolog, cercando di imitare il più
@@ -45,10 +45,10 @@ di una sequenza di token.
 
 ## Application Structure
 
-Giunti alla definizione degli esempi, ci siamo accorti che occorreva strutturare
-il software in maniera migliore. Ogni volta che si andava ad instanziare una
+Giunti alla definizione degli esempi, ci siamo accorti delle necessità di
+un refactoring della struttura del software. Ogni volta che si andava ad instanziare una
 nuova storia, infatti, era necessario scrivere del codice che poteva essere
-comune tra tutte gli esempi. Questo include principalmente la creazione della
+comune a tutti gli esempi. Questo include principalmente la creazione della
 pipeline e del dizionario della storia, che in mancanza di particolari
 necessità, avvengono sempre allo stesso modo. Per questo motivo è stato deciso
 di rifattorizzare quanto più possibile gli elementi comuni, inserendoli
@@ -82,7 +82,7 @@ mappare in maniera biunivoca il nome di un elemento con il riferimento
 all'oggetto che lo descrive.
 
 Questa necessità di generare strutture dati diverse, utilizzando un isomorfismo,
-a partire da un elemento A che può essere `Item` o `Verb`, si è rivelata essere
+a partire da un elemento `A` che può essere `Item` o `Verb`, si è rivelata essere
 un pattern fattorizzabile in un concetto più astratto e riusabile che è stato
 chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta di un
 wrapper di una funzione `A => B`.
@@ -122,7 +122,7 @@ evolvendosi ad ogni iterazione, lasciando l'utente proseguire nel gioco.
 L'entità che implementa il concetto di stato prende appunto nome di `State`.
 
 A un livello più pratico, i vari componenti dello `State` sono propedeutici alla
-messa in atto della pipeline, permettendo la trasformazione i comandi sotto
+messa in atto della pipeline, permettendo la trasformazione di comandi sotto
 forma di stringhe testuali in comandi comprensibili dal modello (`Statement`),
 applicabili a loro volta sullo `State`, modificandolo. Lo `State` deve contenere
 indicazioni riguardo ai seguenti componenti (astraendo dalle strutture dati
