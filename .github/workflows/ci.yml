@@ -30,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Lint Markdown
+      - name: Lint sources
         run: ./gradlew spotlessCheck
 
   Build:
