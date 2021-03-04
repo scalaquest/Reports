@@ -416,17 +416,21 @@ interfacce, evitando di sollevare eccezion.
 
 All'interno del team, le responsabilità di ognuno di noi sono:
 
-- **Filippo Nardini**:
+- **Filippo Nardini**: il membro del team si è preoccupato di curare
+  particolarmente le parti riguardanti il sottoprogetto _cli_, soprattutto per
+  quanto concerne l'utilizzo di **ZIO**. In aggiunta si è occupato anche della
+  parte di `dictonary`. Infine, per quanto riguarda il linguaggio Prolog, è
+  responsabile della parte comprendente la modellazione della grammatica
+  attraverso algebraic-data type e di tutte le altre parti presenti nel package
+  `scalog`.
 
-  1. sotto-progetto cli;
-  2. package scalog;
-  3. package dictonary.
-
-- **Francesco Gorini**:
-  1. package lexer;
-  2. package parser;
-  3. package engine;
-  4. package application.
+* **Francesco Gorini**: il membro ha contribuito alla stesura dei primi due
+  componenti del package `pipeline`, ovvero Lexer e Parser. In aggiunta è
+  responsabile di quanto è stato creato dentro il package `application`,
+  comprendente tutte le parti necessarie per fornire una struttura di base
+  implementabile. Inoltre il membro si è occupato della parte riguardante il
+  motore Prolog, l'interfacciamento con la libreria tuProlog e tutto ciò che
+  comprende il package `engine`.
 
 <!--
 Possibilmente si può fare anche ##### dettaglio_implementativo (membro_responsabile)
