@@ -170,6 +170,8 @@ come già descritto nelle sezioni precedenti, all'interno di questo
      si provvede ad applicarla allo stato corrente del gioco, aggiornandolo e
      generando eventuali messaggi utili per l'interazione con lo user;
 
+![Diagramma delle attività che mostra il flusso di esecuzione delle pipeline, ad alto livello.](./images/activity-pipeline.png)
+
 ### CLI
 
 Il modulo **CLI** fornisce un'implementazione in grado di eseguire sessioni di
