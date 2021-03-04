@@ -1,2 +1,9 @@
 input-files:
   - ./src/lss-report/1-introduzione.md
+  - ./src/lss-report/2-knowledge-chrunching.md
+  - ./src/lss-report/3-gradle-e-convention-plugin.md
+  - ./src/lss-report/4-ci-qa.md
+  - ./src/lss-report/5-cd.md
+  - ./src/lss-report/6-reports-repository.md
+  - ./src/lss-report/7-dependabot.md
+  - ./src/lss-report/8-conclusioni.md
