@@ -8,30 +8,29 @@ Un problema evidente che è emerso durante la fase di prototipazione del progett
 è stato quello della manipolazione delle espressioni Prolog, che all'interno del
 modulo del `Parser` è pervasivo. È stato fatto un primo tentativo di
 rappresentazione delle espressioni tramite l'uso di semplici stringhe, ma questa
-modalità si è rivelata presto inadatta e scomoda. A questo punto, date le
-caratteristiche di Scala, abbiamo pensato di implementare una libreria integrata
-all'interno del progetto, chiamata **Scalog**. Questa consente
-agevolmente di creare espressioni Prolog indipendenti dalla specifica
-implementazione del linguaggio, utilizzando un DSL intuitivo, i cui simboli sono
-ispirati direttamente a quelli del linguaggio Prolog, cercando di imitare il più
-possibile la sintassi originale. Inoltre consente di effettuare pattern matching
-contro espressioni esistenti, in modo da agevolare il processo dell'interazione
-con i risultati del `Parser`.
+modalità si è rivelata presto inadatta e scomoda. Date le caratteristiche di
+Scala, si è pensato di implementare una libreria integrata all'interno del
+progetto, chiamata **Scalog**. Questa consente agevolmente di creare espressioni
+Prolog indipendenti dalla specifica implementazione del linguaggio, utilizzando
+un DSL intuitivo, i cui simboli sono ispirati direttamente a quelli del
+linguaggio Prolog, cercando di imitare il più possibile la sintassi originale.
+Inoltre la libreria consente di effettuare pattern matching contro espressioni
+esistenti, in modo da agevolare il processo dell'interazione con i risultati del
+`Parser`.
 
 ### Prolog parser
 
 Un ideale che è stato perseguito durante lo sviluppo di tutto il software è
-stato quello della realizzazione di componenti riusabili, per questo abbiamo
+stato quello della realizzazione di componenti riusabili. Per questo motivo si è
 cercato di astrarre, quando possibile, dalle specifiche implementazioni e di
 descrivere interfacce attraverso le quali rappresentare le realizzazioni
-concrete. Per il componente `Parser` questo è riuscito attraverso la
-realizzazione di interfacce volte a rappresentare componenti generici, in
-particolare:
+concrete. Per il componente `Parser` sono state realizzate quindi delle
+interfacce volte a rappresentare componenti generici. In particolare:
 
-- `Library`: che rappresenta una generica libreria Prolog;
-- `Theory`: che rappresenta una generica teoria Prolog;
-- `Engine`: che rappresenta un generico motore Prolog il quale, inizializzato
-  con una teoria e un insieme di librerie, è in grado di rispondere a
+- `Library` rappresenta una generica libreria Prolog;
+- `Theory` rappresenta una generica teoria Prolog;
+- `Engine` rappresenta un generico motore Prolog, il quale, inizializzato con
+  una teoria e un insieme di librerie, è in grado di rispondere a
   interrogazioni;
 
 Per comunicare con `Engine` si è scelto di utilizzare **Scalog**, in quanto
@@ -43,32 +42,29 @@ A questo punto, ancor prima di realizzare un'implementazione dello specifico
 utilizza qualsiasi un generico motore Prolog per effettuare l'analisi sintattica
 di una sequenza di token.
 
-## Application Structure
+## Application structure
 
-Giunti alla definizione degli esempi, ci siamo accorti delle necessità di
-un refactoring della struttura del software. Ogni volta che si andava ad instanziare una
-nuova storia, infatti, era necessario scrivere del codice che poteva essere
-comune a tutti gli esempi. Questo include principalmente la creazione della
-pipeline e del dizionario della storia, che in mancanza di particolari
-necessità, avvengono sempre allo stesso modo. Per questo motivo è stato deciso
-di rifattorizzare quanto più possibile gli elementi comuni, inserendoli
-all'interno del package `application` dentro al modulo _core_. Questo package,
-quindi, fornisce un insieme di costrutti che consentono con poche istruzioni
-aggiuntive di creare una storia. All'interno di questo package son confluite
-anche delle implementazioni di default, volte ad aumentare maggiormente
-l'efficienza nella scrittura della singola storia.
+Giunti alla definizione degli esempi, si è rilevata la necessità di un
+refactoring della struttura del software. Ogni volta che si andava ad
+instanziare una nuova storia, infatti, era necessario scrivere diverso codice
+"boilerplate", comune a tutti gli esempi. Principalmente per quanto concerne la
+creazione della pipeline e del dizionario della storia, che in mancanza di
+particolari necessità, avvengono sempre allo stesso modo. Per questo motivo si è
+deciso di rifattorizzare quanto più possibile gli elementi comuni, inserendoli
+all'interno del package `application`, dentro al modulo `core`. Tale package
+fornisce un insieme di costrutti che consentono con poche istruzioni aggiuntive
+di creare una storia. All'interno di questo son confluite anche delle
+implementazioni di default, volte ad aumentare maggiormente l'efficienza nella
+scrittura della singola storia.
 
 Inoltre son stati aggiunti anche metodi di utility, particolarmente importanti
 per fornire delle funzionalità adatte ad ogni storia.
 
-In definitiva, questo processo di refactoring ha portato notevoli miglioramenti:
+In definitiva, tale processo di refactoring ha portato:
 
 - maggiore modularità tra i componenti;
-
 - eliminazione di codice ripetuto in tutti gli esempi;
-
 - minore possibilità di errore per lo story teller;
-
 - maggiore velocità nel definire nuove storie.
 
 ## Generator e GeneratorK
@@ -76,23 +72,23 @@ In definitiva, questo processo di refactoring ha portato notevoli miglioramenti:
 Tra i principali obiettivi preposti, vi è sicuramente quello di definire una
 sola volta gli elementi che compongono il dizionario di una storia e, a partire
 da questo, generare tutte le strutture dati necessarie ai componenti della
-`Pipeline`. In particolare è necessario generare clausole Prolog che serviranno
+`Pipeline`. In particolare si è reso necessario generare clausole Prolog utili
 al parser per svolgere l'analisi sintattica, e una struttura dati in grado di
 mappare in maniera biunivoca il nome di un elemento con il riferimento
 all'oggetto che lo descrive.
 
 Questa necessità di generare strutture dati diverse, utilizzando un isomorfismo,
-a partire da un elemento `A` che può essere `Item` o `Verb`, si è rivelata essere
-un pattern fattorizzabile in un concetto più astratto e riusabile che è stato
-chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta di un
-wrapper di una funzione `A => B`.
+a partire da un elemento `A` che può essere `Item` o `Verb`, si è rivelata
+essere un pattern fattorizzabile in un concetto più astratto e riusabile che è
+stato chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta
+di un wrapper di una funzione `A => B`.
 
 All'interno del dizionario, però, gli elementi sono contenuti all'interno di una
-collezione. È stato quindi introdotto il concetto di `GeneratorK[F[_], A, B]`,
-che rappresenta un wrapper di una funzione `F[A] => B`, quindi una funzione in
-cui la `A` è all'interno di un contesto `F[_]`. La scelta del nome è stata
-ispirata dai nomi utilizzati dalle type class di **Cats**, le quali presentano
-una lettera _K_ nelle versioni delle type class che operano sugli _higher-kinded
+collezione. Si è quindi introdotto il concetto di `GeneratorK[F[_], A, B]`, che
+rappresenta un wrapper di una funzione `F[A] => B`, quindi una funzione in cui
+la `A` è all'interno di un contesto `F[_]`. La scelta del nome è stata ispirata
+dai nomi utilizzati dalle type class di **Cats**, le quali presentano una
+lettera _K_ nelle versioni delle type class che operano sugli _higher-kinded
 types_.
 
 Tramite l'uso di queste due astrazioni combinate è possibile fattorizzare
@@ -110,7 +106,7 @@ Occorre sottolineare che in `GeneratorK`, il valore restituito `B`
 
 Uno dei requisiti centrali alla base del progetto è quello di fornire allo
 storyteller un'API che lo aiuti a creare le proprie storie. In quest'ottica, il
-package `model` del modulo `Core` contiene tutti i componenti utili alla
+package `model` del modulo `core` contiene tutti i componenti utili alla
 creazione di una storia. Più precisamente, il **modello** può essere definito
 come l'insieme di tutti e soli componenti utilizzabili dallo storyteller per
 costruire la propria storia.
@@ -148,7 +144,7 @@ utilizzate):
 
 - Il `Ground`: esso rappresenta un'entità in grado di gestire i verbi
   intransitivi nella modifica dello stato; concetto approfondito nella sezione
-  #;
+  (#);
 - Varie altre indicazioni rappresentative dello stato, potenzialmente
   espandibili.
 
@@ -230,29 +226,6 @@ estende il `Model` di base:
 - fornendo un costrutto in grado di definire combinazioni action-item
   (`GroundTrigger` e `ItemTrigger`).
 
-<!--
-### Trigger
-
-I Behaviors sfruttano il concetto di `Trigger` i quali all'accadere di una
-determinata azione, nello stato corrente, producono una specifica `Reaction`.
-
-Esistono diversi tipi di trigger:
-
-- `GroundTriggers`: sono tutti i trigger riferiti al ground, ovvero tutte le
-  azioni intransitive le qualinon prendono in considerazione alcun item (es: go
-  north). Nel codice vengono implementati come
-  `PartialFunction[(Action, S), Reaction]`.
-
-- `ItemTriggers`: sono tutti i trigger creati appositamente per gestire azioni
-  transitive o ditransitive. Le azioni transitive si riferiscono ad uno
-  specifico item (es: takeTheItem(item: Item)). Le ditransitive sono azioni che
-  coinvolgono due item (es: openTheDoorWithKey(door: Item, key:Item)). Nel
-  codice vengono implementati come
-  `PartialFunction[(Action, Option[Item], S), Reaction]`.
-
-Con il concetto di Behavior sono state implementate alcune estensioni le quali
--->
-
 ### Reaction
 
 Nelle sezioni precedenti si è spesso fatto riferimento al termine `Reaction`,
@@ -269,13 +242,13 @@ in coda alla `Pipeline`, dopo l'`Interpreter` e che si occupa di restituire lo
 stato aggiornato, insieme alle notifiche sugli effetti prodotti dal comando
 sulla partita.
 
-Il concetto di `Reaction` è stato ampliato inizialmente con un metodo `combine`
-che consente di combinarne una coppia, in modo che lo stato risultante della
-prima sia passato come argomento della seconda e che i messaggi siano
-concatenati. Successivamente sono stati introdotti altri metodi che semplificano
-un approccio funzionale, il più importante dei quali è `flatMap`, che abilita la
-creazione e concatenazione di più reazioni utilizzando le **for comprehension**
-di Scala.
+Il concetto di `Reaction` è stato ampliato inizialmente con un metodo
+`::combine()`, che consente di combinarne una coppia, in modo che lo stato
+risultante della prima sia passato come argomento della seconda e che i messaggi
+siano concatenati. Successivamente sono stati introdotti altri metodi che
+semplificano un approccio funzionale, il più importante dei quali è `flatMap`,
+che abilita la creazione e concatenazione di più reazioni utilizzando le **for
+comprehension** di Scala.
 
 ### I Message e il Pusher
 
@@ -319,7 +292,7 @@ prefisso `C` sono inoltre dei trait facenti parte di `commons`.
 ## CLI
 
 Questo modulo rappresenta di fatto un'implementazione che fa uso dei concetti
-presenti in `ApplicationStructure`. Dentro _cli_ viene definito un game loop
+presenti in `ApplicationStructure`. Dentro `cli` viene definito un game loop
 utilizzando **ZIO** come strumento per la gestione delle interazioni con la
 console, che in questo modo risultano essere type safe.
 
@@ -370,13 +343,5 @@ Il design di dettaglio "esplode" (dettaglia) l'architettura, ma viene
 concettualmente prima dell'implementazione, quindi non metteteci diagrammi
 ultra-dettagliati estratti dal codice, quelli vanno nella parte di
 implementazione eventualmente.
-
-##Scelte rilevanti
-
-## Pattern di progettazione
-
-## Organizzazione del codice
-
-organizzazione del codice -- corredato da pochi ma efficaci diagrammi)
 
 -->
