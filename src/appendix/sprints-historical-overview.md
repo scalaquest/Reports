@@ -205,6 +205,7 @@ prerelease delivery system, and some minor adjustments.
 
 Useful links:
 
+- [(Issue) Focus on PPS report](https://github.com/scalaquest/Reports/issues/18)
 - [(Pull request) Add how-to-use guide to the Readme](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/112)
 - [(Issue) Auto generate prerelease on each dev push](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/110)
 - [(Pull request) Release to Maven Central](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/113)
