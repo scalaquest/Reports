@@ -1,8 +1,7 @@
 # Processo di sviluppo adottato
 
 Il processo di sviluppo adottato rispecchia i principi della metodologia
-**Scrum**, nel quale vengono definite un insieme di regole basate su principi
-Agile.
+**Scrum**, basata su un approccio di tipo Agile.
 
 La metodologia richiede l'assegnamento di specifici ruoli, che sono stati
 distribuiti tra i componenti come di seguito specificato:
@@ -11,20 +10,20 @@ distribuiti tra i componenti come di seguito specificato:
   responsabile per la massimizzazione del valore del progetto, in linea teorica
   dovrebbe esprimere i requisiti del cliente. Nel nostro caso, non avendo un
   vero e proprio committente, è stato assegnato lui il ruolo in quanto l'idea di
-  fondo è stata proposta e delineata da esso;
+  fondo è stata proposta e delineata dallo stesso;
+
 - A Riccardo Maldini è stato assegnato il ruolo di **Scrum Master**. Il suo
-  ruolo è quello di facilitare il lavoro di PO e team, innalzandosi a garante
-  dei principi Scrum, e del delineare l'organizzazione di Sprint e meeting;
-- Tutti i componenti sono stati assegnati al ruolo di **team di sviluppo**.
-  Scrum prevede che i ruoli di PO e SM non debbano sovrapporsi con il team di
-  sviluppo; è stata però di fatto una scelta obbligata, visto le dimensioni
-  ridotte del team.
+  ruolo è quello di facilitare il lavoro di Project Owner e team, innalzandosi a
+  garante dei principi Scrum, e del delineare l'organizzazione di Sprint e
+  meeting;
+
+- A Tutti i componenti è stato assegnato il ruolo di **team di sviluppo**. Scrum
+  prevede che i ruoli di Project Owner e Scrum Master non debbano sovrapporsi
+  con il team di sviluppo; è stata però di fatto una scelta obbligata, visto le
+  dimensioni ridotte del team.
 
 Il lavoro è stato suddiviso in **Sprint settimanali**, ad eccezione delle
-primissime iterazioni che hanno richiesto del tempo aggiuntivo. La metodologia
-ha portato il team a lavorare in maniera del tutto coordinata; questo ha portato
-a un particolare giovamento sia per quanto riguarda l'affiatamento tra i
-colleghi, sia per quanto concerne il corretto sviluppo del progetto.
+primissime iterazioni che hanno richiesto del tempo aggiuntivo.
 
 ## Strumenti a supporto di Scrum
 
@@ -50,31 +49,35 @@ meeting, accessibile a
 
 Per approfondire e delineare l'effettiva interazione e evoluzione del progetto,
 sono stati utilizzati estensivamente Issue e Pull Request di GitHub. Consultando
-Issue e PR chiuse all'interno delle singole repository, e possibile ricostruire
-interamente il processo di sviluppo. Un "indice" dei principali Issue e PR sono
-contenuti all'interno del sopracitato documento di Scrum Overview (@sec:sod).
+le stesse, è possibile ricostruire interamente il processo di sviluppo. Un
+"indice" dal quale recuperare i principali Issue e PR è contenuto all'interno
+del sopracitato documento di Scrum Overview (@sec:sod).
 
 ### Discord
 
 Si è utilizzato il software **Discord** per effettuare i meeting settimanali e
 quotidiani. Si è preferito questo strumento, rispetto ad altri simili quali
-Slack, Microsot Teams, Google Meet ecc. sia per la buona qualità di
-videochiamata che per la possibilità di implementare hook integrati con GitHub,
-tali per cui ogni modifica alle repository di progetto viene notificata a tutti
-i componenti del gruppo, tramite un apposito canale.
+Slack, Microsoft Teams, Google Meet o altri, per vari motivi:
+
+- per la buona qualità di videochiamata;
+- per la possibilità di lavorare in stanze differenti in contemporanea, e
+  passare facilmenta da una stanza all'altra;
+- per la possibilità di implementare hook integrati con GitHub, tali per cui
+  ogni modifica alle repository di progetto viene notificata a tutti i
+  componenti del gruppo, tramite un apposito canale.
 
 ## Meeting e interazioni pianificate {#sec:meet}
 
 ### Meeting settimanali
 
-Ad ogni fine settimana (di sabato, tipicamente) è stato portato avanti il
-**meeting settimanale**, durante il quale si sono effettuate le operazioni di
-Sprint Review, Retrospective e Planning. Nella pratica, tali meeting hanno
-seguito la seguente scaletta:
+Ad ogni fine settimana è stato portato avanti il **meeting settimanale**,
+durante il quale si sono effettuate le operazioni di Sprint Review,
+Retrospective e Planning. Nella pratica, tali meeting hanno seguito la seguente
+scaletta:
 
-1. **Brainstorming generale**: ogni componente ha aggiornato i colleghi riguardo
-   ciò che è stato fatto durante lo Sprint precedente. Questo ha portato spesso
-   a importanti discussioni su tematiche emerse dal lavoro di ogni membro del
+1. **Retrospettiva**: ogni componente ha aggiornato i colleghi riguardo ciò che
+   è stato fatto durante lo Sprint precedente. Questo ha portato spesso a
+   importanti discussioni su tematiche emerse dal lavoro di ogni membro del
    team.
 
 2. **Sincronizzazione del lavoro effettuato**: gran parte del lavoro è stato
@@ -97,12 +100,11 @@ seguito la seguente scaletta:
 
 ### Meeting di aggiornamento periodici
 
-Inoltre, ogni due o tre giorni è stato effettuato un **meeting di
-aggiornamento** tra tutti i componenti del team. Per ragioni pratiche, non è
-stato possibile eseguire Daily Scrum giornalieri, sostituiti però da questi
-meeting a cadenza più flessibile. Al pari del Daily Scrum, durante questi
-meeting ci si è aggiornati riguardo i progressi attuati nei singoli team
-interni.
+Ogni due o tre giorni è stato effettuato un **meeting di aggiornamento** tra
+tutti i componenti del team. Per ragioni pratiche, non è stato possibile
+eseguire Daily Scrum giornalieri, sostituiti però da questi meeting a cadenza
+più flessibile. Al pari del Daily Scrum, durante questi meeting ci si è
+aggiornati riguardo i progressi attuati nei singoli team interni.
 
 Sulla base di questi meeting, si sono anche prese eventuali misure di revisione
 in itinere dei task: è ad esempio successo che in alcuni casi un sotto-team
