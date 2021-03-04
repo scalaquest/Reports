@@ -187,3 +187,25 @@ Useful links:
 - [(Pull request) Completed tests](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/103)
 - [(Issue) Dictionary and Prolog Parser refactoring](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/97)
 - [(Issue) PDF for appendix documents, yaml index](https://github.com/scalaquest/Reports/issues/12)
+
+# Sprint 9 (21st February - 27th February)
+
+In Sprint 9 we focused on reports, in particular into the PPS one. The plan was
+to join forces reorganizing pre-existent documentation produced throughout the
+duration of the project into a single report, and finish it. The initial plan
+was to work in sub-teams: from Monday to Wednesday the Team 1 should have worked
+on chapters 1, 2, 3, meanwhile @scalaquest/team-2 on 4,5,7. Then, in the second
+part of the week we should have switched roles, in order to complete, review and
+integrate the different parts. Due to various problems related to lessons and
+personal problems of the members, the second phase was prolonged, and continued
+until the next Sprint with both teams focusing on the last chapters. In
+addition, a major feature and some minor task has been completed, such as the
+enabling of continuous delivery on Maven Central, enabling of a development
+prerelease delivery system, and some minor adjustments.
+
+Useful links:
+
+- [(Issue) Focus on PPS report](https://github.com/scalaquest/Reports/issues/18)
+- [(Pull request) Add how-to-use guide to the Readme](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/112)
+- [(Issue) Auto generate prerelease on each dev push](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/110)
+- [(Pull request) Release to Maven Central](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/113)
