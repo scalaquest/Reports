@@ -337,7 +337,7 @@ siano state definite istanze per le seguenti type class:
 
 #### Dictionary
 
-Contiene i costrutti, realizzati tramite algebraic-data types, che consentono la
+Contiene i costrutti, realizzati tramite algebraic data types, che consentono la
 dichiarazione di verbi, utilizzati in fase di scrittura di una storia da parte
 dello storyteller. A partire da un verbo deve essere possibile generare le
 seguenti informazioni:
@@ -357,14 +357,61 @@ programmi vengono concatenati tra di loro e alla grammatica di base.
 
 ##### Scalog
 
-Per quanto concerne il package `scalog`, tra le parti che occorre sottolineare
-vi è la creazione di uvarie strutture molto interessanti per la modellazione del
-codice Prolog. É stata creata una struttura gerarchica modulare basata su
-Algebraic Data Type che ha permesso di avere maggiore controllo proprio a
-livello di struttura, evitando di lavorare direttamente con le stringhe.
-Inoltre, è stato implementato in maniera massiva un DSL in grado di scrivere
-codice Scala in una sintassi molto simile a quella di Prolog.
+Questo package contiene le strutture necessarie per la modellazione di
+espressioni Prolog. La realizzazione della gerarchia è avvenuta tramite
+algebraic data types e ha origine nel tipo `CodeGen`, una struttura in grado di
+generare un'espressione Prolog sotto forma di stringa, che in seguito si
+suddivide in `Clause` e `Term`, che rappresentano rispettivamente una clausola e
+un termine (@fig:scalog_hierarchy).
 
+I tipi di clausola che sono stati modellati sono: 
+
+- `Fact`, che rappresenta un semplice fatto senza corpo;
+- `Rule`, che rappresenta una clausola di Horn con testa e corpo;
+- `DCGRule`, che rappresenta una clausola espressa in forma DCG.
+
+I tipi di termine che sono stati modellati sono:
+
+- `Atom`, che rappresenta un atomo;
+- `Number`, che rappresenta un numero (è stato modellato il solo uso di numeri
+  interi);
+- `Variable`, che rappresenta una variabile;
+- `Compound`, che rappresenta un termine composto da funtore e argomenti;
+- `ListP`, che rappresenta una lista.
+
+Inoltre è stato implementato un piccolo DSL, che consente la creazione di
+clausole e termini tramite una sintassi molto simile a quella di Prolog
+(esempio in @lst:scalog_dsl).
+
+```{#lst:scalog_dsl .scala caption="Esempio di utilizzo del DSL per la creazione di una regola DCG."}
+import io.github.scalaquest.core.parsing.scalog.dsl._
+import io.github.scalaquest.core.parsing.scalog._
+val hello = CompoundBuilder("hello").constructor
+val X = Variable("X")
+(hello(X) --> ListP("hello", X)).generate
+// val res0: String = "hello(X) --> [hello,X]."
+```
+
+L'uso di algebraic data types rende molto semplice il pattern matching, rendendo
+l'uso di queste strutture molto comodo come formato di scambio dati tra diversi
+componenti, per esempio tra `PrologParser` e `Engine`. A tal fine sono stati
+introdotti ulteriori metodi per rendere il pattern matching ancora più
+espressivo (esempio in @lst:scalog_matching).
+
+```{#lst:scalog_matching .scala caption="Esempio di utilizzo del DSL per il pattern matching di una struttura."}
+val nickname = CompoundBuilder("nickname").extractor.toStrings
+val record = Compound("nickname", "robert", List("bob"))
+record.generate
+// val res0: String = "nickname(robert, bob)"
+
+record match {
+  case nickname(_) => "wrong usage of nickname/2"
+  case nickname(full, nick) => s"${nick} stands for ${full}"
+  case _ => "you didn't say hello to anyone"
+}
+// val res1: String = "bob stands for robert"
+```
+     
 ##### Modulo `cli`
 
 implemtanzione di zio con game loop
@@ -396,8 +443,8 @@ Il riconoscimento del linguaggio naturale in Prolog è basato su regole in forma
 _definite clause grammar_. Questa modalità di esprimere regole consente di
 definire facilmente un parser in Prolog.
 
-Tramite l'uso di una semplice grammatica DCG come quella in listato
-@lst:nlp_grammar è possibile riconoscere frasi in linguaggio naturale.
+Tramite l'uso di una semplice grammatica DCG come quella in @lst:nlp_grammar è
+possibile riconoscere frasi in linguaggio naturale.
 
 ```{#lst:nlp_grammar .txt caption="Una semplice grammatica per riconoscere frasi in lingua inglese. Fonte: https://en.wikipedia.org/wiki/Definite_clause_grammar"}
 sentence(s(NP,VP)) --> noun_phrase(NP), verb_phrase(VP).
