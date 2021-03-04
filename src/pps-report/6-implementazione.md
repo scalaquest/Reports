@@ -330,7 +330,7 @@ seguenti informazioni:
 - una tupla (Verb, Preposition) -> Action (o Verb -> Action), che collega l'uso
   del verbo al suo significato.
 
-![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](/home/filo/prova/verbs.png)
+![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](./images/placeholder.png)
 
 Contiene inoltre una funzione in grado di generare, a partire dal dizionario di
 una storia e dalla grammatica di base, una teoria Prolog utilizzata per
