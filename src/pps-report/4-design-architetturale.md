@@ -47,13 +47,17 @@ Sono stati individuati:
 
 - Il modulo **core**, che implementa l'engine di gioco, la pipeline, e il
   necessario per rendere possibile modellare nuove storie;
+
 - Il modulo **cli**, che fornisce un'implementazione in grado di eseguire
   sessioni di gioco basate su Command Line Interface. Il modulo include `core`
   come dipendenza, rappresentando da solo la libreria necessaria per generare
   storie CLI;
+
 - I moduli **examples**, che rappresentano dei giochi di esempio, andando a
   mostrare le modalità consigliate per l'utilizzo di `cli` nell'implementazione
   di storie.
+
+![Diagramma dei componenti che rappresenta ad alto livello le dipendenze tra i moduli dell'applicazione.](./images/main-component.png)
 
 In seguito si vanno ad approfondire le caratteristiche dei singoli componenti.
 
