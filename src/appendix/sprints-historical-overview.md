@@ -139,7 +139,7 @@ Useful links:
 - [(Issue) Dependabot](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/64)
 - [(Pull Request) Release with GitFlow and semantic versioning](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/63)
 
-## Sprint 7 (7th February - 14th February)
+## Sprint 7 (7th February - 13th February)
 
 In this Sprint we continued working divided in groups. **Team 1** we
 re-organized the commons package, by splitting common reactions from the
@@ -163,3 +163,49 @@ Useful links:
 - [(Pull request) Minor workflow optimizations, readme badges](https://github.com/scalaquest/reports/pull/83)
 - [(Pull request) Sonarqube Scoverage integration](https://github.com/scalaquest/reports/pull/77)
 - [(Pull request) Improve CLI prompt](https://github.com/scalaquest/reports/pull/80)
+
+## Sprint 8 (14th February - 20th February)
+
+The sprint 8 started with an important refactor of the model, carried out
+jointly from all members of the team. This was an important modification,
+regarding the split between `State` and `Message`s, that are separate entities
+actually, involved at different abstraction levels. In this joint group
+configuration, we also finished the second example, called PokeQuest. In the
+second part of the week, resuming the sub-team organization, we finished some
+minor tasks like a re-organization of the Reports' CI and the common package
+based on the new State-Message configuration (in **Team 1**), and a
+refactoring/scaladoc addition for parser`and`dictionary` packages (in **Team
+2**).
+
+Useful links:
+
+- [(Pull request) Remove messages from the state](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/102)
+- [(Pull request) PokeQuest example](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/105)
+- [(Issue) Compilation warnings](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/95)
+- [(Pull request) Add ScalaDoc, CommonReactions cleaning](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/108)
+- [(Pull request) Various commons additions](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/97)
+- [(Pull request) Completed tests](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/103)
+- [(Issue) Dictionary and Prolog Parser refactoring](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/97)
+- [(Issue) PDF for appendix documents, yaml index](https://github.com/scalaquest/Reports/issues/12)
+
+# Sprint 9 (21st February - 27th February)
+
+In Sprint 9 we focused on reports, in particular into the PPS one. The plan was
+to join forces reorganizing pre-existent documentation produced throughout the
+duration of the project into a single report, and finish it. The initial plan
+was to work in sub-teams: from Monday to Wednesday the Team 1 should have worked
+on chapters 1, 2, 3, meanwhile @scalaquest/team-2 on 4,5,7. Then, in the second
+part of the week we should have switched roles, in order to complete, review and
+integrate the different parts. Due to various problems related to lessons and
+personal problems of the members, the second phase was prolonged, and continued
+until the next Sprint with both teams focusing on the last chapters. In
+addition, a major feature and some minor task has been completed, such as the
+enabling of continuous delivery on Maven Central, enabling of a development
+prerelease delivery system, and some minor adjustments.
+
+Useful links:
+
+- [(Issue) Focus on PPS report](https://github.com/scalaquest/Reports/issues/18)
+- [(Pull request) Add how-to-use guide to the Readme](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/112)
+- [(Issue) Auto generate prerelease on each dev push](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/110)
+- [(Pull request) Release to Maven Central](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/113)
