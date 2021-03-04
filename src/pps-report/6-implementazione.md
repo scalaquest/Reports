@@ -105,6 +105,9 @@ implementative:
 
 ##### Commons
 
+Commons contiene una serie di componenti pre-implementati e utility, pensati per
+facilitare allo storyteller lo sviluppo della propria storia.
+
 Tale package è formato da alcuni sotto-package i quali si basano su un pattern
 comune, ovvero molto spesso le classi sono interne a un trait il quale estende
 `BehaviorBasedModel`. Questa scelta implementativa deriva dal fatto che le
@@ -204,7 +207,7 @@ I package da `commons` contenuti sono i seguenti:
 del package stesso. Il trait deve essere adoperato attraverso il meccanismo dei
 mixin con la classe `BehaviorBasedModel` dalla quale estrae i tipi.
 
-![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/trait-diagram.png)
+![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/commons-traits.png)
 
 ##### Resolver, Interpreter, Reducer
 
@@ -212,56 +215,55 @@ mixin con la classe `BehaviorBasedModel` dalla quale estrae i tipi.
   pattern "template method", fornisce una gestione completa delle possibili
   casistiche ottenibili dal risultato della parte di parsing `ParsingResult`: l'
   abstract syntax tree contenuto nel risultato viene distinto mediante pattern
-  matching sulle classi `AbstractSyntaxTree.Intransitive`, `AbstractSyntaxTree.Transitive`
-  e `AbstractSyntaxTree.Ditransitive`. In ultimo caso, se la classe non fosse di una delle ammesse,
-  verrebbe restituita una stringa, contenente potenzialmente il messaggio di
-  errore, ed essa sarà propagata come risultato alternativo del ciclo di
-  pipeline. Nei casi ammessi, vengono estratti gli attributi presenti e si
-  verifica se essi sono presenti tra le `actions` e gli `items` ammessi,
-  tornando in caso affermativo uno `Statement` di tipo corrispondente a quello
-  matchato, che sarà wrappato da un oggetto `ResolverResult`. Se vi fossero
-  mancate corrispondenze con `actions` o `items`, al pari della casistica di errore precedente, verrebbe
-  restituita una stringa di errore.
-  La classe `Resolver` fornisce una possibile
-  implementazione di `AbstractSyntaxTreeResolver`, definendo nel metodo
-  `actions` il controllo se la action passata sia tra quelle definite nello stato, e definendo
-  nel metodo `items` la ricerca di essi nello scope di gioco (insieme degli
-  oggetti presenti nella bag o nella location del player) basandosi su un
-  **criterio di confronto** tra `ItemDescription` dell' oggetto con quella degli
-  altri nello scope, secondo il quale per poter avere un match, il nome deve
-  essere il medesimo ed eventuali aggettivi dell' oggetto ricercato devono
-  essere un sottoinsieme dell' altro oggetto preso in considerazione. Per
-  esemplificare, se nello scope fosse presente una sola mela (senza aggettivi) e
-  si cercasse una mela verde, non si otterrebbe alcuna corrispondenza. Se fosse
-  presente una mela verde e si cercasse una mela rossa, non si avrebbe alcuna
-  corrispondenza, mentre se fossero presenti entrambe le mele con aggettivi
-  e se ne cercasse una senza alcuno vi sarebbero
-  corrispondenze multiple quindi si renderebbe necessaria una disambiguazione.
+  matching sulle classi `AbstractSyntaxTree.Intransitive`,
+  `AbstractSyntaxTree.Transitive` e `AbstractSyntaxTree.Ditransitive`. In ultimo
+  caso, se la classe non fosse di una delle ammesse, verrebbe restituita una
+  stringa, contenente potenzialmente il messaggio di errore, ed essa sarà
+  propagata come risultato alternativo del ciclo di pipeline. Nei casi ammessi,
+  vengono estratti gli attributi presenti e si verifica se essi sono presenti
+  tra le `actions` e gli `items` ammessi, tornando in caso affermativo uno
+  `Statement` di tipo corrispondente a quello matchato, che sarà wrappato da un
+  oggetto `ResolverResult`. Se vi fossero mancate corrispondenze con `actions` o
+  `items`, al pari della casistica di errore precedente, verrebbe restituita una
+  stringa di errore. La classe `Resolver` fornisce una possibile implementazione
+  di `AbstractSyntaxTreeResolver`, definendo nel metodo `actions` il controllo
+  se la action passata sia tra quelle definite nello stato, e definendo nel
+  metodo `items` la ricerca di essi nello scope di gioco (insieme degli oggetti
+  presenti nella bag o nella location del player) basandosi su un **criterio di
+  confronto** tra `ItemDescription` dell' oggetto con quella degli altri nello
+  scope, secondo il quale per poter avere un match, il nome deve essere il
+  medesimo ed eventuali aggettivi dell' oggetto ricercato devono essere un
+  sottoinsieme dell' altro oggetto preso in considerazione. Per esemplificare,
+  se nello scope fosse presente una sola mela (senza aggettivi) e si cercasse
+  una mela verde, non si otterrebbe alcuna corrispondenza. Se fosse presente una
+  mela verde e si cercasse una mela rossa, non si avrebbe alcuna corrispondenza,
+  mentre se fossero presenti entrambe le mele con aggettivi e se ne cercasse una
+  senza alcuno vi sarebbero corrispondenze multiple quindi si renderebbe
+  necessaria una disambiguazione.
 
 - **Interpreter**: Utilizzando `ResolverResult` ottenuto da `Resolver`, la
-  classe `Interpreter` si occupa di eseguire un pattern matching sullo `Statement` contenuto in
-  esso,  distinguendolo in base alla classe `Intransitive`, `Transitive`,
-  `Ditransitive`. In assenza di match, viene restituito, come nel caso riportato
-  in `Resolver`, una stringa di errore. Nel caso `Intransitive` il metodo
-  `::use` è invocato su un oggetto di tipo `Ground`, che rappresenta un sorta di
-  oggetto "virtuale" ed è contenuto all' interno dello stato. Nei casi
-  `Transitive` e `Ditransitive` è stata utilizzata una classe di utility
-  chiamata `RefToItem`, che consiste in un extractor da utilizzare per ottenere
-  l' `Item` partendo da `ItemRef`, reperendolo da un dato dizionario degli
-  elementi, in questo caso quello contenuto all' interno dello stato.
-  In questi ultimi 3 casi, viene restituita una `Reaction` wrappata all' interno
-  di un oggetto `InterpreterResult`.
-  
+  classe `Interpreter` si occupa di eseguire un pattern matching sullo
+  `Statement` contenuto in esso, distinguendolo in base alla classe
+  `Intransitive`, `Transitive`, `Ditransitive`. In assenza di match, viene
+  restituito, come nel caso riportato in `Resolver`, una stringa di errore. Nel
+  caso `Intransitive` il metodo `::use` è invocato su un oggetto di tipo
+  `Ground`, che rappresenta un sorta di oggetto "virtuale" ed è contenuto all'
+  interno dello stato. Nei casi `Transitive` e `Ditransitive` è stata utilizzata
+  una classe di utility chiamata `RefToItem`, che consiste in un extractor da
+  utilizzare per ottenere l' `Item` partendo da `ItemRef`, reperendolo da un
+  dato dizionario degli elementi, in questo caso quello contenuto all' interno
+  dello stato. In questi ultimi 3 casi, viene restituita una `Reaction` wrappata
+  all' interno di un oggetto `InterpreterResult`.
 
- **Reducer**: Utilizzando `InterpreterResult` ottenuto da `Interpreter`,
-  prendendo la `Reaction` contenuta, essa viene applicata sullo stato.
-  Il risultato, nella implementazione realizzata, consiste in una tupla
-  contenente 2 elementi
-  - stato aggiornato a seguito dell' applicazione della `Reaction`
-  - messaggi per lo user, generati a seguito dell' applicazione della `Reaction`
- 
-  Questa tupla è wrappata all' interno della classe `ReducerResult`.
-  
+**Reducer**: Utilizzando `InterpreterResult` ottenuto da `Interpreter`,
+prendendo la `Reaction` contenuta, essa viene applicata sullo stato. Il
+risultato, nella implementazione realizzata, consiste in una tupla contenente 2
+elementi
+
+- stato aggiornato a seguito dell' applicazione della `Reaction`
+- messaggi per lo user, generati a seguito dell' applicazione della `Reaction`
+
+Questa tupla è wrappata all' interno della classe `ReducerResult`.
 
 #### Responsabilità personali
 
@@ -364,7 +366,7 @@ generare un'espressione Prolog sotto forma di stringa, che in seguito si
 suddivide in `Clause` e `Term`, che rappresentano rispettivamente una clausola e
 un termine (@fig:scalog_hierarchy).
 
-I tipi di clausola che sono stati modellati sono: 
+I tipi di clausola che sono stati modellati sono:
 
 - `Fact`, che rappresenta un semplice fatto senza corpo;
 - `Rule`, che rappresenta una clausola di Horn con testa e corpo;
@@ -380,8 +382,8 @@ I tipi di termine che sono stati modellati sono:
 - `ListP`, che rappresenta una lista.
 
 Inoltre è stato implementato un piccolo DSL, che consente la creazione di
-clausole e termini tramite una sintassi molto simile a quella di Prolog
-(esempio in @lst:scalog_dsl).
+clausole e termini tramite una sintassi molto simile a quella di Prolog (esempio
+in @lst:scalog_dsl).
 
 ```{#lst:scalog_dsl .scala caption="Esempio di utilizzo del DSL per la creazione di una regola DCG."}
 import io.github.scalaquest.core.parsing.scalog.dsl._
@@ -411,7 +413,7 @@ record match {
 }
 // val res1: String = "bob stands for robert"
 ```
-     
+
 ##### Modulo `cli`
 
 implemtanzione di zio con game loop
