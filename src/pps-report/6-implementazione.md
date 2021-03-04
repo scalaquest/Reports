@@ -323,17 +323,17 @@ di cui personalmente un membro del team è responsabile.
 
 #### Generators
 
-Le type class `Generator` e `GeneratorK` che si trovano all'interno di questo modulo
-sono state realizzate utilizzando le type class offerte da Cats.
+Le type class `Generator` e `GeneratorK` che si trovano all'interno di questo
+modulo sono state realizzate utilizzando le type class offerte da Cats.
 L'implementazione di `Generator[A, B]` risulta essere un banale wrapper di una
-funzione `A => B,` mentre l'implementazione di `GeneratorK[F[_], A, B]` richiede che
-siano state definite istanze per le seguenti type class:
+funzione `A => B,` mentre l'implementazione di `GeneratorK[F[_], A, B]` richiede
+che siano state definite istanze per le seguenti type class:
 
-- `Generator[A, B]:` essere in grado di generare da ogni valore a: A un output b:
-  B;
-- `Functor[F]` e `Foldable[F]:` in quanto sono necessarie le funzioni map e fold,
-  per trasformare all'interno ed infine estrarre un valore b: B a partire dal
-  contesto `F[_];`
+- `Generator[A, B]:` essere in grado di generare da ogni valore a: A un output
+  b: B;
+- `Functor[F]` e `Foldable[F]:` in quanto sono necessarie le funzioni map e
+  fold, per trasformare all'interno ed infine estrarre un valore b: B a partire
+  dal contesto `F[_];`
 - `Monoid[B]:` in quanto è necessaria un'operazione binaria associativa e un
   valore empty per effettuare l'operazione di fold.
 
@@ -345,17 +345,18 @@ dello storyteller. A partire da un verbo deve essere possibile generare le
 seguenti informazioni:
 
 - una regola Prolog, che descrive la grammatica del verbo;
-- una tupla `(Verb, Preposition) -> Action` (o `Verb -> Action`), che collega l'uso
-  del verbo al suo significato.
+- una tupla `(Verb, Preposition) -> Action` (o `Verb -> Action`), che collega
+  l'uso del verbo al suo significato.
 
 ![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](./images/placeholder.png)
 
 Contiene inoltre una funzione in grado di generare, a partire dal dizionario di
 una storia e dalla grammatica di base, una teoria Prolog utilizzata per
-inizializzare un `Engine`. Per fare ciò utilizza due istanze di `GeneratorK[List,
-Verb, Program]` e `GeneratorK[List, Item, Program],` in grado di generare per ogni
-classe di elemento del dizionario un programma Prolog valido. Infine questi
-programmi vengono concatenati tra di loro e alla grammatica di base.
+inizializzare un `Engine`. Per fare ciò utilizza due istanze di
+`GeneratorK[List, Verb, Program]` e `GeneratorK[List, Item, Program],` in grado
+di generare per ogni classe di elemento del dizionario un programma Prolog
+valido. Infine questi programmi vengono concatenati tra di loro e alla
+grammatica di base.
 
 ##### Scalog
 
@@ -368,7 +369,7 @@ un termine (@fig:scalog_hierarchy).
 
 ![Diagramma delle classi che rappresenta la gerarchia realizzata per clausole e termini.](./images/scalog_hierarchy.png){#fig:scalog_hierarchy}
 
-I tipi di clausola che sono stati modellati sono: 
+I tipi di clausola che sono stati modellati sono:
 
 - `Fact`, che rappresenta un semplice fatto senza corpo;
 - `Rule`, che rappresenta una clausola di Horn con testa e corpo;
