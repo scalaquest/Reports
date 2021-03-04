@@ -2,7 +2,7 @@
 
 <!-- Il passaggio da gitHubFlow a GitFlow, i workflow di release della
 repo principale, i vincoli e l'automazione per quanto riguarda la
-generazione dei tag, la pr di ritorno; accenno alla policy di rebase, 
+generazione dei tag, la pr di ritorno; accenno alla policy di rebase,
 squash and merge per i feature branch, merge
 commit con tag per le release stabili, Maven Central e il ticket presso
 di loro, il fatto che abbiamo fatto tutto sotto l'organizzazione scalaquest
