@@ -7,7 +7,7 @@ permettere l'implementazione di giochi del genere
 giocatore può utilizzare comandi di testo per influenzare l'ambiente e
 proseguire nel gioco.
 
-Esso dovrà in primis fornire una libreria, tale da permettere la **creazione di
+Il progetto dovrà in primis fornire una libreria, tale da permettere la **creazione di
 storie giocabili** da utenti terzi, tramite un API facilmente accessibile.
 
 Dovrà inoltre fornire una **piattaforma per l'esecuzione delle storie**, basata

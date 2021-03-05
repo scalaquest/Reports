@@ -2,6 +2,9 @@
 
 ## Il motore semantico
 
+Con i termini _motore semantico_ è intesa la fase di Parsing nel ciclo di pipeline.
+Di seguito sono descritti i principali componenti.
+
 ### Manipolazione di espressioni Prolog
 
 Un problema evidente che è emerso durante la fase di prototipazione del progetto
@@ -14,7 +17,7 @@ progetto, chiamata **Scalog**. Questa consente agevolmente di creare espressioni
 Prolog indipendenti dalla specifica implementazione del linguaggio, utilizzando
 un DSL intuitivo, i cui simboli sono ispirati direttamente a quelli del
 linguaggio Prolog, cercando di imitare il più possibile la sintassi originale.
-Inoltre la libreria consente di effettuare pattern matching contro espressioni
+Inoltre, la libreria consente di effettuare pattern matching contro espressioni
 esistenti, in modo da agevolare il processo dell'interazione con i risultati del
 `Parser`.
 
@@ -31,7 +34,7 @@ interfacce volte a rappresentare componenti generici. In particolare:
 - `Theory` rappresenta una generica teoria Prolog;
 - `Engine` rappresenta un generico motore Prolog, il quale, inizializzato con
   una teoria e un insieme di librerie, è in grado di rispondere a
-  interrogazioni;
+  interrogazioni.
 
 Per comunicare con `Engine` si è scelto di utilizzare **Scalog**, in quanto
 agnostico a specifiche implementazioni e facilmente mappabile a costrutti di
@@ -39,32 +42,32 @@ altre librerie Prolog.
 
 A questo punto, ancor prima di realizzare un'implementazione dello specifico
 `Engine`, è già stato possibile realizzare il `PrologParser`: un parser che
-utilizza qualsiasi un generico motore Prolog per effettuare l'analisi sintattica
+utilizza un generico motore Prolog per effettuare l'analisi sintattica
 di una sequenza di token.
 
 ## Application structure
 
 Giunti alla definizione degli esempi, si è rilevata la necessità di un
-refactoring della struttura del software. Ogni volta che si andava ad
+refactoring della struttura del software. Ogni volta che si è andati ad
 instanziare una nuova storia, infatti, era necessario scrivere diverso codice
 "boilerplate", comune a tutti gli esempi. Principalmente per quanto concerne la
-creazione della pipeline e del dizionario della storia, che in mancanza di
+creazione della pipeline e del dizionario della storia, in mancanza di
 particolari necessità, avvengono sempre allo stesso modo. Per questo motivo si è
-deciso di rifattorizzare quanto più possibile gli elementi comuni, inserendoli
+deciso di effettuare quanto più possibile il refactoring degli elementi comuni, inserendoli
 all'interno del package `application`, dentro al modulo `core`. Tale package
 fornisce un insieme di costrutti che consentono con poche istruzioni aggiuntive
 di creare una storia. All'interno di questo son confluite anche delle
 implementazioni di default, volte ad aumentare maggiormente l'efficienza nella
 scrittura della singola storia.
 
-Inoltre son stati aggiunti anche metodi di utility, particolarmente importanti
+Son stati aggiunti anche metodi di utility, particolarmente importanti
 per fornire delle funzionalità adatte ad ogni storia.
 
 In definitiva, tale processo di refactoring ha portato:
 
 - maggiore modularità tra i componenti;
 - eliminazione di codice ripetuto in tutti gli esempi;
-- minore possibilità di errore per lo story teller;
+- minore possibilità di errore per lo storyteller;
 - maggiore velocità nel definire nuove storie.
 
 ## Generator e GeneratorK

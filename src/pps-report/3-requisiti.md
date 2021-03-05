@@ -22,11 +22,11 @@ Per requisiti di business si intendono i requisiti che delineano la base del
 progetto:
 
 - Il progetto consiste in un framework utilizzabile da sviluppatori terzi
-  (_storyteller_, nel nostro glossario) di **creare e giochi di tipo Interactive
+  (_storyteller_, nel nostro glossario) per **creare giochi di tipo Interactive
   Fiction**;
 
-- L'utilizzatore del gioco (_user_, nel nostro glossario) esprime i comandi di
-  gioco attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
+- L'utilizzatore del gioco (_user_, nel nostro glossario) esprime i comandi
+  attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
   un'interpretazione lessicale e sintattica delle stesse;
 
 - Il gioco è strutturato in **iterazioni successive**: ogni comando inserito
@@ -76,14 +76,14 @@ possibilità:
 Per requisiti funzionali si intendono le funzionalità che caratterizzano il
 progetto:
 
-- Fornire un modello sul quale rendere possibile costruire storie di tipo
+- Fornire un modello sul quale rendere possibile la costruzione di storie di tipo
   Interactive Fiction;
 
 - Fornire una piattaforma sulla quale lanciare le storie, agente da linea di
   comando;
 
 - Fornire la possibilità di creare piattaforme anche differenti da quella
-  standard (ad es. da interfaccia web);
+  standard (ad esempio da interfaccia web);
 
 - Fornire un engine **Prolog** in grado d'interpretare semplici comandi in
   linguaggio naturale in lingua inglese, mappandoli in azioni applicabili sulla
@@ -135,6 +135,6 @@ d'implementazione considerate imprescindibili nella realizzazione del progetto.
 
 - Utilizzare **GitHub Actions** per CI e CD;
 
-- Utilizzare **ScalaTest**, **jUnit** e **WordSpec** come specifica di test;
+- Utilizzare **ScalaTest**, **ZIO Test** e **WordSpec** come specifica di test;
 
 - Utilizzare il linguaggio **Prolog** per implementare l'engine.

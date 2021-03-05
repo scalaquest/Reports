@@ -16,7 +16,7 @@ ognuno cosa fa, chi parla con chi e per dirsi cosa --
 i diagrammi aiutano, ma poi la prosa deve chiaramente indicare questi aspetti.
 -->
 
-Come specificato in precedenza, il gioco si struttura dal punto di vista dello
+Il gioco si struttura dal punto di vista dello
 user in diverse **iterazioni**, per ognuna delle quali viene intercettato
 l'input utente (in linguaggio naturale), e a seguito di varie elaborazioni viene
 restituita una risposta (in formato testuale, o in altri formati).
@@ -25,15 +25,15 @@ Risulta quindi naturale implementare ogni iterazione come una funzione, che dato
 un comando testuale e lo stato del gioco, restituisce lo stato modificato e
 l'output per l'utente. Faremo riferimento a questa funzione con il nome di
 **pipeline**, essendo di fatto strutturata come una vera e propria "catena di
-montaggio", come verrà in seguito osservato.
+montaggio", come verrà in seguito descritto.
 
 L'architettura di progetto si fonda tutto attorno a questa funzione. Sarà di
 fatto necessario un modulo incaricato di prendere un comando utente e
-restituirne l'output, e un modulo incaricato di iterare la stessa, tale da
+restituirne l'output, e un modulo incaricato d'iterare la stessa, tale da
 comporre una sessione di gioco completa.
 
 Parallelamente alla gestione della pipeline, dovrà essere resa disponibile
-un'API per lo storyteller, così da permettere lui di creare nuove storie basate
+un'API per lo storyteller, così da permettere a lui di creare nuove storie basate
 su questo modello.
 
 ## Architettura di massima
@@ -41,17 +41,16 @@ su questo modello.
 Si è organizzato quindi il sistema in più macro-componenti, corrispondente
 ognuno a un sotto-progetto Gradle separato.
 
-<!-- deployment diagram che mostr le relazioni tra i componenti -->
 
 Sono stati individuati:
 
-- Il modulo **core**, che implementa l'engine di gioco, la pipeline, e il
+- Il modulo **Core**, che implementa l'engine di gioco, la pipeline, e il
   necessario per rendere possibile modellare nuove storie;
 
-- Il modulo **cli**, che fornisce un'implementazione in grado di eseguire
+- Il modulo **CLI**, che fornisce un'implementazione in grado di eseguire
   sessioni di gioco basate su Command Line Interface. Il modulo include `core`
   come dipendenza, rappresentando da solo la libreria necessaria per generare
-  storie CLI;
+  storie interagibili a linea di comando;
 
 - I moduli **examples**, che rappresentano dei giochi di esempio, andando a
   mostrare le modalità consigliate per l'utilizzo di `cli` nell'implementazione
@@ -105,8 +104,6 @@ una storia;
   utilizzato dal giocatore all'interno di una storia. In particolare è composto
   da un insieme di oggetti e un insieme di verbi;
 
-<!-- app e dictonary andrebbero separati perchè Dictonary è imp!-->
-
 <!-- sarebbe meglio metterlo nella parte di implementazione!
 
 come già descritto nelle sezioni precedenti, all'interno di questo
@@ -145,7 +142,7 @@ come già descritto nelle sezioni precedenti, all'interno di questo
 
 - **Pipeline**: definisce l'elaborazione di una singola iterazione di gioco,
   dall'input di un comando testuale e dello stato del gioco, all'output dello
-  stato di gioco modificato e del contenuto visualizzato dall'utente.
+  stato stesso modificato e del contenuto visualizzato dall'utente.
   L'elaborazione si struttura in differenti fasi, a loro volta contenute in
   differenti package:
 
@@ -161,23 +158,23 @@ come già descritto nelle sezioni precedenti, all'interno di questo
      elemento un significato all'interno del sistema, producendo uno
      **Statement**, ossia un comando comprensibile dal modello;
 
-  4. **Interpreter**: dato il risultato del `Resolver`, si verifica sia
+  4. **Interpreter**: dato il risultato del `Resolver`, si verifica che sia
      possibile applicare lo `Statement` sullo stato corrente del gioco. Quando
      possibile, viene generata una **Reaction** ossia una funzione contenente le
-     eventuali modifiche da applicare sullo stesso.
+     eventuali modifiche da applicare sullo stesso;
 
   5. **Reducer**: data la `Reaction` ottenuta al termine del passo precedente,
      si provvede ad applicarla allo stato corrente del gioco, aggiornandolo e
-     generando eventuali messaggi utili per l'interazione con lo user;
+     generando eventuali messaggi utili per l'interazione con lo user.
 
 ![Diagramma delle attività che mostra il flusso di esecuzione delle pipeline, ad alto livello.](./images/activity-pipeline.png)
 
 ### CLI
 
 Il modulo **CLI** fornisce un'implementazione in grado di eseguire sessioni di
-gioco basate su Command Line Interface. Il modulo \ include `core` come
+gioco basate su Command Line Interface. Il modulo include `core` come
 dipendenza, rappresentando da solo la libreria necessaria per generare storie
-CLI.
+a linea di comando.
 
 L'implementazione fornita itera di fatto l'esecuzione della pipeline. È
 possibile individuare, per ogni iterazione, le seguenti fasi
@@ -193,7 +190,7 @@ possibile individuare, per ogni iterazione, le seguenti fasi
 ### Examples
 
 Sono state incluse all'interno del progetto diverse storie di esempio, generate
-tramite l'utilizzo del modulo `cli`:
+tramite l'utilizzo del modulo `CLI`:
 
 1. **Escape Room**: lo user si trova all'interno di uno scantinato con vari
    oggetti coi quali è concessa l'interazione. La storia si focalizza
@@ -202,7 +199,11 @@ tramite l'utilizzo del modulo `cli`:
 2. **PokeQuest**: lo user viene catapultato nel mondo Pokemon e più precisamente
    nella cittadina di Aranciopoli (Vermilion City). La storia mostra come sia
    possibile generare dei componenti completamente custom, limitando l'utilizzo
-   di builder.
+   di builder;
+   
+3. **WizardQuest**: lo user si ritrova nel ruoli di Harry Potter all'interno
+    della Camera dei Segreti. La storia mostra come sia agevole spostare
+   oggetti tra le varie stanze.
 
 ## Pattern architetturali
 
@@ -222,16 +223,12 @@ creazione della pipeline.
 
 ## Scelte tecnologiche
 
-<!-- scelte tecnologiche cruciali ai fini architetturali -- corredato da pochi ma
-efficaci diagrammi -->
 
 Al fine di rispettare i requisiti proposti, sono state effettuate delle scelte
 su alcune tecnologie che hanno influenzato poi anche in maniera importante
 alcune scelte architetturali.
 
 ### tuProlog
-
-<!-- TuProlog (vantaggi > Scala) (svantaggi (?) > prestazioni)-->
 
 **TuProlog** rappresenta la libreria scelta per quanto concerne la creazione del
 motore Prolog di Natural Language Processing. Si è scelta questa libreria per
@@ -256,9 +253,7 @@ intensiva, ma il suo utilizzo si limita alla parte della pipeline che esegue
 l'analisi sintattica della frase inserita dal player. Per questo motivo, non
 sussistono problemi di prestazione legati alla libreria utilizzata.
 
-## ZIO
-
-<!-- Perche zio e non cats-effect -->
+### ZIO
 
 Per quanto riguarda la gestione di side effect e azioni asincrone si è scelto di
 utilizzare **ZIO**, una libreria che fornisce costrutti per la manipolazione di
@@ -275,7 +270,7 @@ Il nucleo di ZIO è definito dal tipo `ZIO[R, E, A]`, nel quale:
 Il tutto può essero vista come una versione con side-effect di una funzione
 `R => Either[E, A]`.
 
-## Lens
+### Lens
 
 Al fine di leggere e trasformare oggetti immutabili si è scelto di utilizzare la
 libreria **Monocle**, in particolare il costrutto `Lens`, le quali mettono a
@@ -287,9 +282,7 @@ class_, rendendo questa fase molto semplice.
 L'uso di questi costrutti è risultato molto utile soprattutto nelle modifiche a
 strutture quali `State` e `Room`.
 
-<!-- todo riguardare il capitolo, vantaggi/svantaggi -->
-
-## Cats
+### Cats
 
 Durante la fase di analisi è emersa la necessità di accordarsi su quale
 implementazione di type classes utilizzare nel caso in cui si volessero scrivere
@@ -305,7 +298,7 @@ d'uso delineati durante la fase di analisi le due sarebbero equivalenti.
 
 Per curiosità e interesse è stata approfondita la conoscenza di questa libreria,
 portando a notevoli miglioramenti nella qualità del codice. Nelle fasi avanzate
-dello sviluppo sono state rifattorizzate attraverso le astrazioni fornite da
+dello sviluppo sono state riscritte attraverso le astrazioni fornite da
 **Cats** (quali `Foldable`, `Monoid`, ecc.) sezioni del software che
 inizialmente non erano state progettate con i concetti di componibilità e
-riusabilità in mente.
+riusabilità.

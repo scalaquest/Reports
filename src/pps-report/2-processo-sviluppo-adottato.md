@@ -14,7 +14,7 @@ distribuiti tra i componenti come di seguito specificato:
 
 - A Riccardo Maldini è stato assegnato il ruolo di **Scrum Master**. Il suo
   ruolo è quello di facilitare il lavoro di Project Owner e team, innalzandosi a
-  garante dei principi Scrum, e del delineare l'organizzazione di Sprint e
+  garante dei principi Scrum, e nel delineare l'organizzazione di Sprint e
   meeting;
 
 - A Tutti i componenti è stato assegnato il ruolo di **team di sviluppo**. Scrum
@@ -32,7 +32,7 @@ primissime iterazioni che hanno richiesto del tempo aggiuntivo.
 Si è tenuto traccia del Backlog di progetto grazie allo strumento **GitHub
 Projects**. Questo rappresenta di fatto una versione di Trello interna a GitHub,
 che ne eredita la maggior parte delle caratteristiche (ad esempio,
-l'organizzazione dei task in liste), aggiungendo a esso però importanti
+l'organizzazione dei task in liste), aggiungendo ad esso però importanti
 integrazioni con GitHub. È possibile ad esempio associare Issue e Pull Request
 direttamente ai task, automatizzarne e sincronizzarne apertura e chiusura con
 gli stessi. È possibile accedere alla backlog di progetto, essendo pubblica, a
@@ -59,9 +59,9 @@ Si è utilizzato il software **Discord** per effettuare i meeting settimanali e
 quotidiani. Si è preferito questo strumento, rispetto ad altri simili quali
 Slack, Microsoft Teams, Google Meet o altri, per vari motivi:
 
-- per la buona qualità di videochiamata;
+- per la buona qualità di video-chiamata;
 - per la possibilità di lavorare in stanze differenti in contemporanea, e
-  passare facilmenta da una stanza all'altra;
+  passare agevolmente da una stanza all'altra;
 - per la possibilità di implementare hook integrati con GitHub, tali per cui
   ogni modifica alle repository di progetto viene notificata a tutti i
   componenti del gruppo, tramite un apposito canale.
@@ -117,7 +117,7 @@ successivo. In questi casi, si è aggiornato di conseguenza il Backlog.
 Il lavoro è stato sviluppato principalmente in team interni composti da due o
 tre componenti, seguendo la metodologia **pair programming**. Questa modalità,
 già utilizzata in altri progetti, pur portando iniziali rallentamenti dovuti a
-una minore parallelizzazione,porta ad un innalzamento della qualità del
+una minore parallelizzazione, porta ad un innalzamento della qualità del
 prodotto, e ad un minore debito tecnico, in quanto le scelte vengono discusse e
 revisionate in tempo reale dagli stessi membri del team. Essa porta inoltre i
 diversi componenti a comprendere meglio la parte sviluppata, e responsabilizza i
@@ -132,7 +132,7 @@ In particolare:
 - Si è individuato un **sotto-team 2**, composto dai componenti Filippo Nardini
   e Francesco Gorini. Il team ha approfondito i concetti legati al parsing del
   testo, e all'interpretazione dello stesso tramite l'engine Prolog;
-- Task di importanza chiave sono stati portati avanti **in comune tra tutti i
+- Task d'importanza chiave sono stati portati avanti **in comune tra tutti i
   componenti**;
 - Task minori sono stati portati avanti **singolarmente** da componenti del
   team.
@@ -153,7 +153,7 @@ Il modello richiede ad esempio che la versione stabile del software sia
 mantenuta su un branch `main` (o `master`), senza però la necessità di un branch
 `dev` parallelo. Ciò ha permesso di avere nella fase iniziale un **flusso di
 sviluppo meno rigido**: non avendo in principio software abbastanza stabile da
-poter essere rilasciato, né tantomeno pipeline di deploy attive, ci si è
+poter essere rilasciato, né tanto meno pipeline di deploy attive, ci si è
 concentrati sullo sviluppo delle funzionalità di base. Allo stesso tempo, però,
 GitHub Flow suggerisce di organizzare il lavoro in `feature/*` branch, come in
 GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo
@@ -178,11 +178,11 @@ primo luogo in quanto richiesto per l'integrazione con il corso di LSS. Ciò è
 comunque risultato molto utile per organizzare la build in maniera più
 strutturata, e per approfondirne gli strumenti di integrazione con Scala. A tal
 proposito, il codice è organizzato in più sotto-progetti, individuati a seguito
-di un'iniziale sessione DDD.
+di un'iniziale sessione di Domain Driven Design.
 
 È stato adottato per il testing del codice Scala il framework **ScalaTest**. Si
-è inoltre sperimentato **WordSpec** come stile di test. Un'ulteriore libreria è
-stata utilizzata per il testing del framework funzionale ZIO.
+è inoltre sperimentato **WordSpec** come stile di test.
+**ZIO Test** è stata utilizzata per il testing del framework funzionale ZIO.
 
 ### Continuous Integration
 
@@ -194,11 +194,11 @@ vincolanti, a seconda del grado di stabilità del branch. In generale, `main` no
 può essere modificato senza che il codice passi tutti i controlli di CI/QA, e
 senza che la pull request venga prima revisionata da un ulteriore componente del
 team, mentre per il branch `dev` vengono generati warning nel caso in cui il
-codice non rispetti i requisiti qualitativi proposti.
+codice non rispetti i requisiti qualitativi proposti e non è necessaria alcuna revisione.
 
 In primo luogo, ogni push o pull request genera un controllo tramite il tool
 esterno **SonarCloud**, il quale definisce soglie qualitative basate su
-coverage, manutenibilità, code smells, presenza di bug conosciuti e molto altro.
+coverage, mantenibilità, code smells, presenza di bug conosciuti e molto altro.
 Sono presenti inoltre ulteriori controlli basati su **workflow CI/QA custom**,
 nei quali viene effettuato il lint del codice tramite il plugin Spotless, poste
 ulteriori soglie di coverage, effettuati test e compilato il codice su
