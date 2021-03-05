@@ -84,4 +84,7 @@ proprio requisito, ad alta complessità. L'utente finale, inteso come
 storyteller/user, può percepire da tali operazioni benefici indiretti (es. nella
 velocità delle release, nella qualità dell'API), ma di fatto maniera indiretta.
 
+I bounded context individuati nella sezione verde del grafico rappresentano i
+context core di progetto.
+
 <!-- todo individuazione della mappa dei context estesa -->
