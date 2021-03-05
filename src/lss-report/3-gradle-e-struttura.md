@@ -1,4 +1,4 @@
-# Gradle multiprogetto e convention plugin
+# Gradle e struttura multi-progetto
 
 <!-- Come si è strutturata la repo principale di progetto, cosa sono
 i convention plugin e come sono stati utilizzati (panoramica generale; il
@@ -30,11 +30,13 @@ all'analisi DDD effettuata. Sono stati definiti i seguenti sotto-progetti:
 - **examples**: sono stati definiti diversi moduli che consistono di fatto in
   delle storie di esempio, giocabili da un'utente finale.
 
+## Strategia basata su convention plugin
+
 Ogni modulo necessita di differenti plugin Gradle per poter funzionare
 correttamente. Il dettaglio dei plugin specifici richiesti da ogni modulo viene
 trattato nei capitoli successivi.
 
-Di particolare interesse è invece una scelata architetturale che ha permesso di
+Di particolare interesse è invece una scelta architetturale che ha permesso di
 condividere tra vari insiemi di sub-projects plugin e configurazioni comuni. Si
 è infatti deciso di sfruttare una strategia fortemente raccomandata da Gradle
 nella sua documentazione, denominata **convention plugins**. Questa consiste ...
