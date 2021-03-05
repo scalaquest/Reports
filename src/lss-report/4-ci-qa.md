@@ -134,3 +134,11 @@ nelle routine di CI. I job eseguiti sono i seguenti:
   rispettate, tramite il task `:checkScoverage`.
 
 ## Il workflow Opt-in CI
+
+Ulteriore controllo di CI è stato posto tramite il workflow **Opt-in CI**.
+Questo permette di attivare determitate funzioni di CI, come lo style check, la
+build, o il controllo di coverage, a partire dai branch `feature/*`. Viene
+definito "opt-in" in quanto di base questi controlli sono disabilitati. Vengono
+di fatto utilizzati solo per dei test, e possono essere invocati includendo, nel
+contenuto del commit che ha generato il push nel branch, i tag `[lint]`,
+`[build]`, `[coverage]`.
