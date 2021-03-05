@@ -1,6 +1,6 @@
 input-files:
   - ./src/lss-report/1-introduzione.md
-  - ./src/lss-report/2-knowledge-chrunching.md
+  - ./src/lss-report/2-ddd.md
   - ./src/lss-report/3-gradle-e-convention-plugin.md
   - ./src/lss-report/4-ci-qa.md
   - ./src/lss-report/5-cd.md
