@@ -72,7 +72,42 @@ soglia di coverage mandatoria del 75% per i moduli `core` e `cli`.
 
 ## Lint e code style
 
+Particolare attenzione è stata posta anche alla qualità del codice e allo stile
+dello stesso, definendo una serie di constraint atti ad innalzare la coesione
+stilistica del codice Scala tra le varie sezioni del progetto.
+
+Sono presenti molteplici alternative in grado di gestire funzionalità di linting
+e styling di codice Scala tramite Gradle. Si è deciso a tal scopo di utilizzare
+il plugin **spotless**: questo aggiunge al progetto vari task per lo styling
+automatico del codice (`:spotlessApply`) e per il check dello stesso
+(`:spotlessCheck`), supportando al contempo molteplici linguaggi di
+programmazione tramite tecniche differenti. Per Scala, Spotless sfrutta
+internamente `scalafmt`, un tool per lo styling del codice Scala. Le regole di
+styling applicate sono accessibili in un formato dichiarativo all'interno del
+file `.scalafmt.conf`.
+
 ## SonarCloud
+
+Un ulteriore strumento posto in atto per innalzare la qualità del codice e
+certificarla è **SonarCloud**. Questo tool permette di porre in atto controlli
+automatizzati sul codice, estraendo varie metriche qualitative riguardo la
+codebase, legate a mantenibilità, coverage, debito tecnico, duplicazione e molto
+altro. Lo strumento fornisce inoltre una dashboard pubblica che ne raccoglie le
+principali metriche, accessibile
+[da qua](https://sonarcloud.io/dashboard?id=scalaquest_PPS-19-ScalaQuest).
+
+Di particolare rilevanza per il progetto è stata la funzionalità **quality
+gate**: SonarCloud integra infatti un bot, che ad ogni push all'interno di una
+pull request in direzione di branch stabili, effettua un controllo di CI,
+fallendo nel caso in cui le metriche rilevate non superino delle soglie
+preimpostate.
+
+Allo scopo di configurare correttamente SonarCloud, si è reso necessario
+aggiungere un plugin al progetto, denominato **Sonarqube**. Questo rappresenta
+uno strumento cosiddetto di "scanner" per SonarCloud, andando ad estrarre in
+maniera più mirata le metriche. Il plugin fornisce il task `:sonarqube`, che va
+eseguito in CI nel momento in cui si voglia eseguire un controllo di quality
+gate.
 
 ## Il workflow CI
 
