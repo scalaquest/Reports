@@ -4,3 +4,76 @@
 quando scattano, regole di protezione dei branch, flusso di PR
 (no release ancora in questo capitolo), build automation, coverage, scoverage,
 framework di test (anche quello di zio), sonarqube, maiflai -->
+
+Particolare sforzo è stato posto nel porre in atto workflow efficaci e
+automatizzati, in grado di garantire la qualità del codice, e la Contiuous
+Integration. Per la realizzazione di questi, si è utilizzato il tool di CI
+GitHub Actions, in parte per la prononda integrazione con GitHub, e in parte a
+causa delle
+[recenti modifiche al piano di pricing in Travis CI](https://blog.travis-ci.com/2020-11-02-travis-ci-new-billing).
+Questi a loro volta sfruttano delle funzionalità integrate all'interno del
+progetto grazie al tool di build automation Gradle.
+
+## Gradle e convention plugin
+
+Uno dei primissimi accorgimenti posti in atto nel progetto ha riguardato dei
+controlli di qualità posti in atto sul codice Kotlin dei convention plugin
+stessi, e nei file `build.gradle.kts` dei vari sub-project. Lo scopo era quello
+di innalzare la qualità, prima ancora dell codebase Scala vera e propria, della
+stessa struttura Gradle a contorno del progetto.
+
+A tal scopo, è stato abilitato il plugin **detekt**, un linter per Kotlin, posto
+in modalità strict: in questo modo, la build gradle fallisce nel caso in cui il
+codice Kotlin non rispetti determinati requisiti qualitativi, riportati in
+maniera dichiarativa all'interno del file `buildSrc/config/detekt.yml`.
+
+Inoltre, per facilitare l'aggiornamento di dipendenze e plugin, è stato adottato
+il plugin **refreshVersions**, che consente di estrapolare le versioni di
+dipendenze e plugin Gradle in un file separato `versions.properties`,
+permettendo l'aggiornamento automatizzato delle stesse.
+
+A tal proposito, a livello di organizzazione è stato definito un bot, denominato
+**[dependabot](https://github.com/scalaquest/Dependabot)** (nome ispirato al
+sistema di GitHub per l'aggiornamento delle dipendenze). Questa altro non è che
+una semplice repository con un workflow schedulato, eseguito automaticamente
+ogni notte, per rilevare all'interno delle varie repository di progetto
+eventuali dipendenze non aggiornate, e generando automaticamente una pull
+request nella quale si va ad aggiornare tale dipendenza. Tale bot non fa altro
+che sfruttare il bot esistente [UpGradle](https://github.com/DanySK/upgradle),
+configurandolo appositamente per agire all'interno dell'organizzazione.
+
+## Framework di test e soglie di coverage
+
+I test sono portati avanti tramite il framework **ScalaTest**, seguendo lo stile
+di test **WordSpec**. Integrare ScalaTest all'interno del progetto non si è
+rivelato banale. A seguito di varie ricerche, si è deciso di integrarli tramite
+il plugin **ScalaTest di Maiflai**, un plugin che integra e configura in maniera
+pressoché trasparente ScalaTest, basato su jUnit 5.
+
+In aggiunta a questo, è stato utilizzato un secondo framework di test, per
+rendere possibile testare il modulo `cli`. Basandosi infatti questo sulla
+libreria funzionale **ZIO**, il test dello stesso può essere effettuato solo con
+un framework apposito basato sempre su jUnit, denomitato **zio-test-junit**.
+L'omonima dipendenza è stata quindi aggiunta al `build.gradle.kts` dello
+specifico sub-project.
+
+Infine, si è reso necessario trovare un modo per poter gestire i controlli di
+coverage. È infatti noto che Jacoco, uno dei tool più diffusi per i controlli di
+coverage su JVM, mal si adatta ai controlli su sorgente Scala. Jacoco opera
+infatti a livello bytecode, andando a coprire del codice autogenerato da Scala,
+e che può portare a stime di coverage del tutto sballate. Lo stato dell'arte per
+la messa in atto di controlli di coverage Scala con Gradle passa per l'utilizzo
+di plugin dedicati che tengono conto di queste caratteristiche, come **Scoverage
+di Maiflai**. Questo permette di generare, tra gli altri, report di coverage in
+formato html, oltre ad esporre un task `:scoverageCheck`, che permette di far
+fallire la build in presenza di coverage più bassa di una determinata soglia. Si
+è quindi installato nel progetto questo plugin, andando anche a configurare una
+soglia di coverage mandatoria del 75% per i moduli `core` e `cli`.
+
+## Lint e code style
+
+## SonarCloud
+
+## Il workflow CI
+
+## Il workflow Opt-in CI
