@@ -111,4 +111,26 @@ gate.
 
 ## Il workflow CI
 
+Allo scopo di porre in atto la maggior parte dei controlli citati in precedenza,
+si è reso necessario definire un apposito workflow GirHub Actions, denominato
+semplicemente `ci.yml`. Questo viene eseguito ad ogni push e pull request
+effettuata in direzionde dei branch `main` e `dev`. Il workflow è stato
+organizzato in differenti job, i quali agiscono in maniera completamente
+parallela. Ciò permette di otttenere una logica di tipo fail-fast, desiderabile
+nelle routine di CI. I job eseguiti sono i seguenti:
+
+- **Build**: responsabile di verificare che il software venga buildato
+  correttamente. Il task `:build` viene in questo caso "sezionato" nei suoi due
+  sotto-task `:assemble` e `:check`, permettendo una più facile interpretazione
+  del log di GH Actions in caso di fail. Il job viene eseguito su una matrice di
+  sistemi operativi, mentre si è ritenuto non di interesse testare la build su
+  versioni differenti di Java (avendo posto come necessario il solo supporto a
+  Java 11 con Scala 2.13);
+
+- **Lint**: responsabile della correttezza stilistica del codice. Al suo
+  interno, viene semplicemente eseguito il task `:spotlessCheck`;
+
+- **Coverage**: controlla che le soglie di coverage impostate vengano
+  rispettate, tramite il task `:checkScoverage`.
+
 ## Il workflow Opt-in CI
