@@ -1,9 +1,11 @@
 # Design di dettaglio
 
-## Il motore semantico
+## Riconoscimento dei comandi testuali
 
-Con i termini _motore semantico_ è intesa la fase di Parsing nel ciclo di
-pipeline. Di seguito sono descritti i principali componenti.
+In queste sezioni si descrivono le modalità con le quali Prolog è stato
+utilizzato nell'implementazione dei componenti atti ad interpretare i comandi
+dell'utente in forma testuale, associoando agli stessi un signigicato
+comprensibile dal modello.
 
 ### Manipolazione di espressioni Prolog
 
@@ -54,11 +56,11 @@ instanziare una nuova storia, infatti, era necessario scrivere diverso codice
 creazione della pipeline e del dizionario della storia, in mancanza di
 particolari necessità, avvengono sempre allo stesso modo. Per questo motivo si è
 deciso di effettuare quanto più possibile il refactoring degli elementi comuni,
-inserendoli all'interno del package `application`, dentro al modulo `core`. Tale
-package fornisce un insieme di costrutti che consentono con poche istruzioni
-aggiuntive di creare una storia. All'interno di questo son confluite anche delle
-implementazioni di default, volte ad aumentare maggiormente l'efficienza nella
-scrittura della singola storia.
+inserendoli all'interno del package `application`, all'interno del modulo
+`core`. Tale package fornisce un insieme di costrutti che consentono con poche
+istruzioni aggiuntive di creare una storia. All'interno di questo son confluite
+anche delle implementazioni di default, volte ad aumentare maggiormente
+l'efficienza nella scrittura della singola storia.
 
 Son stati aggiunti anche metodi di utility, particolarmente importanti per
 fornire delle funzionalità adatte ad ogni storia.
