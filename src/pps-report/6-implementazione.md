@@ -348,7 +348,7 @@ seguenti informazioni:
 - una tupla `(Verb, Preposition) -> Action` (o `Verb -> Action`), che collega
   l'uso del verbo al suo significato.
 
-![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](./images/class_diagram_verb.png)
+![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](images/class-diagram-verb.png)
 
 Contiene inoltre una funzione in grado di generare, a partire dal dizionario di
 una storia e dalla grammatica di base, una teoria Prolog utilizzata per
@@ -367,7 +367,7 @@ generare un'espressione Prolog sotto forma di stringa, che in seguito si
 suddivide in `Clause` e `Term`, che rappresentano rispettivamente una clausola e
 un termine (@fig:scalog_hierarchy).
 
-![Diagramma delle classi che rappresenta la gerarchia realizzata per clausole e termini.](./images/scalog_hierarchy.png){#fig:scalog_hierarchy}
+![Diagramma delle classi che rappresenta la gerarchia realizzata per clausole e termini.](images/scalog-hierarchy.png){#fig:scalog_hierarchy}
 
 I tipi di clausola che sono stati modellati sono:
 
@@ -477,7 +477,7 @@ try/catch o di Option. Tuttavia, questa parte viene utilizzata e gestita
 interamente da i membri del team e quindi sappiamo come rispettare le
 interfacce, evitando di sollevare eccezion.
 
-![Diagramma delle classi che mostra come è stato realizzato il Parser](./images/class_diagram_parser.png)
+![Diagramma delle classi che mostra come è stato realizzato il Parser](images/class-diagram-parser.png)
 
 ##### Modulo `cli`
 
@@ -499,7 +499,7 @@ template method, realizza un applicazione eseguibile costruendo un'istanza di
 `Game` tramite una `Pipeline` di default.
 
 ![Diagramma delle classi UML che rappresenta la gerarchia realizzata all'interno
-del modulo `cli`.](./images/cli_hierarchy.png){#fig:cli_hierarchy}
+del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
 
 #### Responsabilità personali
 
