@@ -294,8 +294,9 @@ presenti in `ApplicationStructure`. Dentro `cli` viene definito un game loop
 utilizzando **ZIO** come strumento per la gestione delle interazioni con la
 console, che in questo modo risultano essere type safe.
 
-Il game loop viene implementato attraverso uno schema ricorsivo che svolge le
-operazioni descritte nel capitolo precedente.
+L'applicazione viene implementata tramite uno schema REPL
+(Read-Eval-Print-Loop), che consente ad ogni iterazione di inserire un comando
+che viene interpretato dal gioco e a cui corrisponde un output.
 
 1. **Lettura della frase inserita**: questa parte viene gestita attraverso
    **ZIO**, il quale si occupa della lettura dalla console in maniera type safe.
@@ -321,9 +322,7 @@ operazioni descritte nel capitolo precedente.
    terminato, e qualora non fosse così, viene richiamato ricorsivamente questo
    schema, ritornando al punto 1 precedente.
 
-I risultati del punto 2 e 3 vengono mappati all'interno di un `UIO`, ovvero
-uno `ZIO` particolare in quanto non può fallire. L'utilizzo di tale
-implementazione è stata dettata dal fatto che abbiamo gestito gli errori
-derivanti dalla `Pipeline` come messaggi, in quanto in questa metodologia di
-interazione con il software, i refusi (intesi come ad esempio "input non
-compreso") sono considerati come parte integrante del sistema.
+Gli errori che vengono emessi dalla `Pipeline` sono stati trasformati in
+messaggi, in quanto come nelle shell dei comandi, i refusi (intesi come ad
+esempio "input non compreso" o "operazione non possibile") sono considerati come
+parte integrante del sistema.

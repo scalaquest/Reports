@@ -420,7 +420,10 @@ record match {
 
 ##### Modulo `cli`
 
-implemtanzione di zio con game loop
+Questo modulo si occupa di fornire dei costrutti per creare un'applicazione a
+linea di comando che consenta di interagire con un'istanza di gioco.
+<!-- La sua implementazione è basata sul framework **ZIO**,  -->
+
 
 ###### Struttura di default dell'applicazione
 
