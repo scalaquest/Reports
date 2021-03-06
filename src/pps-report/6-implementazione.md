@@ -484,6 +484,8 @@ try/catch o di Option. Tuttavia, questa parte viene utilizzata e gestita
 interamente da i membri del team e quindi sappiamo come rispettare le
 interfacce, evitando di sollevare eccezion.
 
+![Diagramma delle classi che mostra come è stato realizzato il Parser](./images/class_diagram_parser.png)
+
 #### Responsabilità personali
 
 All'interno del team, le responsabilità di ognuno di noi sono:
