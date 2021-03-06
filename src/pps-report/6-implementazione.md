@@ -43,12 +43,82 @@ alla definizione del modello. Nello specifico:
 - sviluppo di componenti interni al modulo `pipeline`, quali `resolver`,
   `interpreter` e `reducer`.
 
-#### Dettagli implementativi
+### Team 2
 
-I dettagli implementativi degli aspetti principali trattati dal team 1 sono
-esposti quì di seguito.
+Il team 2 è composto dai membri Filippo Nardini, Francesco Gorini. Sono stati
+trattati specifici aspetti del `core`, legati in generale alla definizione
+dell'engine di gioco, e alla struttra di base del modulo `cli` Nello specifico:
 
-##### Model
+- Package `core`:
+
+  - `dictionary` con tutti i suoi elementi;
+  - `pipeline` in particolare gli elementi `Lexer` e `Parser`;
+  - `application` con tutti i suoi elementi;
+  - `parsing` con tutti i suoi elementi.
+
+- Package `cli`.
+
+Occorre sottolineare che i concetti son stati sviluppati totalmente in "pair
+programming". Tuttavia, successivamente, vengono descritti quali sono le parti
+di cui personalmente un membro del team è responsabile.
+
+## Responsabilità personali
+
+Personalmente ogni elemento del team ha svolto dei task specifici, legati ai
+task principali del team, ma non esclusivamente:
+
+- **Thomas Angelini**: Il membro ha gestito lo sviluppo del sotto-modulo
+  `commons` all'interno di `model.behaviorBased`, ha redatto una buona parte di
+  ScalaDoc e spesso coinvolto in molti test. La maggior parte del lavoro è stato
+  svolto in concomitanza con gli altri membri del team.
+
+- **Jacopo Corina**: Oltre alle parti svolte assieme agli altri membri, il
+  membro ha contribuito a creare la struttura base del meccanismo dei behavior e
+  alla relativa integrazione, per poi ulteriormente svilupparla assieme agli
+  altri membri. In particolare ha contribuito alla creazione dei vari item di
+  gioco con behavior annessi e alla parziale implementazione delle componenti
+  `Resolver`, `Interpreter`, `Reducer`.
+
+  Inoltre, si è dedicato alla predisposizione iniziale ed all'ottimizzazione dei
+  workflow CI ed alla esplorazione dei possibili metodi di release per il codice
+  sorgente, gli eseguibili degli esempi, la generazione dei report e la parziale
+  implementazione essi
+
+- **Riccardo Maldini**: Il membro ha curato in particolare lo sviluppo delle
+  entità di base del **model**, e parte della sua implementazione principale
+  basata su behavior. Gran parte del lavoro riguardo questo aspetto è stato ad
+  ogni modo portato a termine nel contesto del team 1.
+
+  Oltre a ciò, il membro è responsabile dello sviluppo di vari task minori:
+
+  - Ruolo di Scrum Master, e in generale di coordinatore del backlog;
+  - Sviluppo di parte dei workflow CI/QA,
+  - predisposizione della prima base progettuale Gradle basata su convention
+    plugin e submodule
+  - Sviluppo di parte dei workflow di release.
+
+- **Filippo Nardini**: il membro del team si è preoccupato di curare
+  particolarmente le parti riguardanti il sottoprogetto _cli_, soprattutto per
+  quanto concerne l'utilizzo di **ZIO**. In aggiunta si è occupato anche della
+  parte di `dictonary`. Infine, per quanto riguarda il linguaggio Prolog, è
+  responsabile della parte comprendente la modellazione della grammatica
+  attraverso algebraic-data type e di tutte le altre parti presenti nel package
+  `scalog`.
+
+- **Francesco Gorini**: il membro ha contribuito alla stesura dei primi due
+  componenti del package `pipeline`, ovvero Lexer e Parser. In aggiunta è
+  responsabile di quanto è stato creato dentro il package `application`,
+  comprendente tutte le parti necessarie per fornire una struttura di base
+  implementabile. Inoltre il membro si è occupato della parte riguardante il
+  motore Prolog, l'interfacciamento con la libreria tuProlog e tutto ciò che
+  comprende il package `engine`.
+
+## Dettagli implementativi
+
+I dettagli implementativi riguardo i principali aspetti trattati sono esposti
+quì di seguito.
+
+### Model
 
 Riguardo alla definizione del modello, vanno sottolineate le seguenti scelte
 implementative:
@@ -95,7 +165,7 @@ implementative:
   gli `ItemBehavior` necessitano di un subject, ovvero di un riferimento agli
   item che li hanno generati.
 
-##### Commons
+### Commons
 
 Commons contiene una serie di componenti pre-implementati e utility, pensati per
 facilitare allo storyteller lo sviluppo della propria storia.
@@ -151,16 +221,7 @@ I package contenuti all'interno di `commons` sono i seguenti:
 
 ![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/commons-traits.png)
 
-##### Sezione a valle della pipeline
-
-Il team 1 si è anche occupato della definizione della parte a valle della
-pipeline, essendo la sua implementazione strettamente collegata con quella del
-modello. A seguito dell'iniziale implementazione, una fase rifinitura delle
-stesse fasi è stata portata avanti congiuntamente con il team 2, con particolare
-riferimento al "punto di contatto" con la parte degli altri, ovvero il
-`Resolver`.
-
-###### Resolver
+### Resolver
 
 Dato il risultato del `Parser` (un AST), il **Resolver** associa ad ogni suo
 elemento un significato all'interno del sistema, producendo in output uno
@@ -197,7 +258,7 @@ una mela rossa, non si avrebbe alcuna corrispondenza, mentre se fossero presenti
 entrambe le mele con aggettivi e se ne cercasse una senza alcuno vi sarebbero
 corrispondenze multiple quindi si renderebbe necessaria una disambiguazione.
 
-###### Interpreter
+### Interpreter
 
 Dato il risultato del `Resolver`, l'**Interpreter** si verifica che sia
 possibile applicare lo `Statement` sullo stato corrente del gioco. Quando
@@ -220,7 +281,7 @@ dizionario degli elementi, in questo caso quello contenuto all' interno dello
 stato. In questi ultimi 3 casi, viene restituita una `Reaction` wrappata all'
 interno di un oggetto `InterpreterResult`.
 
-###### Reducer
+### Reducer
 
 Data la `Reaction` ottenuta al termine del passo precedente, il **Reducer**
 provvede ad applicarla allo `State` del gioco, aggiornandolo e generando
@@ -235,63 +296,7 @@ implementazione realizzata, consiste in una tupla contenente 2 elementi:
 
 Questa tupla è wrappata all' interno della classe `ReducerResult`.
 
-#### Responsabilità personali
-
-Personalmente ogni elemento del team ha svolto dei task specifici, legati ai
-task principali del team, ma non esclusivamente:
-
-- **Thomas Angelini**: Il membro ha gestito lo sviluppo del sotto-modulo
-  `commons` all'interno di `model.behaviorBased`, ha redatto una buona parte di
-  ScalaDoc e spesso coinvolto in molti test. La maggior parte del lavoro è stato
-  svolto in concomitanza con gli altri membri del team.
-
-- **Jacopo Corina**: Oltre alle parti svolte assieme agli altri membri, il
-  membro ha contribuito a creare la struttura base del meccanismo dei behavior e
-  alla relativa integrazione, per poi ulteriormente svilupparla assieme agli
-  altri membri. In particolare ha contribuito alla creazione dei vari item di
-  gioco con behavior annessi e alla parziale implementazione delle componenti
-  `Resolver`, `Interpreter`, `Reducer`.
-
-  Inoltre, si è dedicato alla predisposizione iniziale ed all'ottimizzazione dei
-  workflow CI ed alla esplorazione dei possibili metodi di release per il codice
-  sorgente, gli eseguibili degli esempi, la generazione dei report e la parziale
-  implementazione essi
-
-- **Riccardo Maldini**: Il membro ha curato in particolare lo sviluppo delle
-  entità di base del **model**, e parte della sua implementazione principale
-  basata su behavior. Gran parte del lavoro riguardo questo aspetto è stato ad
-  ogni modo portato a termine nel contesto del team 1.
-
-  Oltre a ciò, il membro è responsabile dello sviluppo di vari task minori:
-
-  - Ruolo di Scrum Master, e in generale di coordinatore del backlog;
-  - Sviluppo di parte dei workflow CI/QA,
-  - predisposizione della prima base progettuale Gradle basata su convention
-    plugin e submodule
-  - Sviluppo di parte dei workflow di release.
-
-### Team 2
-
-Il team 2 è composto dai membri Filippo Nardini, Francesco Gorini. Sono stati
-trattati specifici aspetti del `core`, legati in generale alla definizione
-dell'engine di gioco, e alla struttra di base del modulo `cli` Nello specifico:
-
-- Package `core`:
-
-  - `dictionary` con tutti i suoi elementi;
-  - `pipeline` in particolare gli elementi `Lexer` e `Parser`;
-  - `application` con tutti i suoi elementi;
-  - `parsing` con tutti i suoi elementi.
-
-- Package `cli`.
-
-Occorre sottolineare che i concetti son stati sviluppati totalmente in "pair
-programming". Tuttavia, successivamente, vengono descritti quali sono le parti
-di cui personalmente un membro del team è responsabile.
-
-#### Dettagli implementativi
-
-##### Generators
+### Generators
 
 Le type class `Generator` e `GeneratorK` che si trovano all'interno di questo
 modulo sono state realizzate utilizzando le type class offerte da Cats.
@@ -307,7 +312,7 @@ che siano state definite istanze per le seguenti type class:
 - `Monoid[B]:` in quanto è necessaria un'operazione binaria associativa e un
   valore empty per effettuare l'operazione di fold.
 
-##### Dictionary
+### Dictionary
 
 Contiene i costrutti, realizzati tramite algebraic data types, che consentono la
 dichiarazione di verbi, utilizzati in fase di scrittura di una storia da parte
@@ -328,7 +333,7 @@ di generare per ogni classe di elemento del dizionario un programma Prolog
 valido. Infine questi programmi vengono concatenati tra di loro e alla
 grammatica di base.
 
-##### Scalog
+### Scalog
 
 Questo package contiene le strutture necessarie per la modellazione di
 espressioni Prolog. La realizzazione della gerarchia è avvenuta tramite
@@ -388,15 +393,15 @@ record match {
 // val res1: String = "bob stands for robert"
 ```
 
-##### Struttura di default dell'applicazione
+### Struttura di default dell'applicazione
 
 All'interno del package `application`, tra i dettagli implementativi più
 interessanti vi è l'utilizzo del pattern "Template Method" all'interno di
-`DefaultPipelineProvider` (@fig:cli_hierarchy) per creare la pipeline di default. In particolare è
-interessante notare che definendo solamente una teoria Prolog, sia possibile
-fruire di una pipeline pronta all'uso.
+`DefaultPipelineProvider` (@fig:cli_hierarchy) per creare la pipeline di
+default. In particolare è interessante notare che definendo solamente una teoria
+Prolog, sia possibile fruire di una pipeline pronta all'uso.
 
-##### Parser
+### Parser
 
 Nell'implementazione di `Parser` viene utilizzato nuovamente il pattern
 "Template Method", con il notevole beneficio di poter sviluppare completamente
@@ -407,7 +412,7 @@ modo il codice risulta essere particolarmente scalabile e modulare, in quanto in
 maniera molto semplice ed in poco tempo, è possibile implementare un altro
 motore Prolog, che ad esempio lavora con **SWI-Prolog**.
 
-##### Natural Language Processing in Prolog
+### Natural Language Processing in Prolog
 
 La scelta per l'implementazione del natural language processing è ricaduta su
 Prolog, per via del particolare paradigma di programmazione che esso offre.
@@ -446,23 +451,23 @@ phrase(substantive(X), [the, key])
 
 - il soggetto è sempre `you` (poiché il modo del verbo è imperativo);
 - il verbo è rappresentato dal termine composto `/(<verbo>, <preposizione>)`, se
-  non è presente nessuna preposizione è stato usato il termine `{}` (esempio in @lst:nlp_example); un verbo
-  può essere in una di queste tre forme:
-  + intransitivo
-  + transitivo
-  + ditransitivo
+  non è presente nessuna preposizione è stato usato il termine `{}` (esempio in
+  @lst:nlp_example); un verbo può essere in una di queste tre forme:
+  - intransitivo
+  - transitivo
+  - ditransitivo
 - il complemento può essere preceduto o seguito da una preposizione, questa
   verrà associata al verbo; inoltre può essere preceduto da un articolo;
 - un nome può essere preceduto da un numero arbitrario di aggettivi, la
   rappresentazione utilizzata è stata `decorated(<aggettivo>, <nome>)` (esempio
   in @lst:nlp_example2).
-  
+
 Il motore TuProlog, che offre API fruibili da linguaggi basati sulla JVM, viene
 inizializzato con la necessaria teoria ed eseguito all'interno di un `Engine`,
 che esporrà il risultato della risoluzione di una query utilizzando i costrutti
-di `scalog`. 
+di `scalog`.
 
-##### Engine Prolog
+### Engine Prolog
 
 Questa soluzione utilizza il pattern "Adapter" per wrappare e permettere di
 utilizzare la libreria **tuProlog** all'interno del codice. Successivamente
@@ -480,7 +485,7 @@ interfacce, evitando di sollevare eccezioni.
 
 ![Diagramma delle classi che mostra come è stato realizzato il Parser](images/class-diagram-parser.png)
 
-##### Modulo `cli`
+### Modulo `cli`
 
 Questo modulo si occupa di fornire dei costrutti per creare un'applicazione a
 linea di comando che consenta di interagire con un'istanza di gioco. La sua
@@ -501,27 +506,3 @@ template method, realizza un applicazione eseguibile costruendo un'istanza di
 
 ![Diagramma delle classi UML che rappresenta la relazione tra i costrutti del
 modulo `core` e quelli del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
-
-#### Responsabilità personali
-
-All'interno del team, le responsabilità di ognuno di noi sono:
-
-- **Filippo Nardini**: il membro del team si è preoccupato di curare
-  particolarmente le parti riguardanti il sottoprogetto _cli_, soprattutto per
-  quanto concerne l'utilizzo di **ZIO**. In aggiunta si è occupato anche della
-  parte di `dictonary`. Infine, per quanto riguarda il linguaggio Prolog, è
-  responsabile della parte comprendente la modellazione della grammatica
-  attraverso algebraic-data type e di tutte le altre parti presenti nel package
-  `scalog`.
-
-* **Francesco Gorini**: il membro ha contribuito alla stesura dei primi due
-  componenti del package `pipeline`, ovvero Lexer e Parser. In aggiunta è
-  responsabile di quanto è stato creato dentro il package `application`,
-  comprendente tutte le parti necessarie per fornire una struttura di base
-  implementabile. Inoltre il membro si è occupato della parte riguardante il
-  motore Prolog, l'interfacciamento con la libreria tuProlog e tutto ciò che
-  comprende il package `engine`.
-
-<!--
-Possibilmente si può fare anche ##### dettaglio_implementativo (membro_responsabile)
--->
