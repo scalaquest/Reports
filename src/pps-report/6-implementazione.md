@@ -392,11 +392,9 @@ record match {
 
 All'interno del package `application`, tra i dettagli implementativi più
 interessanti vi è l'utilizzo del pattern "Template Method" all'interno di
-`DefaultPipelineProvider` per creare la pipeline di default. In particolare è
+`DefaultPipelineProvider` (@fig:cli_hierarchy) per creare la pipeline di default. In particolare è
 interessante notare che definendo solamente una teoria Prolog, sia possibile
 fruire di una pipeline pronta all'uso.
-
-<!-- diagramma delle classi -->
 
 ##### Parser
 
@@ -411,33 +409,66 @@ motore Prolog, che ad esempio lavora con **SWI-Prolog**.
 
 ##### Natural Language Processing in Prolog
 
-Il riconoscimento del linguaggio naturale in Prolog è basato su regole in forma
-_definite clause grammar_. Questa modalità di esprimere regole consente di
-definire facilmente un parser in Prolog.
+La scelta per l'implementazione del natural language processing è ricaduta su
+Prolog, per via del particolare paradigma di programmazione che esso offre.
+Infatti la programmazione logica si presta molto bene allo sviluppo di
+analizzatori sintattici per il linguaggio naturale. È stata presa come
+riferimento la lingua inglese in quanto la forma dei verbi non varia con il
+variare del soggetto e per la vastità della letteratura sul NLP.
 
-Tramite l'uso di una semplice grammatica DCG come quella in @lst:nlp_grammar è
-possibile riconoscere frasi in linguaggio naturale.
+L'implementazione realizzata di parser del linguaggio naturale è basata su
+regole in forma _definite clause grammar_. Questa modalità di esprimere regole
+consente di definire una grammatica utilizzando dei costrutti molto espressivi.
 
-```{#lst:nlp_grammar .prolog caption="Una semplice grammatica per riconoscere frasi in lingua inglese. Fonte: https://en.wikipedia.org/wiki/Definite_clause_grammar"}
-sentence(s(NP,VP)) --> noun_phrase(NP), verb_phrase(VP).
-noun_phrase(np(D,N)) --> det(D), noun(N).
-verb_phrase(vp(V,NP)) --> verb(V), noun_phrase(NP).
-det(d(the)) --> [the].
-det(d(a)) --> [a].
-noun(n(bat)) --> [bat].
-noun(n(cat)) --> [cat].
-verb(v(eats)) --> [eats].
+Nell'implementazione della comunicazione tra il `PrologParser` e il motore
+Prolog si è scelto di utilizzare le frasi in forma imperativa, in quanto adatta
+ad impartire comandi al personaggio, e di rappresentare le strutture
+grammaticali nel seguente modo:
+
+```{#lst:nlp_example .prolog caption="Esempio di risoluzione di query utilizzando la teoria prodotta per il NLP."}
+phrase(i(X), [take, the, key])
+% yes. X / sentence(take/{}, you, key)
+
+phrase(i(X), [open, the, door, with, the, key])
+% yes. X / sentence(open/with, you, door, key).
+
+phrase(i(X), [inspect])
+% yes. X / sentence(inspect/{}, you)
 ```
 
-frase imperative (verbo senza soggetto) tutto sulla grammatica
+```{#lst:nlp_example2 .prolog caption="Esempio di parsing di un nome con aggettivi."}
+phrase(substantive(X), [the, big, red, key])
+% yes. X / decorated(big, decorated(red, key))
+
+phrase(substantive(X), [the, key])
+% yes. X / key
+```
+
+- il soggetto è sempre `you` (poiché il modo del verbo è imperativo);
+- il verbo è rappresentato dal termine composto `/(<verbo>, <preposizione>)`, se
+  non è presente nessuna preposizione è stato usato il termine `{}` (esempio in @lst:nlp_example); un verbo
+  può essere in una di queste tre forme:
+  + intransitivo
+  + transitivo
+  + ditransitivo
+- il complemento può essere preceduto o seguito da una preposizione, questa
+  verrà associata al verbo; inoltre può essere preceduto da un articolo;
+- un nome può essere preceduto da un numero arbitrario di aggettivi, la
+  rappresentazione utilizzata è stata `decorated(<aggettivo>, <nome>)` (esempio
+  in @lst:nlp_example2).
+  
+Il motore TuProlog, che offre API fruibili da linguaggi basati sulla JVM, viene
+inizializzato con la necessaria teoria ed eseguito all'interno di un `Engine`,
+che esporrà il risultato della risoluzione di una query utilizzando i costrutti
+di `scalog`. 
 
 ##### Engine Prolog
 
 Questa soluzione utilizza il pattern "Adapter" per wrappare e permettere di
 utilizzare la libreria **tuProlog** all'interno del codice. Successivamente
 questa è stata arraggiata per modellare correttamente il nostro dominio; ad
-esempio è stata creata una interfaccia `engine` la quale prevede di essere
-definita solamente attraverso `theory` e `library`.
+esempio è stata creata una interfaccia `Engine` la quale prevede di essere
+definita solamente attraverso `Theory` e `Library`.
 
 Occorre sottolineare che in alcuni parti del codice, vengono gestite solo
 parzialmente le eccezioni che potrebbero essere sollevate nell'utilizzo del
@@ -445,7 +476,7 @@ Prolog. Questa scelta è stata dettata da un duplice fattore: il codice
 altrimenti si sarebbe notevolmente "sporcato" con l'utilizzo di costrutti
 try/catch o di Option. Tuttavia, questa parte viene utilizzata e gestita
 interamente da i membri del team e quindi sappiamo come rispettare le
-interfacce, evitando di sollevare eccezion.
+interfacce, evitando di sollevare eccezioni.
 
 ![Diagramma delle classi che mostra come è stato realizzato il Parser](images/class-diagram-parser.png)
 
@@ -468,8 +499,8 @@ di `Model`, `State`, `MessagePusher` e gli elementi del dizionario tramite
 template method, realizza un applicazione eseguibile costruendo un'istanza di
 `Game` tramite una `Pipeline` di default.
 
-![Diagramma delle classi UML che rappresenta la gerarchia realizzata all'interno
-del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
+![Diagramma delle classi UML che rappresenta la relazione tra i costrutti del
+modulo `core` e quelli del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
 
 #### Responsabilità personali
 
