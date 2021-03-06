@@ -76,8 +76,8 @@ possibilità:
 Per requisiti funzionali si intendono le funzionalità che caratterizzano il
 progetto:
 
-- Fornire un modello sul quale rendere possibile la costruzione di storie di tipo
-  Interactive Fiction;
+- Fornire un modello sul quale rendere possibile la costruzione di storie di
+  tipo Interactive Fiction;
 
 - Fornire una piattaforma sulla quale lanciare le storie, agente da linea di
   comando;

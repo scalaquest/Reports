@@ -181,8 +181,8 @@ proposito, il codice è organizzato in più sotto-progetti, individuati a seguit
 di un'iniziale sessione di Domain Driven Design.
 
 È stato adottato per il testing del codice Scala il framework **ScalaTest**. Si
-è inoltre sperimentato **WordSpec** come stile di test.
-**ZIO Test** è stata utilizzata per il testing del framework funzionale ZIO.
+è inoltre sperimentato **WordSpec** come stile di test. **ZIO Test** è stata
+utilizzata per il testing del framework funzionale ZIO.
 
 ### Continuous Integration
 
@@ -194,7 +194,8 @@ vincolanti, a seconda del grado di stabilità del branch. In generale, `main` no
 può essere modificato senza che il codice passi tutti i controlli di CI/QA, e
 senza che la pull request venga prima revisionata da un ulteriore componente del
 team, mentre per il branch `dev` vengono generati warning nel caso in cui il
-codice non rispetti i requisiti qualitativi proposti e non è necessaria alcuna revisione.
+codice non rispetti i requisiti qualitativi proposti e non è necessaria alcuna
+revisione.
 
 In primo luogo, ogni push o pull request genera un controllo tramite il tool
 esterno **SonarCloud**, il quale definisce soglie qualitative basate su

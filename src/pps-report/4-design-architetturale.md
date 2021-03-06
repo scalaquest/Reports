@@ -16,10 +16,10 @@ ognuno cosa fa, chi parla con chi e per dirsi cosa --
 i diagrammi aiutano, ma poi la prosa deve chiaramente indicare questi aspetti.
 -->
 
-Il gioco si struttura dal punto di vista dello
-user in diverse **iterazioni**, per ognuna delle quali viene intercettato
-l'input utente (in linguaggio naturale), e a seguito di varie elaborazioni viene
-restituita una risposta (in formato testuale, o in altri formati).
+Il gioco si struttura dal punto di vista dello user in diverse **iterazioni**,
+per ognuna delle quali viene intercettato l'input utente (in linguaggio
+naturale), e a seguito di varie elaborazioni viene restituita una risposta (in
+formato testuale, o in altri formati).
 
 Risulta quindi naturale implementare ogni iterazione come una funzione, che dato
 un comando testuale e lo stato del gioco, restituisce lo stato modificato e
@@ -33,14 +33,13 @@ restituirne l'output, e un modulo incaricato d'iterare la stessa, tale da
 comporre una sessione di gioco completa.
 
 Parallelamente alla gestione della pipeline, dovrà essere resa disponibile
-un'API per lo storyteller, così da permettere a lui di creare nuove storie basate
-su questo modello.
+un'API per lo storyteller, così da permettere a lui di creare nuove storie
+basate su questo modello.
 
 ## Architettura di massima
 
 Si è organizzato quindi il sistema in più macro-componenti, corrispondente
 ognuno a un sotto-progetto Gradle separato.
-
 
 Sono stati individuati:
 
@@ -173,8 +172,8 @@ come già descritto nelle sezioni precedenti, all'interno di questo
 
 Il modulo **CLI** fornisce un'implementazione in grado di eseguire sessioni di
 gioco basate su Command Line Interface. Il modulo include `core` come
-dipendenza, rappresentando da solo la libreria necessaria per generare storie
-a linea di comando.
+dipendenza, rappresentando da solo la libreria necessaria per generare storie a
+linea di comando.
 
 L'implementazione fornita itera di fatto l'esecuzione della pipeline. È
 possibile individuare, per ogni iterazione, le seguenti fasi
@@ -200,10 +199,10 @@ tramite l'utilizzo del modulo `CLI`:
    nella cittadina di Aranciopoli (Vermilion City). La storia mostra come sia
    possibile generare dei componenti completamente custom, limitando l'utilizzo
    di builder;
-   
+
 3. **WizardQuest**: lo user si ritrova nel ruoli di Harry Potter all'interno
-    della Camera dei Segreti. La storia mostra come sia agevole spostare
-   oggetti tra le varie stanze.
+   della Camera dei Segreti. La storia mostra come sia agevole spostare oggetti
+   tra le varie stanze.
 
 ## Pattern architetturali
 
@@ -222,7 +221,6 @@ caso questo concetto è stato esploso ed è stato implementato attraverso la
 creazione della pipeline.
 
 ## Scelte tecnologiche
-
 
 Al fine di rispettare i requisiti proposti, sono state effettuate delle scelte
 su alcune tecnologie che hanno influenzato poi anche in maniera importante
@@ -298,7 +296,6 @@ d'uso delineati durante la fase di analisi le due sarebbero equivalenti.
 
 Per curiosità e interesse è stata approfondita la conoscenza di questa libreria,
 portando a notevoli miglioramenti nella qualità del codice. Nelle fasi avanzate
-dello sviluppo sono state riscritte attraverso le astrazioni fornite da
-**Cats** (quali `Foldable`, `Monoid`, ecc.) sezioni del software che
-inizialmente non erano state progettate con i concetti di componibilità e
-riusabilità.
+dello sviluppo sono state riscritte attraverso le astrazioni fornite da **Cats**
+(quali `Foldable`, `Monoid`, ecc.) sezioni del software che inizialmente non
+erano state progettate con i concetti di componibilità e riusabilità.

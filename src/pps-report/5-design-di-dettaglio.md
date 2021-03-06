@@ -2,8 +2,8 @@
 
 ## Il motore semantico
 
-Con i termini _motore semantico_ è intesa la fase di Parsing nel ciclo di pipeline.
-Di seguito sono descritti i principali componenti.
+Con i termini _motore semantico_ è intesa la fase di Parsing nel ciclo di
+pipeline. Di seguito sono descritti i principali componenti.
 
 ### Manipolazione di espressioni Prolog
 
@@ -42,8 +42,8 @@ altre librerie Prolog.
 
 A questo punto, ancor prima di realizzare un'implementazione dello specifico
 `Engine`, è già stato possibile realizzare il `PrologParser`: un parser che
-utilizza un generico motore Prolog per effettuare l'analisi sintattica
-di una sequenza di token.
+utilizza un generico motore Prolog per effettuare l'analisi sintattica di una
+sequenza di token.
 
 ## Application structure
 
@@ -53,15 +53,15 @@ instanziare una nuova storia, infatti, era necessario scrivere diverso codice
 "boilerplate", comune a tutti gli esempi. Principalmente per quanto concerne la
 creazione della pipeline e del dizionario della storia, in mancanza di
 particolari necessità, avvengono sempre allo stesso modo. Per questo motivo si è
-deciso di effettuare quanto più possibile il refactoring degli elementi comuni, inserendoli
-all'interno del package `application`, dentro al modulo `core`. Tale package
-fornisce un insieme di costrutti che consentono con poche istruzioni aggiuntive
-di creare una storia. All'interno di questo son confluite anche delle
+deciso di effettuare quanto più possibile il refactoring degli elementi comuni,
+inserendoli all'interno del package `application`, dentro al modulo `core`. Tale
+package fornisce un insieme di costrutti che consentono con poche istruzioni
+aggiuntive di creare una storia. All'interno di questo son confluite anche delle
 implementazioni di default, volte ad aumentare maggiormente l'efficienza nella
 scrittura della singola storia.
 
-Son stati aggiunti anche metodi di utility, particolarmente importanti
-per fornire delle funzionalità adatte ad ogni storia.
+Son stati aggiunti anche metodi di utility, particolarmente importanti per
+fornire delle funzionalità adatte ad ogni storia.
 
 In definitiva, tale processo di refactoring ha portato:
 
@@ -86,13 +86,12 @@ essere un pattern fattorizzabile in un concetto più astratto e riusabile che è
 stato chiamato `Generator[A, B]`, realizzato tramite una type class. Si tratta
 di un wrapper di una funzione `A => B`.
 
-Nel dizionario, però, gli elementi sono contenuti all'interno di una
-collezione. Si è quindi introdotto il concetto di `GeneratorK[F[_], A, B]`, che
-rappresenta un wrapper di una funzione `F[A] => B`, quindi una funzione in cui
-`A` è all'interno di un contesto `F[_]`. La scelta del nome è stata ispirata
-dai nomi utilizzati dalle type class di **Cats**, le quali presentano una
-lettera _K_ nelle versioni delle type class che operano sugli _higher-kinded
-types_.
+Nel dizionario, però, gli elementi sono contenuti all'interno di una collezione.
+Si è quindi introdotto il concetto di `GeneratorK[F[_], A, B]`, che rappresenta
+un wrapper di una funzione `F[A] => B`, quindi una funzione in cui `A` è
+all'interno di un contesto `F[_]`. La scelta del nome è stata ispirata dai nomi
+utilizzati dalle type class di **Cats**, le quali presentano una lettera _K_
+nelle versioni delle type class che operano sugli _higher-kinded types_.
 
 Tramite l'uso di queste due astrazioni combinate è possibile fattorizzare
 funzioni come `List[A] => List[B]` o `List[A] => Map[K, V]` in
@@ -121,9 +120,9 @@ indicazioni riguardo ai seguenti componenti (astraendo dalle strutture dati
 utilizzate):
 
 - l'insieme di `Action` e dei `Verb` ad essi associati. Questi permettono di
-  mappare i verbi che lo user include all'interno dei comandi testuali, a
-  delle entità comprensibili dal modello. Una volta definiti, non dovrebbero
-  essere modificabili durante il gioco;
+  mappare i verbi che lo user include all'interno dei comandi testuali, a delle
+  entità comprensibili dal modello. Una volta definiti, non dovrebbero essere
+  modificabili durante il gioco;
 
 - l'insieme di `Item` disponibili: per `Item` si intende un qualunque componente
   con il quale il player può interagire durante il gioco. Essi devono essere
@@ -133,28 +132,28 @@ utilizzate):
 
 - L'insieme di `Room`: una `Room` rappresenta una porzione geografica della
   mappa del gioco. Il player durante il gioco deve avere la possibilità di
-  muoversi tra le `Room`. La stanza può concettualmente contenere dinamicamente degli
-  `Item` a runtime; deve contenere un'indicazione riguardo alle `Room` limitrofe
-  (direttamente raggiungibili dalla `Room` corrente, con un passo in direzione
-  di un punto cardinale);
+  muoversi tra le `Room`. La stanza può concettualmente contenere dinamicamente
+  degli `Item` a runtime; deve contenere un'indicazione riguardo alle `Room`
+  limitrofe (direttamente raggiungibili dalla `Room` corrente, con un passo in
+  direzione di un punto cardinale);
 
 - Il `Ground`: esso rappresenta un'entità in grado di gestire i verbi
   intransitivi nella modifica dello stato;
-  
+
 - Varie altre indicazioni rappresentative dello stato, potenzialmente
   espandibili.
 
-Porre in atto un'implementazione per queste entità non è stato banale. Le principali
-problematiche sono legate a:
+Porre in atto un'implementazione per queste entità non è stato banale. Le
+principali problematiche sono legate a:
 
 - **Dipendenze incrociate**: lo `State` contiene concettualmente degli `Item`,
   ma all'atto pratico anche gli `Item` devono venire a conoscenza dello `State`.
   Stesso ragionamento vale per le `Room`;
 
 - **Evoluzione dello stato**: lo `State` è un'entità immutabile; per poterla
-  aggiornare, è necessario crearne una copia modificata, e per far ciò
-  si deve conoscere il tipo concreto alla base di ogni entità. A causa delle
-  dipendenze incrociate, ogni entità deve conoscere il tipo concreto di ognuna.
+  aggiornare, è necessario crearne una copia modificata, e per far ciò si deve
+  conoscere il tipo concreto alla base di ogni entità. A causa delle dipendenze
+  incrociate, ogni entità deve conoscere il tipo concreto di ognuna.
 
 La miglior soluzione a cui siamo giunti è stata quella di definire le interfacce
 base di `State`, `Item` e `Room` all'interno di un trait `Model`, e di
@@ -168,18 +167,18 @@ Un altro importante sfida nella definizione del modello riguarda la messa in
 atto di un meccanismo tale da consentire allo stato di "reagire" ai comandi
 utente.
 
-Nel capitolo precedente si è utilizzato il termine `Statement` per indicare l'output
-della fase di resolving della pipeline. Tale output rappresenta un **comando
-interpretabile dal modello**. Ciò significa che al termine della fase di
-risoluzione, si ha conoscenza riguardo a quali sono gli `Item` e le `Action`
+Nel capitolo precedente si è utilizzato il termine `Statement` per indicare
+l'output della fase di resolving della pipeline. Tale output rappresenta un
+**comando interpretabile dal modello**. Ciò significa che al termine della fase
+di risoluzione, si ha conoscenza riguardo a quali sono gli `Item` e le `Action`
 coinvolti nel comando.
 
-La fase d'interpretazione della pipeline è quella predisposta
-all'individuazione delle modifiche da applicare allo stato. L'output della fase
-è una `Reaction`, ovvero un'entità comprendente funzioni in grado di applicare
-allo stato le modifiche necessarie, e un'insieme di informazioni da mostrare in
-output all'utente (concetto approfondito nella sezione @sec:reaction). La fase viene posta
-in atto come segue:
+La fase d'interpretazione della pipeline è quella predisposta all'individuazione
+delle modifiche da applicare allo stato. L'output della fase è una `Reaction`,
+ovvero un'entità comprendente funzioni in grado di applicare allo stato le
+modifiche necessarie, e un'insieme di informazioni da mostrare in output
+all'utente (concetto approfondito nella sezione @sec:reaction). La fase viene
+posta in atto come segue:
 
 - nel caso di **comandi intransitivi** (`Statement` composto da una sola
   `Action`), l'`Action` viene applicata direttamente a un'entità interna allo
@@ -217,10 +216,10 @@ estende il `Model` di base:
 
 - estendendo il concetto di `Item` e `Ground`, fornendo ad essi la possibilità
   di integrare loro dei behavior (`BehaviorBasedItem` e `BehaviorBasedGround`);
-  
+
 - fornendo un'implementazione flessibile del concetto di behavior,
   (`GroundBehavior` e `ItemBehavior`);
-  
+
 - fornendo un costrutto in grado di definire combinazioni `Action`-`Item`
   (`GroundTrigger` e `ItemTrigger`).
 
@@ -237,38 +236,38 @@ Possibili implementazioni potrebbero essere `takeTheItem(i: Item)`,
 
 È un concetto chiave utilizzato all'interno del `Reducer`, componente che agisce
 in coda alla `Pipeline` dopo l'`Interpreter`, e che si occupa di restituire lo
-stato aggiornato insieme alle notifiche sugli effetti prodotti dal comando
-sulla partita.
+stato aggiornato insieme alle notifiche sugli effetti prodotti dal comando sulla
+partita.
 
 Il concetto di `Reaction` è stato ampliato inizialmente con un metodo
 `::combine()`, che consente di combinarne una coppia, in modo che lo stato
 risultante della prima sia passato come argomento della seconda e che i messaggi
 siano concatenati. Successivamente sono stati introdotti altri metodi che
 semplificano un approccio funzionale, il più importante dei quali è `flatMap`,
-che abilita la creazione e concatenazione di più reazioni utilizzando il costrutto **for
-comprehension** di Scala.
+che abilita la creazione e concatenazione di più reazioni utilizzando il
+costrutto **for comprehension** di Scala.
 
 ### I Message e il Pusher
 
-Si è fatto riferimento, nelle sezioni precedenti, alla necessità di avere un output,
-da poter mostrare all'utente, al termine dell'esecuzione della pipeline.
-Come scelta progettuale, si è deciso di separare l'output vero e
-proprio, da delle **notifiche di avvenuto evento**, che fanno scaturire lo
-stesso. Ciò permette di avere una separazione più netta dei concetti,
-supportando potenzialmente diverse tipologie di output (non soltanto testuale).
+Si è fatto riferimento, nelle sezioni precedenti, alla necessità di avere un
+output, da poter mostrare all'utente, al termine dell'esecuzione della pipeline.
+Come scelta progettuale, si è deciso di separare l'output vero e proprio, da
+delle **notifiche di avvenuto evento**, che fanno scaturire lo stesso. Ciò
+permette di avere una separazione più netta dei concetti, supportando
+potenzialmente diverse tipologie di output (non soltanto testuale).
 
 La pipeline, oltre a fornire come output lo stato aggiornato, restituisce
 infatti una sequenza di notifiche. Esempi di notifiche potrebbero essere
-l'apertura di una porta, l'uccisione di un avversario, l'aver mangiato una mela, ecc.
-Nella nostra implementazione, tali notifiche prendono il nome di `Message`.
+l'apertura di una porta, l'uccisione di un avversario, l'aver mangiato una mela,
+ecc. Nella nostra implementazione, tali notifiche prendono il nome di `Message`.
 
 Al di fuori della pipeline è quindi necessario un componente in grado di
 associare ad ogni `Message`, il corrispondente output, facilmente
 personalizzabile dallo storyteller. A tale scopo, nella nostra implementazione è
-presente il componente `Pusher`. Esso viene implementato come un'abstract class che
-permette di definire una mappatura tra dei `Message` in input con un output di
-tipo generico. `StringPusher` è un'abstract class che estende poi il `Pusher`,
-supportando output di tipo `String`.
+presente il componente `Pusher`. Esso viene implementato come un'abstract class
+che permette di definire una mappatura tra dei `Message` in input con un output
+di tipo generico. `StringPusher` è un'abstract class che estende poi il
+`Pusher`, supportando output di tipo `String`.
 
 Il `Pusher` è facilmente personalizzabile dall'utente. Per essere utilizzato,
 deve essere esteso, andandone a implementare i `::messageTriggers`. Un
@@ -310,9 +309,9 @@ che viene interpretato dal gioco e a cui corrisponde un output.
    - _sequenza di messaggi_ da restituire in uscita.
 
 3. **Creazione del messaggio in output**: in base al risultato restituito dalla
-   `Pipeline`, viene creato il messaggio da mostrare sulla console.
-   In particolare, se si è verificato un errore, viene ritornato un avviso che
-   lo descrive, altrimenti viene restituita la sequenza di messaggi. In
+   `Pipeline`, viene creato il messaggio da mostrare sulla console. In
+   particolare, se si è verificato un errore, viene ritornato un avviso che lo
+   descrive, altrimenti viene restituita la sequenza di messaggi. In
    quest'ultimo caso viene anche aggiornato lo stato.
 
 4. **Stampa del messaggio in uscita**: viene stampato su console il messaggio o

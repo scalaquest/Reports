@@ -485,11 +485,11 @@ Questo modulo si occupa di fornire dei costrutti per creare un'applicazione a
 linea di comando che consenta di interagire con un'istanza di gioco. La sua
 implementazione è basata sul framework **ZIO**, che consente di creare effetti
 (ovvero codice con side-effects) tramite costrutti type-safe, funzionali, quindi
-facilmente componibili e testabili. 
+facilmente componibili e testabili.
 
-L'interfaccia principale è `CLI`, ovvero un wrapper per un effetto `ZIO[Console,
-IOException, Unit]`, che può essere semplificato in `Console =>
-Either[IOException, Unit]`, ovvero una funzione che necessita di
+L'interfaccia principale è `CLI`, ovvero un wrapper per un effetto
+`ZIO[Console, IOException, Unit]`, che può essere semplificato in
+`Console => Either[IOException, Unit]`, ovvero una funzione che necessita di
 un'implementazione di `Console` e ritorna un'eccezione di tipo IO oppure un
 valore unit. **ZIO** offre un costrutto `App` che fornisce tramite un template
 method di realizzare facilmente un'applicazione eseguibile. Questo è stato
