@@ -418,14 +418,7 @@ record match {
 // val res1: String = "bob stands for robert"
 ```
 
-##### Modulo `cli`
-
-Questo modulo si occupa di fornire dei costrutti per creare un'applicazione a
-linea di comando che consenta di interagire con un'istanza di gioco.
-<!-- La sua implementazione è basata sul framework **ZIO**,  -->
-
-
-###### Struttura di default dell'applicazione
+##### Struttura di default dell'applicazione
 
 All'interno del package `application`, tra i dettagli implementativi più
 interessanti vi è l'utilizzo del pattern "Template Method" all'interno di
@@ -485,6 +478,28 @@ interamente da i membri del team e quindi sappiamo come rispettare le
 interfacce, evitando di sollevare eccezion.
 
 ![Diagramma delle classi che mostra come è stato realizzato il Parser](./images/class_diagram_parser.png)
+
+##### Modulo `cli`
+
+Questo modulo si occupa di fornire dei costrutti per creare un'applicazione a
+linea di comando che consenta di interagire con un'istanza di gioco. La sua
+implementazione è basata sul framework **ZIO**, che consente di creare effetti
+(ovvero codice con side-effects) tramite costrutti type-safe, funzionali, quindi
+facilmente componibili e testabili. 
+
+L'interfaccia principale è `CLI`, ovvero un wrapper per un effetto `ZIO[Console,
+IOException, Unit]`, che può essere semplificato in `Console =>
+Either[IOException, Unit]`, ovvero una funzione che necessita di
+un'implementazione di `Console` e ritorna un'eccezione di tipo IO oppure un
+valore unit. **ZIO** offre un costrutto `App` che fornisce tramite un template
+method di realizzare facilmente un'applicazione eseguibile. Questo è stato
+esteso per creare `GameCLIApp`: una classe astratta, configurabile con istanze
+di `Model`, `State`, `MessagePusher` e gli elementi del dizionario tramite
+template method, realizza un applicazione eseguibile costruendo un'istanza di
+`Game` tramite una `Pipeline` di default.
+
+![Diagramma delle classi UML che rappresenta la gerarchia realizzata all'interno
+del modulo `cli`.](./images/cli_hierarchy.png){#fig:cli_hierarchy}
 
 #### Responsabilità personali
 
