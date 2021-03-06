@@ -24,6 +24,25 @@ jobs:
           fetch-depth: 0
           submodules: 'recursive'
 
+      - name: Set up JDK 11
+        if: (startsWith(github.event.pull_request.head.ref, 'hotfix/') != true) &&
+          (startsWith(github.event.pull_request.head.ref, 'release/') != true)
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Cache Gradle packages
+        if: (startsWith(github.event.pull_request.head.ref, 'hotfix/') != true) &&
+          (startsWith(github.event.pull_request.head.ref, 'release/') != true)
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Extract version from branch name (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/')
         run: |
@@ -38,12 +57,12 @@ jobs:
           VERSION=${BRANCH_NAME#hotfix/}
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Add tag
+      - name: Extract version from GitSemVer (for spurious branches)
+        if: (startsWith(github.event.pull_request.head.ref, 'hotfix/') != true) &&
+          (startsWith(github.event.pull_request.head.ref, 'release/') != true)
         run: |
-          git config user.name releaserbot
-          git config user.email github-actions@github.com
-          git tag ${{ env.RELEASE_VERSION }} -a -m "Release ${{ env.RELEASE_VERSION }}"
-          git push --follow-tags
+          ./gradlew generateVersionFile
+          echo "RELEASE_VERSION=$(cat ./build/version)" >> $GITHUB_ENV
 
       - name: Create release
         id: create-release
@@ -89,6 +108,17 @@ jobs:
         with:
           args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
 
+      - name: Upload Readme asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./README.md
+          asset_name: README.md
+          asset_content_type: text/x-markdown
+
       - name: Upload release assets
         uses: dwenegar/upload-release-assets@v1
         env:
@@ -105,29 +135,37 @@ jobs:
 
       - name: Prepare gh-pages environment
         run: |
-          rm -rf gh-pages/docs
-          mkdir gh-pages/docs -p
+          rm -rf gh-pages/{pps-report,lss-report,appendix}
+          mkdir gh-pages/{pps-report,lss-report,appendix} -p
 
       - name: Generate PPS report HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/docs/pps-report.html
+          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/pps-report/pps-report.html
 
       - name: Generate LSS report HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/docs/lss-report.html
+          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/lss-report/lss-report.html
 
       - name: Generate Appendix documents HTML
         uses: docker://pandoc/latex:2.11.4
         with:
-          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/docs/appendix.html
+          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/appendix/appendix.html
+
+      - name: Add images to gh-pages
+        run: |
+          mkdir gh-pages/{pps-report,lss-report,appendix}/images -p
+          rm -rf gh-pages/{pps-report,lss-report,appendix}/images/*
+          mv src/appendix/images gh-pages/appendix/images
+          mv src/pps-report/images gh-pages/pps-report/images
+          mv src/lss-report/images gh-pages/lss-report/images
 
       - name: Push reports to gh-pages
         run: |
           cd gh-pages
           git config user.name Reportbot
           git config user.email github-actions@github.com
-          git add reports
+          git add .
           git commit -m "Update reports to version ${{ env.RELEASE_VERSION }}"
           git push
