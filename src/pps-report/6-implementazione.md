@@ -321,7 +321,7 @@ di cui personalmente un membro del team è responsabile.
 
 #### Dettagli implementativi
 
-#### Generators
+##### Generators
 
 Le type class `Generator` e `GeneratorK` che si trovano all'interno di questo
 modulo sono state realizzate utilizzando le type class offerte da Cats.
@@ -337,7 +337,7 @@ che siano state definite istanze per le seguenti type class:
 - `Monoid[B]:` in quanto è necessaria un'operazione binaria associativa e un
   valore empty per effettuare l'operazione di fold.
 
-#### Dictionary
+##### Dictionary
 
 Contiene i costrutti, realizzati tramite algebraic data types, che consentono la
 dichiarazione di verbi, utilizzati in fase di scrittura di una storia da parte
