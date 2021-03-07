@@ -14,7 +14,7 @@ and adjectives also but just if there aren't ambiguity.
 ## Let's start
 
 Initially, you are in a basement.
-Inspecting the room there is:
+Inspecting the room there are:
 - a *brown chest*
 - an *iron hatch*
 - a *rusty heavy crowbar*
