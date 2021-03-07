@@ -1,0 +1,8 @@
+input-files:
+  - ./src/lss-report/1-introduzione.md
+  - ./src/lss-report/2-ddd.md
+  - ./src/lss-report/3-gradle-e-struttura.md
+  - ./src/lss-report/4-ci-qa.md
+  - ./src/lss-report/5-cd.md
+  - ./src/lss-report/6-reports-repository.md
+  - ./src/lss-report/7-conclusioni.md

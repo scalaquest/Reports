@@ -1,0 +1,85 @@
+name: Prerelease
+
+# Generates a new prerelease on each push on dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Extract version from GitSemVer
+        id: genversion
+        run: |
+          ./gradlew generateVersionFile
+          echo "RELEASE_VERSION=$(cat ./build/version)" >> $GITHUB_ENV
+
+      - name: Create pre-release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          prerelease: true
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
+
+      - name: Prepare environment
+        run: |
+          mkdir docs
+
+      - name: Generate PPS report PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/pps-report/latex.yaml -o docs/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate LSS report PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/lss-report/latex.yaml -o docs/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate appendix documents PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Upload Readme asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./README.md
+          asset_name: README.md
+          asset_content_type: text/x-markdown
+
+      - name: Upload release assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create-release.outputs.id }}
+          assets_path: ./docs

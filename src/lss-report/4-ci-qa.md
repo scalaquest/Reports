@@ -1,0 +1,195 @@
+# Continuous Integration, Quality Assurance
+
+Particolare sforzo è stato posto nel porre in atto workflow efficaci e
+automatizzati, in grado di garantire la qualità del codice, e la Contiuous
+Integration. Per la realizzazione di questi, si è utilizzato il tool di CI
+GitHub Actions, in parte per la prononda integrazione con GitHub, e in parte a
+causa delle
+[recenti modifiche al piano di pricing in Travis CI](https://blog.travis-ci.com/2020-11-02-travis-ci-new-billing).
+Questi a loro volta sfruttano delle funzionalità integrate all'interno del
+progetto grazie al tool di build automation Gradle.
+
+## Gradle e convention plugin
+
+Uno dei primissimi accorgimenti posti in atto nel progetto ha riguardato dei
+controlli di qualità posti in atto sul codice Kotlin dei convention plugin
+stessi, e nei file `build.gradle.kts` dei vari sub-project. Lo scopo era quello
+di innalzare la qualità, prima ancora dell codebase Scala vera e propria, della
+stessa struttura Gradle a contorno del progetto.
+
+A tal scopo, è stato abilitato il plugin **detekt**, un linter per Kotlin, posto
+in modalità strict: in questo modo, la build gradle fallisce nel caso in cui il
+codice Kotlin non rispetti determinati requisiti qualitativi, riportati in
+maniera dichiarativa all'interno del file `buildSrc/config/detekt.yml`.
+
+Inoltre, per facilitare l'aggiornamento di dipendenze e plugin, è stato adottato
+il plugin **refreshVersions**, che consente di estrapolare le versioni di
+dipendenze e plugin Gradle in un file separato `versions.properties`,
+permettendo l'aggiornamento automatizzato delle stesse.
+
+A tal proposito, a livello di organizzazione è stato definito un bot, denominato
+**[dependabot](https://github.com/scalaquest/Dependabot)** (nome ispirato al
+sistema di GitHub per l'aggiornamento delle dipendenze). Questa altro non è che
+una semplice repository con un workflow schedulato, eseguito automaticamente
+ogni notte, per rilevare all'interno delle varie repository di progetto
+eventuali dipendenze non aggiornate, e generando automaticamente una pull
+request nella quale si va ad aggiornare tale dipendenza. Tale bot non fa altro
+che sfruttare il bot esistente [UpGradle](https://github.com/DanySK/upgradle),
+configurandolo appositamente per agire all'interno dell'organizzazione.
+
+## Framework di test e soglie di coverage
+
+I test sono portati avanti tramite il framework **ScalaTest**, seguendo lo stile
+di test **WordSpec**. Integrare ScalaTest all'interno del progetto non si è
+rivelato banale. A seguito di varie ricerche, si è deciso di integrarli tramite
+il plugin **ScalaTest di Maiflai**, un plugin che integra e configura in maniera
+pressoché trasparente ScalaTest, basato su jUnit 5.
+
+In aggiunta a questo, è stato utilizzato un secondo framework di test, per
+rendere possibile testare il modulo `cli`. Basandosi infatti questo sulla
+libreria funzionale **ZIO**, il test dello stesso può essere effettuato solo con
+un framework apposito basato sempre su jUnit, denomitato **zio-test-junit**.
+L'omonima dipendenza è stata quindi aggiunta al `build.gradle.kts` dello
+specifico sub-project.
+
+Infine, si è reso necessario trovare un modo per poter gestire i controlli di
+coverage. È infatti noto che Jacoco, uno dei tool più diffusi per i controlli di
+coverage su JVM, mal si adatta ai controlli su sorgente Scala. Jacoco opera
+infatti a livello bytecode, andando a coprire del codice autogenerato da Scala,
+e che può portare a stime di coverage del tutto sballate. Lo stato dell'arte per
+la messa in atto di controlli di coverage Scala con Gradle passa per l'utilizzo
+di plugin dedicati che tengono conto di queste caratteristiche, come **Scoverage
+di Maiflai**. Questo permette di generare, tra gli altri, report di coverage in
+formato html, oltre ad esporre un task `:scoverageCheck`, che permette di far
+fallire la build in presenza di coverage più bassa di una determinata soglia. Si
+è quindi installato nel progetto questo plugin, andando anche a configurare una
+soglia di coverage mandatoria del 75% per i moduli `core` e `cli`.
+
+## Lint e code style
+
+Particolare attenzione è stata posta anche alla qualità del codice e allo stile
+dello stesso, definendo una serie di constraint atti ad innalzare la coesione
+stilistica del codice Scala tra le varie sezioni del progetto.
+
+Sono presenti molteplici alternative in grado di gestire funzionalità di linting
+e styling di codice Scala tramite Gradle. Si è deciso a tal scopo di utilizzare
+il plugin **spotless**: questo aggiunge al progetto vari task per lo styling
+automatico del codice (`:spotlessApply`) e per il check dello stesso
+(`:spotlessCheck`), supportando al contempo molteplici linguaggi di
+programmazione tramite tecniche differenti. Per Scala, Spotless sfrutta
+internamente `scalafmt`, un tool per lo styling del codice Scala. Le regole di
+styling applicate sono accessibili in un formato dichiarativo all'interno del
+file `.scalafmt.conf`.
+
+## SonarCloud
+
+Un ulteriore strumento posto in atto per innalzare la qualità del codice e
+certificarla è **SonarCloud**. Questo tool permette di porre in atto controlli
+automatizzati sul codice, estraendo varie metriche qualitative riguardo la
+codebase, legate a mantenibilità, coverage, debito tecnico, duplicazione e molto
+altro. Lo strumento fornisce inoltre una dashboard pubblica che ne raccoglie le
+principali metriche, accessibile
+[da qua](https://sonarcloud.io/dashboard?id=scalaquest_PPS-19-ScalaQuest).
+
+Di particolare rilevanza per il progetto è stata la funzionalità **quality
+gate**: SonarCloud integra infatti un bot, che ad ogni push all'interno di una
+pull request in direzione di branch stabili, effettua un controllo di CI,
+fallendo nel caso in cui le metriche rilevate non superino delle soglie
+preimpostate.
+
+Allo scopo di configurare correttamente SonarCloud, si è reso necessario
+aggiungere un plugin al progetto, denominato **Sonarqube**. Questo rappresenta
+uno strumento cosiddetto di "scanner" per SonarCloud, andando ad estrarre in
+maniera più mirata le metriche. Il plugin fornisce il task `:sonarqube`, che va
+eseguito in CI nel momento in cui si voglia eseguire un controllo di quality
+gate.
+
+## Il workflow CI
+
+Allo scopo di porre in atto la maggior parte dei controlli citati in precedenza,
+si è reso necessario definire un apposito workflow GirHub Actions, denominato
+semplicemente `ci.yml`. Questo viene eseguito ad ogni push e pull request
+effettuata in direzionde dei branch `main` e `dev`. Il workflow è stato
+organizzato in differenti job, i quali agiscono in maniera completamente
+parallela. Ciò permette di otttenere una logica di tipo fail-fast, desiderabile
+nelle routine di CI. I job eseguiti sono i seguenti:
+
+- **Build**: responsabile di verificare che il software venga buildato
+  correttamente. Il task `:build` viene in questo caso "sezionato" nei suoi due
+  sotto-task `:assemble` e `:check`, permettendo una più facile interpretazione
+  del log di GH Actions in caso di fail. Il job viene eseguito su una matrice di
+  sistemi operativi, mentre si è ritenuto non di interesse testare la build su
+  versioni differenti di Java (avendo posto come necessario il solo supporto a
+  Java 11 con Scala 2.13);
+
+- **Lint**: responsabile della correttezza stilistica del codice. Al suo
+  interno, viene semplicemente eseguito il task `:spotlessCheck`;
+
+- **Coverage**: controlla che le soglie di coverage impostate vengano
+  rispettate, tramite il task `:checkScoverage`.
+
+## Il workflow Opt-in CI
+
+Ulteriore controllo di CI è stato posto tramite il workflow **Opt-in CI**.
+Questo permette di attivare determitate funzioni di CI, come lo style check, la
+build, o il controllo di coverage, a partire dai branch `feature/*`. Viene
+definito "opt-in" in quanto di base questi controlli sono disabilitati. Vengono
+di fatto utilizzati solo per dei test, e possono essere invocati includendo, nel
+contenuto del commit che ha generato il push nel branch, i tag `[lint]`,
+`[build]`, `[coverage]`.
+
+## Modelli di sviluppo
+
+Si è ritenuto opportuno accennare all'interno di questo capitolo anche maggiori
+dettagli riguardo i modelli di sviluppo adottati. Questo poiché strettamente
+legati ai workflow di CI.
+
+Durante lo sviluppo del progetto, non si è adottato sempre lo stesso modello di
+sviluppo. Nelle prime fasi di progetto, durante le quali non si aveva del codice
+abbastanza stabile da essere "rilasciabile", si è seguito un approccio più
+flessibile e prototipale, denominato GitFlow, per poi evolvere il modello ad un
+più strutturato GitFlow.
+
+## GitHub Flow in fase embrionale
+
+**GitHub Flow** è un modello di sviluppo ispirato a GitFlow, ma con alcune
+caratteristiche che lo rendono più flessibile e semplice da porre in atto.
+
+Il modello richiede ad esempio che la versione stabile del software sia
+mantenuta su un branch `main` (o `master`), senza però la necessità di un branch
+`dev` parallelo. Allo stesso tempo, però, GitHub Flow suggerisce di organizzare
+il lavoro in `feature/*` branch, come in GitFlow, i quali confluiscono nel main
+a seguito della revisione di un secondo utente.
+
+Alla luce di ciò, le prime iterazioni di progetto hanno presentato particolare
+flessibilità sulle modalità di modifica del codice. Le varie feature sono state
+sviluppate sui rispettivi `feature/*` branch, poi riversati nel `main` tramite
+pull request. Si è subordinato la chiusura di queste alla revisione da parte di
+un membro del team (solitamente, non appartenente allo stesso sub-team) e al
+passaggio di determitati workflow di CI e QA.
+
+## GitFlow a regime
+
+Una volta predisposta una codebase sufficientemente stabile, e una volta
+abilitati i workflow di Continuous Deploy, si è migrato al più strutturato
+modello **GitFlow**. Questo permette di avere nel branch `main` la versione
+ufficiale e stabile, sempre associata a una release. A ogni push nel `main` deve
+corrispondere un tag, associato a sua volta a un numero di versione. La versione
+"di lavoro" del codice, stabile ma potenzialmente parziale, risiede nel branch
+`dev`.
+
+I vari `feature/*` branch confluiscono ora tramite pull request in `dev`, con
+gli stessi vincoli formulati per modello precedente (controlli di CI obbligatori
+e revisione di un utente). In aggiunta, per una maggiore leggibilità e
+organizzazione del codice, si è adottata una precisa politica di merge, che
+prevede che queste pull request vengano chiuse tramite **squash and merge**.
+
+Il `main` viene aggiornato tramite delle pull request sullo stesso originate da
+branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati dal `dev`, dove con `X.Y.Z`
+si intende un numero di versione formulato secondo semantic versioning. Queste
+pull request presentano, oltre ai vincoli di validazione visti per le precedenti
+(controlli di CI e revisione di un membro del team), anche la necessità di
+presentare una coverage superiore al 75% nei moduli `core` e `cli`. Sono poi
+presenti degli accorgimenti di automazione ulteriori per la delivery
+automatizzata degli artefatti, e la gestione dei tag, indicati nel capitolo
+successivo.

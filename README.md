@@ -1,29 +1,21 @@
 # ScalaQuest Final Reports
 
-![Reports Generation](https://github.com/scalaquest/reports/workflows/Reports%20Generation/badge.svg?branch=main)
-![Markdown lint](https://github.com/scalaquest/reports/workflows/Markdown%20lint/badge.svg?branch=main)
+![CI](https://github.com/scalaquest/Reports/workflows/CI/badge.svg)
+![Release](https://img.shields.io/github/v/release/scalaquest/Reports?label=Release)
 
 This is the entry point for PPS and LSS reports. We decided to set them in a
 separate repository, as the structure of them begun to rise in complexity.
 
-You can consult reports and other project documentation, either in Markdown, in
-PDF of from the repo website.
+The documentation is written in Markdown, available in the `src` directory. Anyway, more convenient consultation formats 
+are provided: for
+each release, PDF LaTeX and web version are generated automatically, using [Pandoc](https://pandoc.org/index.html).
 
-## PPS Report
+## How to consult the documentation?
 
-1. [Introduzione](./src/markdown/pps-report/1-introduzione.md)
-2. [Processo di sviluppo adottato](./src/markdown/pps-report/2-processo-sviluppo-adottato.md)
-3. [Requisiti](./src/markdown/pps-report/3-requisiti.md)
-4. [Design architetturale](./src/markdown/pps-report/4-design-architetturale.md)
-5. [Design di dettaglio](./src/markdown/pps-report/5-design-di-dettaglio.md)
-6. [Implementazione](./src/markdown/pps-report/6-implementazione.md)
-7. [Retrospettiva e conclusioni](./src/markdown/pps-report/7-retrospettiva-conclusioni.md)
+You can examine the web version of reports and the appendix document from the
+[PPS report website](https://scalaquest.github.io/Reports/docs/pps-report.html),
+[LSS report website](https://scalaquest.github.io/Reports/docs/lss-report.html) and
+[appendix website](https://scalaquest.github.io/Reports/docs/appendix.html).
 
-## LSS Report
-
-1. [Introduzione](./src/markdown/lss-report/1-introduzione.md)
-
-## Appendix documents
-
-- [Sprints historical overview](./src/markdown/appendix/sprints-historical-overview.md)
-- More coming soon
+If you prefer a LaTeX PDF version, you can download the latest release 
+[from here](https://github.com/scalaquest/Reports/releases/latest).

@@ -1,0 +1,10 @@
+defaults:
+  - ./src/appendix/index
+  - ./pandoc/defaults/html
+
+output-file: Appendix.html
+resource-path: ['./src/appendix']
+
+metadata:
+  title: ScalaQuest Appendix Documents
+

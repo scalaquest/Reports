@@ -1,0 +1,171 @@
+name: Release
+
+# Generates a new release, after a release/* branch is successfully
+# merged into main. The tag name is inferred from the branch name.
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  Deploy:
+
+    # only merged pull requests must trigger this job
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: Set up JDK 11
+        if: (startsWith(github.event.pull_request.head.ref, 'hotfix/') != true) &&
+          (startsWith(github.event.pull_request.head.ref, 'release/') != true)
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Cache Gradle packages
+        if: (startsWith(github.event.pull_request.head.ref, 'hotfix/') != true) &&
+          (startsWith(github.event.pull_request.head.ref, 'release/') != true)
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Extract version from branch name (for release branches)
+        if: startsWith(github.event.pull_request.head.ref, 'release/')
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#release/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Extract version from branch name (for hotfix branches)
+        if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#hotfix/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Extract version from GitSemVer (for spurious branches)
+        if: (startsWith(github.event.pull_request.head.ref, 'hotfix/') != true) &&
+          (startsWith(github.event.pull_request.head.ref, 'release/') != true)
+        run: |
+          ./gradlew generateVersionFile
+          echo "RELEASE_VERSION=$(cat ./build/version)" >> $GITHUB_ENV
+
+      - name: Create release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          prerelease: false
+
+      - name: Create "merge into dev" pull request
+        uses: thomaseizinger/create-pull-request@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          head: main
+          base: dev
+          title: Merge main into dev branch
+          body: |
+            This PR merges the main branch back into dev. This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates, are also present on the dev branch.
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
+
+      - name: Prepare environment
+        run: |
+          mkdir docs
+
+      - name: Generate PPS report PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/pps-report/latex.yaml -o docs/PPSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate LSS report PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/lss-report/latex.yaml -o docs/LSSReport-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Generate appendix documents PDF
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/latex.yaml -o docs/Appendix-${{ env.RELEASE_VERSION }}.pdf -M date:${{steps.date.outputs.date}}
+
+      - name: Upload Readme asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./README.md
+          asset_name: README.md
+          asset_content_type: text/x-markdown
+
+      - name: Upload release assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create-release.outputs.id }}
+          assets_path: ./docs
+
+      - name: Checkout GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: ./gh-pages
+
+      - name: Prepare gh-pages environment
+        run: |
+          rm -rf gh-pages/{pps-report,lss-report,appendix}
+          mkdir gh-pages/{pps-report,lss-report,appendix} -p
+
+      - name: Generate PPS report HTML
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/pps-report/html.yaml -o ./gh-pages/pps-report/pps-report.html
+
+      - name: Generate LSS report HTML
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/lss-report/html.yaml -o ./gh-pages/lss-report/lss-report.html
+
+      - name: Generate Appendix documents HTML
+        uses: docker://pandoc/latex:2.11.4
+        with:
+          args: -d ./pandoc/appendix/html.yaml -o ./gh-pages/appendix/appendix.html
+
+      - name: Add images to gh-pages
+        run: |
+          mkdir gh-pages/{pps-report,lss-report,appendix}/images -p
+          rm -rf gh-pages/{pps-report,lss-report,appendix}/images/*
+          mv src/appendix/images gh-pages/appendix/images
+          mv src/pps-report/images gh-pages/pps-report/images
+          mv src/lss-report/images gh-pages/lss-report/images
+
+      - name: Push reports to gh-pages
+        run: |
+          cd gh-pages
+          git config user.name Reportbot
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update reports to version ${{ env.RELEASE_VERSION }}"
+          git push

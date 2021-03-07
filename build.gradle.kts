@@ -10,7 +10,7 @@ repositories {
 spotless {
     // markdown format with Prettier
     format("styling") {
-        target("**/*.md")
+        target("src/**/*.md")
 
         // auto format markdown with to 80 characters
         prettier().configFile(rootDir.absolutePath + "/.prettierrc.yml")
@@ -30,5 +30,5 @@ gitSemVer {
 
 tasks.register("generateVersionFile") {
     mkdir("build")
-    File(buildDir.toString() + "/version").writeText(version.toString())
+    File("$buildDir/version").writeText(version.toString())
 }
