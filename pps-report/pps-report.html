@@ -1,0 +1,698 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      <meta name="author" content="Thomas AngeliniJacopo CorinaFrancesco GoriniRiccardo MaldiniFilippo Nardini">
+      
+      <title>ScalaQuest PPS Report</title>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Font-awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Styles -->
+      <link rel="stylesheet" href="https://ashki23.github.io/styles.css">
+         </head>
+   <body>
+            <div class="container">
+         <h1 class="title">ScalaQuest PPS Report</h1>
+                  <div class="row">
+            <div class="col-xl-9"><h1 data-number="1" id="sec:introduzione"><span class="header-section-number">1</span> Introduzione</h1>
+<p>L’obiettivo di questo progetto è quello di realizzare un framework per permettere l’implementazione di giochi del genere <strong><a href="https://en.wikipedia.org/wiki/Interactive_fiction">Interactive Fiction</a></strong> (come ad esempio <a href="https://en.wikipedia.org/wiki/Zork">Zork</a>), nei quali il giocatore può utilizzare comandi di testo per influenzare l’ambiente e proseguire nel gioco.</p>
+<p>Il progetto dovrà in primis fornire una libreria, tale da permettere la <strong>creazione di storie giocabili</strong> da utenti terzi, tramite un API facilmente accessibile.</p>
+<p>Dovrà inoltre fornire una <strong>piattaforma per l’esecuzione delle storie</strong>, basata su un’interfaccia da linea di comando. Questa permetterà ad utenti terzi di interagire con le storie create precedentemente, modificando lo stato nel gioco e avanzando man mano nella storia.</p>
+<p>Il progetto è stato ideato per essere oggetto di esame in maniera mutuata per i corsi di PPS e LSS. A tale scopo, fin dalla definizione delle fondamenta del progetto si è posta particolare attenzione nell’adozione di una metodologia tale da integrare le peculiarità di entrambi i corsi. Il report di LSS descrive estensivamente gli aspetti relativi allo stesso corso, tra cui:</p>
+<ul>
+<li>Il processo di sviluppo e di design, incentrato su un approccio di tipo Domain Driven;</li>
+<li>Le pratiche DevOps poste in atto.</li>
+</ul>
+<p>Il report di LSS va considerato parte integrante della documentazione di progetto, e approfondisce alcuni aspetti non trattatti all’interno del report corrente. Si consiglia quindi per la valutazione del progetto di consultare anche quest’ultimo.</p>
+<p>Nel report corrente vengono invece approfonditi nel dettaglio gli aspetti inerenti al corso di Paradigmi di Programmazione e Sviluppo.</p>
+<h2 data-number="1.1" id="sec:codice-sorgente-e-documentazione-aggiuntiva"><span class="header-section-number">1.1</span> Codice sorgente e documentazione aggiuntiva</h2>
+<p>Il report corrente tratta il processo di sviluppo limitatamente alla repository <a href="https://github.com/scalaquest/PPS-19-ScalaQuest">PPS-19-ScalaQuest</a>. Ad ogni modo, i sorgenti di progetto consistono nell’insieme di repository GitHub parte dell’<a href="https://github.com/scalaquest">organizzazione ScalaQuest</a>.</p>
+<p>Tutti i sorgenti sono resi disponibile sotto <strong>licenza MIT</strong>, in quanto chiara, breve e concisa. Non vengono poste particolari limitazioni riguardo la consultazione e il riuso da parte di terzi del software fornito.</p>
+<p>Ulteriori informazioni, documentazione e guide possono essere reperite a partire dal <a href="https://scalaquest.github.io/PPS-19-ScalaQuest">sito di progetto</a>.</p>
+<h1 data-number="2" id="sec:processo-di-sviluppo-adottato"><span class="header-section-number">2</span> Processo di sviluppo adottato</h1>
+<p>Il processo di sviluppo adottato rispecchia i principi della metodologia <strong>Scrum</strong>, basata su un approccio di tipo Agile.</p>
+<p>La metodologia richiede l’assegnamento di specifici ruoli, che sono stati distribuiti tra i componenti come di seguito specificato:</p>
+<ul>
+<li><p>A Filippo Nardini è stato assegnato il ruolo di <strong>Product Owner</strong>: responsabile per la massimizzazione del valore del progetto, in linea teorica dovrebbe esprimere i requisiti del cliente. Nel nostro caso, non avendo un vero e proprio committente, è stato assegnato lui il ruolo in quanto l’idea di fondo è stata proposta e delineata dallo stesso;</p></li>
+<li><p>A Riccardo Maldini è stato assegnato il ruolo di <strong>Scrum Master</strong>. Il suo ruolo è quello di facilitare il lavoro di Project Owner e team, innalzandosi a garante dei principi Scrum, e nel delineare l’organizzazione di Sprint e meeting;</p></li>
+<li><p>A tutti i componenti è stato assegnato il ruolo di <strong>team di sviluppo</strong>. Scrum prevede che i ruoli di Project Owner e Scrum Master non debbano in linea di massima sovrapporsi con il team di sviluppo; è stata però di fatto una scelta obbligata, visto le dimensioni ridotte del team.</p></li>
+</ul>
+<p>Il lavoro è stato suddiviso in <strong>Sprint settimanali</strong>, ad eccezione delle primissime iterazioni che hanno richiesto del tempo aggiuntivo.</p>
+<h2 data-number="2.1" id="sec:strumenti-a-supporto-di-scrum"><span class="header-section-number">2.1</span> Strumenti a supporto di Scrum</h2>
+<h3 data-number="2.1.1" id="sec:github-projects"><span class="header-section-number">2.1.1</span> GitHub Projects</h3>
+<p>Si è tenuto traccia del Backlog di progetto grazie allo strumento <strong>GitHub Projects</strong>. Questo rappresenta di fatto una versione di Trello interna a GitHub, che ne eredita la maggior parte delle caratteristiche (ad esempio, l’organizzazione dei task in liste), aggiungendo ad esso però importanti integrazioni con GitHub. È possibile ad esempio associare Issue e Pull Request direttamente ai task, automatizzarne e sincronizzarne apertura e chiusura con gli stessi. È possibile accedere alla backlog di progetto, essendo pubblica, a <a href="https://github.com/orgs/scalaquest/projects/1">questo indirizzo</a>.</p>
+<h3 data-number="2.1.2" id="sec:sod"><span class="header-section-number">2.1.2</span> Scrum Overview Document</h3>
+<p>Si è tenuto traccia dei meeting settimanali e dei progressi grazie alla redazione di un documento denominato <strong>Scrum Overview</strong>, aggiornato dopo ogni meeting, accessibile a <a href="https://scalaquest.github.io/Reports/reports/appendix.html">questo indirizzo</a>.</p>
+<h3 data-number="2.1.3" id="sec:github-issues-e-pull-request"><span class="header-section-number">2.1.3</span> GitHub Issues e Pull Request</h3>
+<p>Per approfondire e delineare l’effettiva interazione e evoluzione del progetto, sono stati utilizzati estensivamente Issue e Pull Request di GitHub. Consultando le stesse, è possibile ricostruire interamente il processo di sviluppo. Un “indice” dal quale recuperare i principali Issue e PR è contenuto all’interno del sopracitato documento di Scrum Overview (sec. 2.1.2).</p>
+<h3 data-number="2.1.4" id="sec:discord"><span class="header-section-number">2.1.4</span> Discord</h3>
+<p>Si è utilizzato il software <strong>Discord</strong> per effettuare i meeting settimanali e quotidiani. Si è preferito questo strumento, rispetto ad altri simili quali Slack, Microsoft Teams, Google Meet o altri, per vari motivi:</p>
+<ul>
+<li>per la buona qualità di video-chiamata;</li>
+<li>per la possibilità di lavorare in stanze differenti in contemporanea, e passare agevolmente da una stanza all’altra;</li>
+<li>per la possibilità di implementare hook integrati con GitHub, tali per cui ogni modifica alle repository di progetto viene notificata a tutti i componenti del gruppo, tramite un apposito canale.</li>
+</ul>
+<h2 data-number="2.2" id="sec:meet"><span class="header-section-number">2.2</span> Meeting e interazioni pianificate</h2>
+<h3 data-number="2.2.1" id="sec:meeting-settimanali"><span class="header-section-number">2.2.1</span> Meeting settimanali</h3>
+<p>Ad ogni fine settimana è stato portato avanti il <strong>meeting settimanale</strong>, durante il quale si sono effettuate le operazioni di Sprint Review, Retrospective e Planning. Nella pratica, tali meeting hanno seguito la seguente scaletta:</p>
+<ol type="1">
+<li><p><strong>Retrospettiva</strong>: ogni componente ha aggiornato i colleghi riguardo ciò che è stato fatto durante lo Sprint precedente. Questo ha portato spesso a importanti discussioni su tematiche emerse dal lavoro di ogni membro del team.</p></li>
+<li><p><strong>Sincronizzazione del lavoro effettuato</strong>: gran parte del lavoro è stato effettuato in branch separati (feature branch); grazie a una buona organizzazione, difficilmente il lavoro di un sotto-team è entrato in conflitto con quello di un altro. Ad ogni modo, tipicamente, al termine dello Sprint si è andati a chiudere le varie pull request aperte, gestendone eventuali conflitti minori.</p></li>
+<li><p><strong>Definizione dei task dello Sprint successivo e aggiornamento del backlog</strong>: a questo punto del meeting si vanno a definire gli obiettivi della settimana a venire, andando ad aggiornare di conseguenza il Backlog, trasferendo inoltre i task completati nello Sprint corrente nella colonna dei task completati negli Sprint precedenti. In questa fase si vanno inoltre a definire gli obiettivi prioritari, spostandoli nella colonna di Backlog dello Sprint corrente.</p></li>
+<li><p><strong>Assegnamento dei task</strong>: i task individuati vengono quindi assegnati ai componenti del team, o ad eventuali team interni (sec. 2.3).</p></li>
+</ol>
+<h3 data-number="2.2.2" id="sec:meeting-di-aggiornamento-periodici"><span class="header-section-number">2.2.2</span> Meeting di aggiornamento periodici</h3>
+<p>Ogni due o tre giorni è stato effettuato un <strong>meeting di aggiornamento</strong> tra tutti i componenti del team. Per ragioni pratiche, non è stato possibile eseguire Daily Scrum giornalieri, sostituiti però da questi meeting a cadenza più flessibile. Al pari del Daily Scrum, durante questi meeting ci si è aggiornati riguardo i progressi attuati nei singoli team interni.</p>
+<p>Sulla base di questi meeting, si sono anche prese eventuali misure di revisione in itinere dei task: è ad esempio successo che in alcuni casi un sotto-team completasse tutti i task ad esso assegnati in anticipo, o che in alcuni altri casi ci si rendesse conto che il task sarebbe stato concluso nello Sprint successivo. In questi casi, si è aggiornato di conseguenza il Backlog.</p>
+<h2 data-number="2.3" id="sec:team"><span class="header-section-number">2.3</span> Organizzazione in team interni</h2>
+<p>Il lavoro è stato sviluppato principalmente in team interni composti da due o tre componenti, seguendo la metodologia <strong>pair programming</strong>. Questa modalità, già utilizzata in altri progetti, pur portando iniziali rallentamenti dovuti a una minore parallelizzazione, porta ad un innalzamento della qualità del prodotto, e ad un minore debito tecnico, in quanto le scelte vengono discusse e revisionate in tempo reale dagli stessi membri del team. Essa porta inoltre i diversi componenti a comprendere meglio la parte sviluppata, e responsabilizza i singoli, dovendo a rotazione prendere il comando del team.</p>
+<p>In particolare:</p>
+<ul>
+<li>Si è individuato un <strong>sotto-team 1</strong>, composto dai componenti Riccardo Maldini, Jacopo Corina e Thomas Angelini. Tale team è stato responsabile in particolare di aspetti relativi alla definizione del componente model (approfondito in seguito);</li>
+<li>Si è individuato un <strong>sotto-team 2</strong>, composto dai componenti Filippo Nardini e Francesco Gorini. Il team ha approfondito i concetti legati al parsing del testo, e all’interpretazione dello stesso tramite l’engine Prolog;</li>
+<li>Task d’importanza chiave sono stati portati avanti <strong>in comune tra tutti i componenti</strong>;</li>
+<li>Task minori sono stati portati avanti <strong>singolarmente</strong> da componenti del team.</li>
+</ul>
+<h2 data-number="2.4" id="sec:modelli-di-sviluppo"><span class="header-section-number">2.4</span> Modelli di sviluppo</h2>
+<h3 data-number="2.4.1" id="sec:github-flow-in-fase-embrionale"><span class="header-section-number">2.4.1</span> GitHub Flow in fase embrionale</h3>
+<p>In una prima fase, all’interno dei singoli repository si è adottato come modello di sviluppo <strong>GitHub Flow</strong>. Tale modello, come intuibile dal nome, è ispirato a GitFlow, ma presenta alcune caratteristiche in contrapposizione allo stesso, che lo rendono più flessibile e semplice.</p>
+<p>Il modello richiede ad esempio che la versione stabile del software sia mantenuta su un branch <code>main</code> (o <code>master</code>), senza però la necessità di un branch <code>dev</code> parallelo. Ciò ha permesso di avere nella fase iniziale un <strong>flusso di sviluppo meno rigido</strong>: non avendo in principio software abbastanza stabile da poter essere rilasciato, né tanto meno pipeline di deploy attive, ci si è concentrati sullo sviluppo delle funzionalità di base. Allo stesso tempo, però, GitHub Flow suggerisce di organizzare il lavoro in <code>feature/*</code> branch, come in GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo utente.</p>
+<h3 data-number="2.4.2" id="sec:gitflow-a-regime"><span class="header-section-number">2.4.2</span> GitFlow a regime</h3>
+<p>Una volta predisposta una codebase sufficientemente stabile, e una volta abilitate le pipeline di deploy, si è migrato al più strutturato modello <strong>GitFlow</strong>. Questo permette di avere nel branch <code>main</code> la versione ufficiale e stabile. A ogni push nel <code>main</code> deve corrispondere un tag, associato a sua volta a un numero di versione. La versione “di lavoro” del codice, stabile ma potenzialmente parziale, risiede nel branch <code>dev</code>. I vari <code>feature/*</code> branch confluiscono ora in <code>dev</code>. Il <code>main</code> viene aggiornato tramite delle pull request sullo stesso originate da branch <code>release/X.Y.Z</code> (o <code>hotfix/X.Y.Z</code>), originati dal <code>dev</code>, e con <code>X.Y.Z</code> numero di versione formulato secondo semantic versioning.</p>
+<p>Per un maggiore approfondimento su questi aspetti, si rimanda al report di LSS.</p>
+<h2 data-number="2.5" id="sec:strumenti-di-test-build-e-ci"><span class="header-section-number">2.5</span> Strumenti di test, build e CI</h2>
+<p>Il progetto sfrutta <strong>Gradle</strong> come build automation tool. La scelta è dovuta primo luogo in quanto richiesto per l’integrazione con il corso di LSS. Ciò è comunque risultato molto utile per organizzare la build in maniera più strutturata, e per approfondirne gli strumenti di integrazione con Scala. A tal proposito, il codice è organizzato in più sotto-progetti, individuati a seguito di un’iniziale sessione di Domain Driven Design.</p>
+<p>È stato adottato per il testing del codice Scala il framework <strong>ScalaTest</strong>. Si è inoltre sperimentato <strong>WordSpec</strong> come stile di test. <strong>ZIO Test</strong> è stata utilizzata per il testing del framework funzionale ZIO.</p>
+<p>Per un maggiore approfondimento su questi aspetti, si rimanda al report di LSS.</p>
+<h3 data-number="2.5.1" id="sec:continuous-integration"><span class="header-section-number">2.5.1</span> Continuous Integration</h3>
+<p>Particolare attenzione è stata posta nell’individuazione di misure per assicurare la qualità del codice. Sono stati predisposti dei workflow a garanzia di Continuous Integration e Quality Assurance, costruiti con il tool <strong>GitHub Actions</strong>. Sono stati posti criteri di qualità man mano più stringenti e vincolanti, a seconda del grado di stabilità del branch. In generale, <code>main</code> e <code>dev</code> non possono essere modificati senza che il codice passi tutti i controlli di CI/QA, e senza che la pull request venga prima revisionata da un ulteriore componente del team, mentre per il branch <code>dev</code> non è necessaria alcuna revisione.</p>
+<p>In primo luogo, ogni push o pull request genera un controllo tramite il tool esterno <strong>SonarCloud</strong>, il quale definisce soglie qualitative basate su coverage, mantenibilità, code smells, presenza di bug conosciuti e molto altro. Sono presenti inoltre ulteriori controlli basati su <strong>workflow CI/QA custom</strong>, nei quali viene effettuato il lint del codice tramite il plugin Spotless, poste ulteriori soglie di coverage, effettuati test e compilato il codice su molteplici piattaforme.</p>
+<p>Tutti gli accorgimenti vengono approfonditi in maniera più dettagliata nel report di LSS.</p>
+<h3 data-number="2.5.2" id="sec:automazione-della-delivery"><span class="header-section-number">2.5.2</span> Automazione della delivery</h3>
+<p>Sono state inoltre predisposte dei workflow per la generazione e il deploy delle release, strutturate in maniera tale da rispettare i requisiti imposti da GitFlow, apportandone importanti caratteristiche di automazione.</p>
+<p>Nel momento in cui si desideri generare una release, il nostro flusso di lavoro GitFlow-based prevede che venga generato un branch <code>release/X.Y.Z</code>, e che venga aperta una pull request su <code>main</code> a partire da questa. Quanto detto è l’unica operazione manuale da effettuare: una volta chiusa la pull request, revisionata la stessa e passati i controlli di CI, un workflow genera il tag della versione, inferendolo dal nome del branch. Vengono quindi generati gli asset collegati alla release, e resi disponibili sia nella <a href="https://github.com/scalaquest/PPS-19-ScalaQuest/releases">sezione Release</a> del progetto, che sulla repository pubblica Maven Central (modulo <a href="https://mvnrepository.com/artifact/io.github.scalaquest/core">core</a> e modulo <a href="https://mvnrepository.com/artifact/io.github.scalaquest/cli">cli</a>). Vengono inoltre generati ScalaDoc, report di coverage e di test, resi disponibili all’interno dello <a href="https://scalaquest.github.io/PPS-19-ScalaQuest">spazio web GH Pages associato al progetto</a>.</p>
+<p>Un meccanismo equivalente è stato sviluppato per la repository che ospita le relazioni di progetto. Al momento della release, vengono generate le relazioni (a partire da codice Markdown) in formato <a href="https://github.com/scalaquest/Reports/releases/latest">PDF LaTeX</a> e <code>HTML</code> (<a href="https://scalaquest.github.io/Reports/pps-report/pps-report.html">pps report</a>, <a href="https://scalaquest.github.io/Reports/lss-report/lss-report.html">lss report</a>, <a href="https://scalaquest.github.io/Reports/appendix/appendix.html">appendix</a>), tramite il tool Pandoc.</p>
+<h1 data-number="3" id="sec:requisiti"><span class="header-section-number">3</span> Requisiti</h1>
+<p>I requisiti sono stati individuati a seguito di diverse sessioni di <strong>knowledge crunching</strong>, nelle primissime iterazioni di progetto. Queste sono state portate avanti congiuntamente da tutti i componenti del team, con lo scopo di definire glossario, elementi di modellazione di base e le loro interazioni.</p>
+<p>In linea di massima, durante le sessioni i requisiti sono andati delineandosi, grazie al confronto tra la visione di base proposta dal Product Owner e le proposte costruttive dei vari membri del team. Partendo dai concetti individuati si sono andate a creare le entità alla base per l’implementazione concreta di progetto.</p>
+<p>Si è data molta importanza a tale fase iniziale, tanto da portarla avanti per quasi due iterazioni complete di Sprint. Ciò allo scopo di creare dei requisiti il più possibile stabili. A seguire, sono stati elencati i requisiti individuati.</p>
+<h2 data-number="3.1" id="sec:requisiti-di-business"><span class="header-section-number">3.1</span> Requisiti di business</h2>
+<p>Per requisiti di business si intendono i requisiti che delineano la base del progetto:</p>
+<ul>
+<li><p>Il progetto consiste in un framework utilizzabile da sviluppatori terzi (<em>storyteller</em>, nel nostro glossario) per <strong>creare giochi di tipo Interactive Fiction</strong>;</p></li>
+<li><p>L’utilizzatore del gioco (<em>user</em>, nel nostro glossario) esprime i comandi attraverso delle <strong>frasi in linguaggio naturale</strong>. Ciò rende necessaria un’interpretazione lessicale e sintattica delle stesse;</p></li>
+<li><p>Il gioco è strutturato in <strong>iterazioni successive</strong>: ogni comando inserito dallo <em>user</em> modifica lo stato corrente del gioco, generando un output che lo descrive; sulla base di questo lo user prende una decisione su quale sarà il comando successivo.</p></li>
+</ul>
+<h2 data-number="3.2" id="sec:requisiti-utente"><span class="header-section-number">3.2</span> Requisiti utente</h2>
+<p>Per requisiti utente si intendono i requisiti che l’utente si aspetta dal sistema. Le categorie di utenti target del sistema sono due, ognuna con i propri requisiti caratteristici.</p>
+<h3 data-number="3.2.1" id="sec:storyteller"><span class="header-section-number">3.2.1</span> Storyteller</h3>
+<p>Il termine storyteller identifica i soggetti che utilizzano il sistema per la creazione di giochi. Sono date lui le seguenti possibilità:</p>
+<ul>
+<li><p>Utilizzare un’<strong>API minimale ma completa</strong> per la generazione di giochi di genere Interactive Fiction, accessibile tramite un linguaggio di programmazione idoneo;</p></li>
+<li><p>Modellare la propria <strong>storia</strong>, e i componenti che la caratterizzano;</p></li>
+<li><p>Definire dei <strong>comportamenti</strong> associati a tali componenti, intesi come delle funzioni in grado di modificare lo stato del gioco e l’output mostrato allo user;</p></li>
+<li><p>Definire le <strong>parole chiave</strong> (come nomi e verbi) che lo user può utilizzare, combinati in frasi anche complesse, per dettare comandi al motore di gioco.</p></li>
+</ul>
+<h3 data-number="3.2.2" id="sec:user"><span class="header-section-number">3.2.2</span> User</h3>
+<p>Il termine user identifica i soggetti che utilizzano giochi creati tramite il framework. Tale soggetto va considerato nell’analisi dei requisiti utente al pari dello storyteller, in quanto esso rappresenta sia un utente indiretto (essendo il fruitore di storie create dallo storyteller) che diretto (dovendo il sistema includere degli esempi di utilizzo). Sono date lui le seguenti possibilità:</p>
+<ul>
+<li>Interagire con le storie generate dagli storyteller, tramite un’<strong>interfaccia grafica a linea di comando</strong>; questa deve supportare l’input di frasi in linguaggio naturale, e fornirne un output testuale in risposta.</li>
+</ul>
+<h2 data-number="3.3" id="sec:requisiti-funzionali"><span class="header-section-number">3.3</span> Requisiti funzionali</h2>
+<p>Per requisiti funzionali si intendono le funzionalità che caratterizzano il progetto:</p>
+<ul>
+<li><p>Fornire un <strong>modello</strong> sul quale rendere possibile la costruzione di storie di tipo Interactive Fiction;</p></li>
+<li><p>Fornire una <strong>piattaforma</strong> sulla quale lanciare le storie, agente da linea di comando;</p></li>
+<li><p>Fornire la possibilità di creare <strong>piattaforme anche differenti</strong> da quella standard (ad esempio da interfaccia web);</p></li>
+<li><p>Fornire un <strong>engine Prolog</strong> in grado d’interpretare semplici comandi in linguaggio naturale in lingua inglese, mappandoli in azioni applicabili sulla storia;</p></li>
+<li><p>Fornire dei <strong>costrutti comuni</strong> per la definizione della storia, già modellati e potenzialmente riutilizzabili, al fine di rendere più agevole il compito dello storyteller;</p></li>
+<li><p>Esporre un set di <strong>esempi</strong>, utili come spunto di partenza per la creazione, da parte dello storyteller, della propria storia giocabile.</p></li>
+</ul>
+<h2 data-number="3.4" id="sec:requisiti-non-funzionali"><span class="header-section-number">3.4</span> Requisiti non funzionali</h2>
+<p>Per requisiti non funzionali si intendono caratteristiche del progetto utili a minimizzare le problematiche d’integrazione tra le varie componenti del framework, verificarne i comportamenti e garantire uno stile di scrittura conforme alle convenzioni adottate:</p>
+<ul>
+<li><p>Effettuare <strong>test</strong> per verificare il comportamento del codice, ponendo particolare attenzione ai componenti core;</p></li>
+<li><p>Introdurre pratiche <strong>DevOps</strong>, volte ad automatizzare la verifica del codice, porre forti condizioni di QA, compilare il codice ed eseguire i test su differenti sistemi operativi, e adottare workflow di Continuous Delivery;</p></li>
+<li><p>Seguire la metodologia Agile <strong>Scrum</strong>, cercando di restare più fedeli possibile al principio originale, definendo ruoli e Sprint settimanali al fine di raggiungere una corretta organizzazione temporale.</p></li>
+</ul>
+<h2 data-number="3.5" id="sec:requisiti-dimplementazione"><span class="header-section-number">3.5</span> Requisiti d’implementazione</h2>
+<p>Per requisiti d’implementazione si intendono tutte le tecnologie e le soluzioni d’implementazione considerate imprescindibili nella realizzazione del progetto.</p>
+<ul>
+<li><p>Applicare il paradigma di <strong>programmazione funzionale</strong>;</p></li>
+<li><p>Utilizzare il linguaggio di programmazione <strong>Scala</strong>, con garanzia di compatibilità sulla versione 2.13 (Java 11);</p></li>
+<li><p>Utilizzare il sistema di build automation <strong>Gradle</strong>;</p></li>
+<li><p>Utilizzare <strong>GitHub</strong> come servizio di repository per il progetto;</p></li>
+<li><p>Utilizzare <strong>GitHub Actions</strong> per CI e CD;</p></li>
+<li><p>Utilizzare <strong>ScalaTest</strong>, <strong>ZIO Test</strong> e <strong>WordSpec</strong> come specifica di test;</p></li>
+<li><p>Utilizzare il linguaggio <strong>Prolog</strong> per implementare l’engine.</p></li>
+</ul>
+<h1 data-number="4" id="sec:design-architetturale"><span class="header-section-number">4</span> Design architetturale</h1>
+<p>Il gioco si struttura dal punto di vista dello user in diverse <strong>iterazioni</strong>, per ognuna delle quali viene intercettato l’input utente (in linguaggio naturale), e a seguito di varie elaborazioni viene restituita una risposta (in formato testuale, o in altri formati).</p>
+<p>Risulta quindi naturale implementare ogni iterazione come una funzione, che dato un comando testuale e lo stato del gioco, restituisce lo stato modificato e l’output per l’utente. Faremo riferimento a questa funzione con il nome di <strong>pipeline</strong>, essendo di fatto strutturata come una vera e propria “catena di montaggio”, come verrà in seguito descritto.</p>
+<p>L’architettura di progetto si fonda tutto attorno a questa funzione. Sarà di fatto necessario un modulo incaricato di prendere un comando utente e restituirne l’output, e un modulo incaricato d’iterare la stessa, tale da comporre una sessione di gioco completa.</p>
+<p>Parallelamente alla gestione della pipeline, dovrà essere resa disponibile un’API per lo storyteller, così da permettere a lui di creare nuove storie basate su questo modello.</p>
+<h2 data-number="4.1" id="sec:architettura-di-massima"><span class="header-section-number">4.1</span> Architettura di massima</h2>
+<p>Si è organizzato quindi il sistema in più macro-componenti, corrispondente ognuno a un sotto-progetto Gradle separato. Sono stati individuati:</p>
+<ul>
+<li><p>Il modulo <strong>Core</strong>, che implementa l’engine di gioco, la pipeline, e il necessario per rendere possibile modellare nuove storie;</p></li>
+<li><p>Il modulo <strong>CLI</strong>, che fornisce un’implementazione in grado di eseguire sessioni di gioco basate su Command Line Interface. Il modulo include <em>Core</em> come dipendenza, rappresentando da solo la libreria necessaria per generare storie interagibili a linea di comando;</p></li>
+<li><p>I moduli <strong>Examples</strong>, che rappresentano dei giochi di esempio, andando a mostrare le modalità consigliate per l’utilizzo di <em>CLI</em> nell’implementazione di storie.</p></li>
+</ul>
+<figure>
+<img src="./images/main-component.png" alt="Diagramma dei componenti che rappresenta ad alto livello le dipendenze tra i moduli dell’applicazione." /><figcaption aria-hidden="true">Diagramma dei componenti che rappresenta ad alto livello le dipendenze tra i moduli dell’applicazione.</figcaption>
+</figure>
+<p>In seguito si vanno ad approfondire le caratteristiche dei singoli moduli.</p>
+<h3 data-number="4.1.1" id="sec:core"><span class="header-section-number">4.1.1</span> Core</h3>
+<p>Il modulo <strong>Core</strong> rappresenta l’elemento centrale del sistema, tale da implementare l’engine di gioco, la pipeline, e il necessario per rendere possibile modellare nuove storie. È strutturato ad alto livello in molteplici sezioni, corrispondenti in linea di massima a package separati:</p>
+<ul>
+<li><p><strong>Model</strong>: contiene tutti i componenti e gli strumenti necessari a modellare una storia;</p></li>
+<li><p><strong>Parsing</strong>: contiene le logiche alla base della fase di parsing della pipeline, ovvero ciò che concerne l’interpretazione dell’input testuale dell’utente tramite l’interprete Prolog.</p></li>
+<li><p><strong>Application</strong>: comprendono delle utility per dare un “template” di base alle storie, facilitandone la costruzione, e la generazione delle regole grammaticali Prolog utili alla fase di parsing;</p></li>
+<li><p><strong>Dictionary</strong>: contiene tutti gli elementi che definiscono il vocabolario utilizzato dal giocatore all’interno di una storia. In particolare è composto da un insieme di oggetti e un insieme di verbi;</p></li>
+<li><p><strong>Pipeline</strong>: definisce l’elaborazione di una singola iterazione di gioco, dall’input di un comando testuale e dello stato del gioco, all’output dello stato stesso modificato e del contenuto visualizzato dall’utente. L’elaborazione si struttura in differenti fasi, a loro volta contenute in differenti package:</p>
+<ol type="1">
+<li><p><strong>Lexer</strong>: dato l’input dello user, lo si sottopone ad un’analisi lessicale, volta alla creazione di uno stream di token. Ogni token corrisponde ad una parola, distinta in base alla separazione tramite spazi;</p></li>
+<li><p><strong>Parser</strong>: dato il risultato del <code>Lexer</code>, lo si sottopone ad un’analisi sintattica tramite l’interprete Prolog, dalla quale viene generato un Abstract Syntax Tree;</p></li>
+<li><p><strong>Resolver</strong>: dato il risultato del <code>Parser</code>, si associa ad ogni suo elemento un significato all’interno del sistema, producendo uno <strong>Statement</strong>, ossia un comando comprensibile dal modello;</p></li>
+<li><p><strong>Interpreter</strong>: dato il risultato del <code>Resolver</code>, si verifica che sia possibile applicare lo <code>Statement</code> sullo stato corrente del gioco. Quando possibile, viene generata una <strong>Reaction</strong> ossia una funzione contenente le eventuali modifiche da applicare sullo stesso;</p></li>
+<li><p><strong>Reducer</strong>: data la <code>Reaction</code> ottenuta al termine del passo precedente, si provvede ad applicarla allo stato corrente del gioco, aggiornandolo e generando eventuali messaggi utili per l’interazione con lo user.</p></li>
+</ol></li>
+</ul>
+<figure>
+<img src="./images/activity-pipeline.png" alt="Diagramma delle attività che mostra il flusso di esecuzione delle pipeline, ad alto livello." /><figcaption aria-hidden="true">Diagramma delle attività che mostra il flusso di esecuzione delle pipeline, ad alto livello.</figcaption>
+</figure>
+<h3 data-number="4.1.2" id="sec:cli"><span class="header-section-number">4.1.2</span> CLI</h3>
+<p>Il modulo <strong>CLI</strong> fornisce un’implementazione in grado di eseguire sessioni di gioco basate su Command Line Interface. Il modulo include <em>Core</em> come dipendenza, rappresentando da solo la libreria necessaria per generare storie a linea di comando.</p>
+<p>L’implementazione fornita itera di fatto l’esecuzione della pipeline. È possibile individuare, per ogni iterazione, le seguenti fasi:</p>
+<ol type="1">
+<li>Viene letta la frase inserita dallo user;</li>
+<li>Viene messa in azione la pipeline che restituisce un risultato;</li>
+<li>Viene creato il messaggio di risposta in base a ciò che restituisce la pipeline;</li>
+<li>Viene stampato a video il messaggio di risposta;</li>
+<li>Se il gioco è terminato, viene chiusa la sessione, altrimenti si ricomincia il ciclo.</li>
+</ol>
+<h3 data-number="4.1.3" id="sec:examples"><span class="header-section-number">4.1.3</span> Examples</h3>
+<p>Sono state incluse all’interno del progetto diverse storie di <strong>esempio</strong>, generate tramite l’utilizzo del modulo <em>CLI</em>:</p>
+<ol type="1">
+<li><p><strong>EscapeRoom</strong>: lo user si trova all’interno di uno scantinato con vari oggetti coi quali è concessa l’interazione. La storia si focalizza sull’utilizzo di vari builder preimpostati per la generazione della stessa;</p></li>
+<li><p><strong>PokeQuest</strong>: lo user viene catapultato nel mondo Pokemon. La storia mostra come sia possibile generare dei componenti completamente custom, limitando l’utilizzo di builder;</p></li>
+<li><p><strong>WizardQuest</strong>: lo user si ritrova nei panni di Harry Potter all’interno della Camera dei Segreti. La storia mostra come sia agevole spostare oggetti tra le varie stanze.</p></li>
+</ol>
+<h2 data-number="4.2" id="sec:pattern-architetturali"><span class="header-section-number">4.2</span> Pattern architetturali</h2>
+<p>La gestione dello stato all’interno del progetto si ispira al pattern architetturale <strong><a href="https://facebook.github.io/flux/docs/in-depth-overview">Flux</a></strong>.</p>
+<p>Il flusso di dati di questa applicazione segue un percorso unidirezionale ciclico. Quest’ultima soluzione in particolare, risulta essere molto efficace con il problema definito in questo progetto in quanto ad ogni input generato dallo user viene aggiornato lo stato. Il prossimo input utente viene valutato a partire del nuovo stato attuale.</p>
+<p>In questo paradigma viene considerato come punto centrale il nodo <strong>Dispatcher</strong>, attraverso il quale fluiscono tutti i flussi di dati. Nel nostro caso questo concetto è stato esploso ed è stato implementato attraverso la creazione della pipeline.</p>
+<h2 data-number="4.3" id="sec:scelte-tecnologiche"><span class="header-section-number">4.3</span> Scelte tecnologiche</h2>
+<p>Al fine di rispettare i requisiti proposti, sono state effettuate delle scelte su alcune tecnologie che hanno influenzato poi anche in maniera importante alcune scelte architetturali.</p>
+<h3 data-number="4.3.1" id="sec:tuprolog"><span class="header-section-number">4.3.1</span> TuProlog</h3>
+<p><strong>TuProlog</strong> rappresenta la libreria scelta per quanto concerne la creazione del motore Prolog di Natural Language Processing. Si è scelta questa libreria per avere una solida base per la fase di parsing.</p>
+<p>Le motivazioni per cui è stata scelta sono molteplici:</p>
+<ul>
+<li><p>perfetta integrazione tra tuProlog e il mondo JVM e questo ha consentito di utilizzare Prolog all’interno del linguaggio Scala senza particolari problematiche dovute all’integrazione di API diverse;</p></li>
+<li><p>possibilità di utilizzare la <strong>grammatica Prolog DCG</strong> importando una piccola parte aggiuntiva alla libreria.</p></li>
+</ul>
+<p>Tra i possibili svantaggi derivanti dall’utilizzo della libreria <em>tuProlog</em> vi potrebbe essere un problema legato alle prestazioni. Essendo sviluppata in Java e quindi su JVM, potrebbero non essere ottimizzati i tempi attraverso i quali vengono esplorate le soluzioni Prolog.</p>
+<p>Tuttavia nel nostro progetto il Prolog non viene richiamato in maniera intensiva, ma il suo utilizzo si limita alla parte della pipeline che esegue l’analisi sintattica della frase inserita dal player. Per questo motivo, non sussistono problemi di prestazione legati alla libreria utilizzata.</p>
+<h3 data-number="4.3.2" id="sec:zio"><span class="header-section-number">4.3.2</span> ZIO</h3>
+<p>Per quanto riguarda la gestione di side effect e azioni asincrone si è scelto di utilizzare <strong>ZIO</strong>, una libreria che fornisce costrutti per la manipolazione di effetti utilizzando un approccio funzionale, in maniera <em>type-safe</em>, quindi facilmente componibili e testabili.</p>
+<p>Il nucleo di ZIO è definito dal tipo <code>ZIO[R, E, A]</code>, nel quale:</p>
+<ul>
+<li><code>R</code> rappresenta l’ambiente necessario affinché l’effetto possa essere eseguito;</li>
+<li><code>E</code> rappresenta il tipo dell’errore che la computazione potrebbe causare;</li>
+<li><code>A</code> rappresenta il tipo di ritorno nel caso in cui l’effetto vada a buon fine.</li>
+</ul>
+<p>Il tutto può essero vista come una versione con side-effect di una funzione <code>R =&gt; Either[E, A]</code>.</p>
+<h3 data-number="4.3.3" id="sec:monocle-lens"><span class="header-section-number">4.3.3</span> Monocle Lens</h3>
+<p>Al fine di leggere e trasformare oggetti immutabili si è scelto di utilizzare la libreria <strong>Monocle</strong>, in particolare il costrutto <code>Lens</code>, le quali mettono a disposizione un’API semplice e componibile per modificare oggetti anche innestati, senza dover ricorrere all’uso del metodo <code>copy</code>. La libreria fornisce una macro <code>GenLens</code>, che consente la creazione di <code>Lens</code> a partire da una case class, rendendo questa fase molto semplice.</p>
+<p>L’uso di questi costrutti è risultato molto utile soprattutto nelle modifiche a strutture quali <code>State</code> e <code>Room</code>.</p>
+<h3 data-number="4.3.4" id="sec:cats"><span class="header-section-number">4.3.4</span> Cats</h3>
+<p>Durante la fase di analisi è emersa la necessità di accordarsi su quale implementazione di type classes utilizzare nel caso in cui si volessero scrivere algoritmi o strutture dati utilizzando un approccio funzionale. È stato deciso di utilizzare <strong>Cats</strong>, in quanto mette a disposizione un insieme di astrazioni, ispirate alla teoria delle categorie, che permettono di sfruttare al massimo le caratteristiche della programmazione funzionale. La scelta di <strong>Cats</strong> piuttosto che <strong>Scalaz</strong> è stata dettata principalmente dal fatto che la prima è una libreria più nuova, che in poco tempo è riuscita a guadagnare molta popolarità nella comunità di Scala (4.2k stars su GitHub per <strong>Cats</strong> alla sua release 2.4.2 contro 4.4k per <strong>Scalaz</strong> alla sua release 7.3.3), in quanto per i casi d’uso delineati durante la fase di analisi le due sarebbero equivalenti.</p>
+<p>Per curiosità e interesse è stata approfondita la conoscenza di questa libreria, portando a notevoli miglioramenti nella qualità del codice. Nelle fasi avanzate dello sviluppo sono state riscritte attraverso le astrazioni fornite da <strong>Cats</strong> (quali <code>Foldable</code>, <code>Monoid</code>, ecc.) sezioni del software che inizialmente non erano state progettate con i concetti di componibilità e riusabilità.</p>
+<h1 data-number="5" id="sec:design-di-dettaglio"><span class="header-section-number">5</span> Design di dettaglio</h1>
+<h2 data-number="5.1" id="sec:riconoscimento-dei-comandi-testuali"><span class="header-section-number">5.1</span> Riconoscimento dei comandi testuali</h2>
+<p>In queste sezioni si descrivono le modalità con le quali Prolog è stato utilizzato nell’implementazione dei componenti atti ad interpretare i comandi dell’utente in forma testuale, associoando agli stessi un signigicato comprensibile dal modello.</p>
+<h3 data-number="5.1.1" id="sec:manipolazione-di-espressioni-prolog"><span class="header-section-number">5.1.1</span> Manipolazione di espressioni Prolog</h3>
+<p>Un problema evidente che è emerso durante la fase di prototipazione del progetto è stato quello della manipolazione delle espressioni Prolog, che all’interno del modulo del <code>Parser</code> è pervasivo. È stato fatto un primo tentativo di rappresentazione delle espressioni tramite l’uso di semplici stringhe, ma questa modalità si è rivelata presto inadatta e scomoda. Date le caratteristiche di Scala, si è pensato di implementare una libreria integrata all’interno del progetto, chiamata <strong>Scalog</strong>. Questa consente agevolmente di creare espressioni Prolog indipendenti dalla specifica implementazione del linguaggio, utilizzando un DSL intuitivo, i cui simboli sono ispirati direttamente a quelli del linguaggio Prolog, cercando di imitare il più possibile la sintassi originale. Inoltre, la libreria consente di effettuare pattern matching contro espressioni esistenti, in modo da agevolare il processo dell’interazione con i risultati del <code>Parser</code>.</p>
+<h3 data-number="5.1.2" id="sec:prolog-parser"><span class="header-section-number">5.1.2</span> Prolog parser</h3>
+<p>Un ideale che è stato perseguito durante lo sviluppo di tutto il software è stato quello della realizzazione di componenti riusabili. Per questo motivo si è cercato di astrarre, quando possibile, dalle specifiche implementazioni e di descrivere interfacce attraverso le quali rappresentare le realizzazioni concrete. Per il componente <code>Parser</code> sono state realizzate quindi delle interfacce volte a rappresentare componenti generici. In particolare:</p>
+<ul>
+<li><code>Library</code> rappresenta una generica libreria Prolog;</li>
+<li><code>Theory</code> rappresenta una generica teoria Prolog;</li>
+<li><code>Engine</code> rappresenta un generico motore Prolog, il quale, inizializzato con una teoria e un insieme di librerie, è in grado di rispondere a interrogazioni.</li>
+</ul>
+<p>Per comunicare con <code>Engine</code> si è scelto di utilizzare <strong>Scalog</strong>, in quanto agnostico a specifiche implementazioni e facilmente mappabile a costrutti di altre librerie Prolog.</p>
+<p>A questo punto, ancor prima di realizzare un’implementazione dello specifico <code>Engine</code>, è già stato possibile realizzare il <code>PrologParser</code>: un parser che utilizza un generico motore Prolog per effettuare l’analisi sintattica di una sequenza di token.</p>
+<h2 data-number="5.2" id="sec:application-structure"><span class="header-section-number">5.2</span> Application structure</h2>
+<p>Giunti alla definizione degli esempi, si è rilevata la necessità di un refactoring della struttura del software. Ogni volta che si è andati ad instanziare una nuova storia, infatti, era necessario scrivere diverso codice “boilerplate”, comune a tutti gli esempi. Principalmente per quanto concerne la creazione della pipeline e del dizionario della storia, in mancanza di particolari necessità, avvengono sempre allo stesso modo. Per questo motivo si è deciso di effettuare quanto più possibile il refactoring degli elementi comuni, inserendoli all’interno del package <code>application</code>, all’interno del modulo <code>core</code>. Tale package fornisce un insieme di costrutti che consentono con poche istruzioni aggiuntive di creare una storia. All’interno di questo son confluite anche delle implementazioni di default, volte ad aumentare maggiormente l’efficienza nella scrittura della singola storia.</p>
+<p>Son stati aggiunti anche metodi di utility, particolarmente importanti per fornire delle funzionalità adatte ad ogni storia.</p>
+<p>In definitiva, tale processo di refactoring ha portato:</p>
+<ul>
+<li>maggiore modularità tra i componenti;</li>
+<li>eliminazione di codice ripetuto in tutti gli esempi;</li>
+<li>minore possibilità di errore per lo storyteller;</li>
+<li>maggiore velocità nel definire nuove storie.</li>
+</ul>
+<h2 data-number="5.3" id="sec:generator-e-generatork"><span class="header-section-number">5.3</span> Generator e GeneratorK</h2>
+<p>Tra i principali obiettivi preposti, vi è sicuramente quello di definire una sola volta gli elementi che compongono il dizionario di una storia e, a partire da questo, generare tutte le strutture dati necessarie ai componenti della <code>Pipeline</code>. In particolare si è reso necessario generare clausole Prolog utili al parser per svolgere l’analisi sintattica, e una struttura dati in grado di mappare in maniera biunivoca il nome di un elemento con il riferimento all’oggetto che lo descrive.</p>
+<p>Questa necessità di generare strutture dati diverse, utilizzando un isomorfismo, a partire da un elemento <code>A</code> che può essere <code>Item</code> o <code>Verb</code>, si è rivelata essere un pattern fattorizzabile in un concetto più astratto e riusabile che è stato chiamato <code>Generator[A, B]</code>, realizzato tramite una type class. Si tratta di un wrapper di una funzione <code>A =&gt; B</code>.</p>
+<p>Nel dizionario, però, gli elementi sono contenuti all’interno di una collezione. Si è quindi introdotto il concetto di <code>GeneratorK[F[_], A, B]</code>, che rappresenta un wrapper di una funzione <code>F[A] =&gt; B</code>, quindi una funzione in cui <code>A</code> è all’interno di un contesto <code>F[_]</code>. La scelta del nome è stata ispirata dai nomi utilizzati dalle type class di <strong>Cats</strong>, le quali presentano una lettera <em>K</em> nelle versioni delle type class che operano sugli <em>higher-kinded types</em>.</p>
+<p>Tramite l’uso di queste due astrazioni combinate è possibile fattorizzare funzioni come <code>List[A] =&gt; List[B]</code> o <code>List[A] =&gt; Map[K, V]</code> in un’implementazione comune.</p>
+<h2 data-number="5.4" id="sec:il-modello"><span class="header-section-number">5.4</span> Il modello</h2>
+<p>Uno dei requisiti centrali alla base del progetto è quello di fornire allo storyteller un’API che lo aiuti a creare le proprie storie. In quest’ottica, il package <code>model</code> del modulo <code>core</code> contiene tutti i componenti utili alla creazione di una storia. Più precisamente, il <strong>modello</strong> può essere definito come l’insieme di tutti e soli componenti utilizzabili dallo storyteller per costruire la propria storia.</p>
+<p>Il componente chiave attorno al quale il modello si fonda è lo <strong>stato</strong>. Esso può essere assimilato a una sorta di “punto di salvataggio”: a partire dal salvataggio iniziale (ciò che indichiamo con il termine <strong>storia</strong>), essa va evolvendosi ad ogni iterazione, lasciando l’utente proseguire nel gioco. L’entità che implementa il concetto di stato prende appunto nome di <code>State</code>.</p>
+<p>A un livello più pratico, i vari componenti dello <code>State</code> sono propedeutici alla messa in atto della pipeline, permettendo la trasformazione di comandi sotto forma di stringhe testuali in comandi comprensibili dal modello (<code>Statement</code>), applicabili a loro volta sullo <code>State</code>, modificandolo. Lo <code>State</code> deve contenere indicazioni riguardo ai seguenti componenti (astraendo dalle strutture dati utilizzate):</p>
+<ul>
+<li><p>l’insieme di <code>Action</code> e dei <code>Verb</code> ad essi associati. Questi permettono di mappare i verbi che lo user include all’interno dei comandi testuali, a delle entità comprensibili dal modello. Una volta definiti, non dovrebbero essere modificabili durante il gioco;</p></li>
+<li><p>l’insieme di <code>Item</code> disponibili: per <code>Item</code> si intende un qualunque componente con il quale il player può interagire durante il gioco. Essi devono essere definiti nella fase iniziale del gioco, anche se possono non essere inizialmente visibili. L’unico vincolo è quindi quello di non poterne generare di nuovi a runtime;</p></li>
+<li><p>L’insieme di <code>Room</code>: una <code>Room</code> rappresenta una porzione geografica della mappa del gioco. Il player durante il gioco deve avere la possibilità di muoversi tra le <code>Room</code>. La stanza può concettualmente contenere dinamicamente degli <code>Item</code> a runtime; deve contenere un’indicazione riguardo alle <code>Room</code> limitrofe (direttamente raggiungibili dalla <code>Room</code> corrente, con un passo in direzione di un punto cardinale);</p></li>
+<li><p>Il <code>Ground</code>: esso rappresenta un’entità in grado di gestire i verbi intransitivi nella modifica dello stato;</p></li>
+<li><p>Varie altre indicazioni rappresentative dello stato, potenzialmente espandibili.</p></li>
+</ul>
+<p>Porre in atto un’implementazione per queste entità non è stato banale. Le principali problematiche sono legate a:</p>
+<ul>
+<li><p><strong>Dipendenze incrociate</strong>: lo <code>State</code> contiene concettualmente degli <code>Item</code>, ma all’atto pratico anche gli <code>Item</code> devono venire a conoscenza dello <code>State</code>. Stesso ragionamento vale per le <code>Room</code>;</p></li>
+<li><p><strong>Evoluzione dello stato</strong>: lo <code>State</code> è un’entità immutabile; per poterla aggiornare, è necessario crearne una copia modificata, e per far ciò si deve conoscere il tipo concreto alla base di ogni entità. A causa delle dipendenze incrociate, ogni entità deve conoscere il tipo concreto di ognuna.</p></li>
+</ul>
+<p>La miglior soluzione a cui siamo giunti è stata quella di definire le interfacce base di <code>State</code>, <code>Item</code> e <code>Room</code> all’interno di un trait <code>Model</code>, e di implementarle facendo uso dei <strong>path dependent types</strong>. Sulla base di ciò sono state poi definite delle <code>Lens</code> per rendere possibile la modifica delle singole entità.</p>
+<h3 data-number="5.4.1" id="sec:aggiornamento-dello-stato-e-behavior-based-model"><span class="header-section-number">5.4.1</span> Aggiornamento dello stato e behavior-based model</h3>
+<p>Un altro importante sfida nella definizione del modello riguarda la messa in atto di un meccanismo tale da consentire allo stato di “reagire” ai comandi utente.</p>
+<p>Nel capitolo precedente si è utilizzato il termine <code>Statement</code> per indicare l’output della fase di resolving della pipeline. Tale output rappresenta un <strong>comando interpretabile dal modello</strong>. Ciò significa che al termine della fase di risoluzione, si ha conoscenza riguardo a quali sono gli <code>Item</code> e le <code>Action</code> coinvolti nel comando.</p>
+<p>La fase d’interpretazione della pipeline è quella predisposta all’individuazione delle modifiche da applicare allo stato. L’output della fase è una <code>Reaction</code>, ovvero un’entità comprendente funzioni in grado di applicare allo stato le modifiche necessarie, e un’insieme di informazioni da mostrare in output all’utente (concetto approfondito nella sezione sec. 5.4.2). La fase viene posta in atto come segue:</p>
+<ul>
+<li><p>nel caso di <strong>comandi intransitivi</strong> (<code>Statement</code> composto da una sola <code>Action</code>), l’<code>Action</code> viene applicata direttamente a un’entità interna allo stato, responsabile di gestire comportamenti intransitivi. Tale entità prende il nome di <code>Ground</code>, e deve esporre un metodo <code>Ground::use(action)</code>, con output la rispettiva <code>Reaction</code>;</p></li>
+<li><p>nel caso di <strong>comandi transitivi e ditransitivi</strong> (<code>Statement</code> composto da una <code>Action</code>, un <code>Item</code> sottoposto a tale azione, e un eventuale <code>Item</code> indirettamente coinvolto), l’<code>Action</code> viene applicata all’<code>Item</code> oggetto dell’azione, passandogli un’eventuale indicazione riguardo all’item indirettamente coinvolto. Di conseguenza anche gli <code>Item</code> devono esporre un metodo <code>Item::use(azione, itemIndiretto)</code>, e ritornare la rispettiva <code>Reaction</code>.</p></li>
+</ul>
+<p>Alla luce di ciò, si è reso necessario un meccanismo flessibile, modulare, facilmente utilizzabile dallo storyteller, che permettesse di definire il comportamento della funzione <code>::use</code>.</p>
+<p>L’idea a cui si è giunti si basa sul concetto di <strong>behavior</strong>. Un behavior è proprietà, caratteristica degli <code>Item</code> e dei <code>Ground</code>, tale da permettere l’integrazione modulare, all’interno di un <code>Item</code> (o un <code>Ground</code>), della logica per la gestione di determinate combinazioni <code>Action</code>-<code>Item</code>.</p>
+<p>Ad esempio, integrando a un item <code>apple</code> il comportamento <code>Takeable</code>, diventa possibile durante il gioco prendere la mela (comando <code>take the apple</code>), restituendo la <code>Reaction</code> corrispondente.</p>
+<p>La potenza di tale meccanismo risiede nella sua <strong>estendibilità</strong>: ogni behavior può facilmente essere esteso, integrando ulteriori combinazioni all’interno degli stessi, o sovrascrivendo eventuali comportamenti predefiniti.</p>
+<p>All’atto pratico, ciò è stato reso possibile definendo un ulteriore trait che estende il <code>Model</code> di base:</p>
+<ul>
+<li><p>estendendo il concetto di <code>Item</code> e <code>Ground</code>, fornendo ad essi la possibilità di integrare loro dei behavior (<code>BehaviorBasedItem</code> e <code>BehaviorBasedGround</code>);</p></li>
+<li><p>fornendo un’implementazione flessibile del concetto di behavior, (<code>GroundBehavior</code> e <code>ItemBehavior</code>);</p></li>
+<li><p>fornendo un costrutto in grado di definire combinazioni <code>Action</code>-<code>Item</code> (<code>GroundTrigger</code> e <code>ItemTrigger</code>).</p></li>
+</ul>
+<h3 data-number="5.4.2" id="sec:reaction"><span class="header-section-number">5.4.2</span> Reaction</h3>
+<p>Nelle sezioni precedenti si è spesso fatto riferimento al termine <code>Reaction</code>, come una funzione in grado di modificare lo stato e di tener traccia dell’output da mostrare all’utente. Nella pratica, ciò si concretizza in una funzione <code>State =&gt; (State, Seq[Message])</code>, che, preso lo stato attuale, ne produce una nuova istanza e una sequenza di messaggi. Permette quindi sia di rappresentare un cambiamento nello stato della partita, che la notifica di avvenuto evento. Possibili implementazioni potrebbero essere <code>takeTheItem(i: Item)</code>, <code>move(direction: Dir)</code>, ecc.</p>
+<p>È un concetto chiave utilizzato all’interno del <code>Reducer</code>, componente che agisce in coda alla <code>Pipeline</code> dopo l’<code>Interpreter</code>, e che si occupa di restituire lo stato aggiornato insieme alle notifiche sugli effetti prodotti dal comando sulla partita.</p>
+<p>Il concetto di <code>Reaction</code> è stato ampliato inizialmente con un metodo <code>::combine()</code>, che consente di combinarne una coppia, in modo che lo stato risultante della prima sia passato come argomento della seconda e che i messaggi siano concatenati. Successivamente sono stati introdotti altri metodi che semplificano un approccio funzionale, il più importante dei quali è <code>flatMap</code>, che abilita la creazione e concatenazione di più reazioni utilizzando il costrutto <strong>for comprehension</strong> di Scala.</p>
+<h3 data-number="5.4.3" id="sec:i-message-e-il-pusher"><span class="header-section-number">5.4.3</span> I Message e il Pusher</h3>
+<p>Si è fatto riferimento, nelle sezioni precedenti, alla necessità di avere un output, da poter mostrare all’utente, al termine dell’esecuzione della pipeline. Come scelta progettuale, si è deciso di separare l’output vero e proprio, da delle <strong>notifiche di avvenuto evento</strong>, che fanno scaturire lo stesso. Ciò permette di avere una separazione più netta dei concetti, supportando potenzialmente diverse tipologie di output (non soltanto testuale).</p>
+<p>La pipeline, oltre a fornire come output lo stato aggiornato, restituisce infatti una sequenza di notifiche. Esempi di notifiche potrebbero essere l’apertura di una porta, l’uccisione di un avversario, l’aver mangiato una mela, ecc. Nella nostra implementazione, tali notifiche prendono il nome di <code>Message</code>.</p>
+<p>Al di fuori della pipeline è quindi necessario un componente in grado di associare ad ogni <code>Message</code>, il corrispondente output, facilmente personalizzabile dallo storyteller. A tale scopo, nella nostra implementazione è presente il componente <code>Pusher</code>. Esso viene implementato come un’abstract class che permette di definire una mappatura tra dei <code>Message</code> in input con un output di tipo generico. <code>StringPusher</code> è un’abstract class che estende poi il <code>Pusher</code>, supportando output di tipo <code>String</code>.</p>
+<p>Il <code>Pusher</code> è facilmente personalizzabile dall’utente. Per essere utilizzato, deve essere esteso, andandone a implementare i <code>::messageTriggers</code>. Un <code>MessageTriggers</code> altro non è che una <code>PartialFunction</code>, che permette di definire le varie corrispondenze tra <code>Message</code> e output.</p>
+<h3 data-number="5.4.4" id="sec:commons"><span class="header-section-number">5.4.4</span> Commons</h3>
+<p>Il package <code>model</code> contiene, tra gli altri, anche delle implementazioni “pronte all’uso” di vari <code>Item</code>, <code>Action</code>, <code>Verb</code>, <code>Reaction</code>, <code>Ground</code> e <code>Pusher</code>, di uso comune nell’implementazione di storie. Questi sono contenuti all’interno del package <code>commons</code>. È possibile integrare questi ultimi nel trait <code>BehaviorBasedModel</code> mixandoli all’interno dello stesso: si è infatti strutturato il package in maniera tale da contenere le implementazioni in differenti trait. Nel progetto, in generale, i trait marcati con il suffisso <code>Ext</code> possono essere mixati al model principale; quelli che iniziano con il prefisso <code>C</code> sono inoltre dei trait facenti parte di <code>commons</code>.</p>
+<h2 data-number="5.5" id="sec:cli-1"><span class="header-section-number">5.5</span> CLI</h2>
+<p>Questo modulo rappresenta di fatto un’implementazione che fa uso dei concetti presenti in <code>ApplicationStructure</code>. Dentro <code>cli</code> viene definito un game loop utilizzando <strong>ZIO</strong> come strumento per la gestione delle interazioni con la console, che in questo modo risultano essere type safe.</p>
+<p>L’applicazione viene implementata tramite uno schema REPL (Read-Eval-Print-Loop), che consente ad ogni iterazione di inserire un comando che viene interpretato dal gioco e a cui corrisponde un output.</p>
+<ol type="1">
+<li><p><strong>Lettura della frase inserita</strong>: questa parte viene gestita attraverso <strong>ZIO</strong>, il quale si occupa della lettura dalla console in maniera type safe.</p></li>
+<li><p><strong>Messa in azione della pipeline</strong>: la frase letta dalla console viene inoltrata alla <code>Pipeline</code>. Questa si occupa di elaborare il risultato in forma:</p>
+<ul>
+<li><em>messaggio di errore</em> (qualora non fosse andato a buon fine);</li>
+<li><em>nuovo stato</em> aggiornato;</li>
+<li><em>sequenza di messaggi</em> da restituire in uscita.</li>
+</ul></li>
+<li><p><strong>Creazione del messaggio in output</strong>: in base al risultato restituito dalla <code>Pipeline</code>, viene creato il messaggio da mostrare sulla console. In particolare, se si è verificato un errore, viene ritornato un avviso che lo descrive, altrimenti viene restituita la sequenza di messaggi. In quest’ultimo caso viene anche aggiornato lo stato.</p></li>
+<li><p><strong>Stampa del messaggio in uscita</strong>: viene stampato su console il messaggio o la sequenza di messaggi calcolati nel punto 3.</p></li>
+<li><p><strong>Controllo di terminazione</strong>: infine viene controllato se il gioco è terminato, e qualora non fosse così, viene richiamato ricorsivamente questo schema, ritornando al punto 1 precedente.</p></li>
+</ol>
+<p>Gli errori che vengono emessi dalla <code>Pipeline</code> sono stati trasformati in messaggi, in quanto come nelle shell dei comandi, i refusi (intesi come ad esempio “input non compreso” o “operazione non possibile”) sono considerati come parte integrante del sistema.</p>
+<h1 data-number="6" id="sec:implementazione"><span class="header-section-number">6</span> Implementazione</h1>
+<p>In questo progetto sono diversi i temi implementativi salienti riscontrati. Di seguito sono descritti i punti principali, divisi in base all’autore o agli autori che li hanno sviluppati.</p>
+<h2 data-number="6.1" id="sec:aspetti-trattati-in-comune"><span class="header-section-number">6.1</span> Aspetti trattati in comune</h2>
+<p>Alcuni task relativi allo sviluppo del software hanno richiesto l’attenzione di tutti i membri del team, in sedute comuni di programmazione e di scambio d’idee. Tra questi:</p>
+<ul>
+<li>task relativi a sezioni strategiche del software;</li>
+<li>task particolarmente complessi, tali da richiedere competenze possedute da più sotto-team;</li>
+<li>task relativi allo sviluppo di sezioni “cuscinetto” tra moduli differenti, tali da richiedere conoscenze riguardo a strutture sviluppate separatamente da sotto-team differenti.</li>
+</ul>
+<p>È possibile individuare i seguenti task con queste caratteristiche:</p>
+<ul>
+<li>Lo sviluppo degli esempi;</li>
+<li>Il lavoro delle primissime iterazioni, nelle quali è stata posta la base di progetto, e la suddivisione in più sotto-progetti Gradle;</li>
+<li>Lo sviluppo delle strutture alla base del model;</li>
+<li>Lo sviluppo delle strutture alla base della pipeline.</li>
+</ul>
+<h2 data-number="6.2" id="sec:aspetti-trattati-in-sotto-team"><span class="header-section-number">6.2</span> Aspetti trattati in sotto-team</h2>
+<p>Allo scopo di rendere il lavoro parallelo e flessibile, gran parte del lavoro è stato spartito tra due sotto-team, con responsabilità legate a parti di progetto differenti.</p>
+<h3 data-number="6.2.1" id="sec:team-1"><span class="header-section-number">6.2.1</span> Team 1</h3>
+<p>Il team 1 è composto dai membri Riccardo Maldini, Jacopo Corina, Thomas Angelini. Sono stati trattati specifici aspetti del <code>Core</code>, legati in generale alla definizione del modello. Nello specifico:</p>
+<ul>
+<li><p>sviluppo di buona parte del modello, e del sotto-modulo <code>commons</code>, corrispondente a grandi linee al package <code>model</code>;</p></li>
+<li><p>sviluppo di componenti interni al modulo <code>pipeline</code>, quali <code>resolver</code>, <code>interpreter</code> e <code>reducer</code>.</p></li>
+</ul>
+<h3 data-number="6.2.2" id="sec:team-2"><span class="header-section-number">6.2.2</span> Team 2</h3>
+<p>Il team 2 è composto dai membri Filippo Nardini, Francesco Gorini. Sono stati trattati specifici aspetti del <code>core</code>, legati in generale alla definizione dell’engine di gioco, e alla struttra di base del modulo <code>cli</code> Nello specifico:</p>
+<ul>
+<li><p>Package <code>core</code>:</p>
+<ul>
+<li><code>dictionary</code> con tutti i suoi elementi;</li>
+<li><code>pipeline</code> in particolare gli elementi <code>Lexer</code> e <code>Parser</code>;</li>
+<li><code>application</code> con tutti i suoi elementi;</li>
+<li><code>parsing</code> con tutti i suoi elementi.</li>
+</ul></li>
+<li><p>Package <code>cli</code>.</p></li>
+</ul>
+<p>Occorre sottolineare che i concetti son stati sviluppati totalmente in “pair programming”. Tuttavia, successivamente, vengono descritti quali sono le parti di cui personalmente un membro del team è responsabile.</p>
+<h2 data-number="6.3" id="sec:responsabilità-personali"><span class="header-section-number">6.3</span> Responsabilità personali</h2>
+<p>Personalmente ogni elemento del team ha svolto dei task specifici, legati ai task principali del team, ma non esclusivamente:</p>
+<ul>
+<li><p><strong>Thomas Angelini</strong>: Il membro ha gestito lo sviluppo del sotto-modulo <code>commons</code> all’interno di <code>model.behaviorBased</code>, ha redatto una buona parte di ScalaDoc e spesso coinvolto in molti test. La maggior parte del lavoro è stato svolto in concomitanza con gli altri membri del team.</p></li>
+<li><p><strong>Jacopo Corina</strong>: Oltre alle parti svolte assieme agli altri membri, il membro ha contribuito a creare la struttura base del meccanismo dei behavior e alla relativa integrazione, per poi ulteriormente svilupparla assieme agli altri membri. In particolare ha contribuito alla creazione dei vari item di gioco con behavior annessi e alla parziale implementazione delle componenti <code>Resolver</code>, <code>Interpreter</code>, <code>Reducer</code>.</p>
+<p>Inoltre, si è dedicato alla predisposizione iniziale ed all’ottimizzazione dei workflow CI ed alla esplorazione dei possibili metodi di release per il codice sorgente, gli eseguibili degli esempi, la generazione dei report e la parziale implementazione essi</p></li>
+<li><p><strong>Riccardo Maldini</strong>: Il membro ha curato in particolare lo sviluppo delle entità di base del <strong>model</strong>, e parte della sua implementazione principale basata su behavior. Gran parte del lavoro riguardo questo aspetto è stato ad ogni modo portato a termine nel contesto del team 1.</p>
+<p>Oltre a ciò, il membro è responsabile dello sviluppo di vari task minori:</p>
+<ul>
+<li>Ruolo di Scrum Master, e in generale di coordinatore del backlog;</li>
+<li>Sviluppo di parte dei workflow CI/QA,</li>
+<li>predisposizione della prima base progettuale Gradle basata su convention plugin e submodule</li>
+<li>Sviluppo di parte dei workflow di release.</li>
+</ul></li>
+<li><p><strong>Filippo Nardini</strong>: il membro del team si è preoccupato di curare particolarmente le parti riguardanti il sottoprogetto <em>cli</em>, soprattutto per quanto concerne l’utilizzo di <strong>ZIO</strong>. In aggiunta si è occupato anche della parte di <code>dictonary</code>. Infine, per quanto riguarda il linguaggio Prolog, è responsabile della parte comprendente la modellazione della grammatica attraverso algebraic-data type e di tutte le altre parti presenti nel package <code>scalog</code>.</p></li>
+<li><p><strong>Francesco Gorini</strong>: il membro ha contribuito alla stesura dei primi due componenti del package <code>pipeline</code>, ovvero Lexer e Parser. In aggiunta è responsabile di quanto è stato creato dentro il package <code>application</code>, comprendente tutte le parti necessarie per fornire una struttura di base implementabile. Inoltre il membro si è occupato della parte riguardante il motore Prolog, l’interfacciamento con la libreria tuProlog e tutto ciò che comprende il package <code>engine</code>.</p></li>
+</ul>
+<h2 data-number="6.4" id="sec:dettagli-implementativi"><span class="header-section-number">6.4</span> Dettagli implementativi</h2>
+<p>I dettagli implementativi riguardo i principali aspetti trattati sono esposti quì di seguito.</p>
+<h3 data-number="6.4.1" id="sec:model"><span class="header-section-number">6.4.1</span> Model</h3>
+<p>Riguardo alla definizione del modello, vanno sottolineate le seguenti scelte implementative:</p>
+<ul>
+<li><p>A causa delle dipendenze circolari tra <code>Room</code>, <code>Item</code> e <code>State</code>, tali entità sono state definite all’interno di un abstract class comune, denominato <code>Model</code>, e implementati tramite il meccanismo dei path dependent types. Tale scelta ha influenzato il resto dell’implementazione, determinando la necessità di espandere l’implementazione in una gerarchia che parte da essa.</p></li>
+<li><p>L’implementazione del <code>Model</code> basata sul meccanismo dei behavior viene integrata tramite l’utilizzo dell’abstract class <code>BehaviorBasedModel</code>. All’interno di questa vengono definiti i concetti di <code>BehaviorBasedItem</code>, <code>ItemBehavior</code>, <code>BehaviorBasedGround</code>, <code>GroundBehavior</code>. Le “combinazioni” di <code>Action</code> e <code>Item</code> in grado di far scattare comportamenti vengono definiti in dei <code>Set</code> interni agli stessi, contenenti dei <code>GroundTriggers</code> e <code>ItemTriggers</code>. Questi non sono altro che wrapper per <code>PartialFunction[(Action, State), Reaction]</code> e <code>PartialFunction[(Action, Option[Item], State), Reaction]</code>, sulla base dei quali vengono implementati i metodi <code>BehaviorBasedGround::use()</code> e <code>BehaviorBasedItem::use()</code>, combinando tra loro tramite <code>::lift()</code> tutti i triggers propri di un certo behavior.</p></li>
+<li><p>Internamente, <code>Room</code> e <code>Item</code> sono completamente descritti dal proprio riferimento (<code>RoomRef</code> e <code>ItemRef</code>); comportamento implementato effettuando l’override dei metodi <code>::equals()</code> e <code>::hashCode()</code> degli stessi, abilitando il confronto sulla base appunto dei soli ref, anziché sull’hashcode dell’intero oggetto. Ciò permette di comparare tra di loro <code>Room</code> (o <code>Item</code>) che, pur rappresentando lo stesso concetto, hanno delle differenze legate all’implementazione, rendendo al contempo più agevoli i test.</p></li>
+<li><p>A livello implementativo, le <code>Room</code> non contengono al loro interno gli <code>Item</code> concreti presenti al loro interno, ma i soli riferimenti alle stesse. Per restituire gli <code>Item</code> concreti, la <code>Room</code> deve risolverli, prendendo in input lo <code>State</code>, il quale contiene la <code>Map</code> che memorizza gli <code>Item</code> effettivi. Ciò evità ad esempio inconsistenze tra i dati.</p></li>
+<li><p>Le case class che implementano i <code>BehaviorBasedItem</code> sono intese come delle categorie di oggetti (ad esempio: la categoria di oggetti <code>Key</code> denota l’insieme di oggetti che potenzialmente potrebbero aprire un item di tipo <code>Door</code>). In fase di costruzione degli stessi, gli <code>ItemBehavior</code> che caratterizzano gli item vengono passati come delle higher order function <code>I =&gt; ItemBehavior</code>, eseguite una volta costruito l’oggetto. Questo in quanto gli <code>ItemBehavior</code> necessitano di un subject, ovvero di un riferimento agli item che li hanno generati.</p></li>
+</ul>
+<h3 data-number="6.4.2" id="sec:commons-1"><span class="header-section-number">6.4.2</span> Commons</h3>
+<p>Commons contiene una serie di componenti pre-implementati e utility, pensati per facilitare allo storyteller lo sviluppo della propria storia.</p>
+<p>È possibile importare tutti i componenti comuni semplicemente mixando all’interno di un <code>BehaviorBasedModel</code> il trait <code>CommonsExt</code>, che fornisce tutti gli elementi del package stesso.</p>
+<p>Tale package è formato da alcuni sotto-package, seguono un pattern comune. All’interno di ogni sotto-package, viene reso disponibile un trait mixabile nel <code>BehaviorBasedModel</code>. Questo permette di integrare direttamente al model tutti i trait contenuti nel sotto-package <code>impl</code>.</p>
+<p>Questo meccanismo si è reso necessario in quanto, per implementare le varie funzionalità, è spesso richiesto di accedere al tipo concreto di <code>Item</code>, <code>Room</code>, <code>Ground</code>. Tali tipi, a causa dell’utilizzo dei path dependent type, può essere acceduto soltanto a partite dal <code>Model</code> originario.</p>
+<p>I package contenuti all’interno di <code>commons</code> sono i seguenti:</p>
+<ul>
+<li><p><code>actioning</code>, contente implementazioni comuni di <code>Action</code> e <code>Verb</code>;</p></li>
+<li><p><code>groundBehavior</code>, contenente dei <code>Behavior</code> che possono essere integrati all’interno di un <code>Ground</code>, ovvero tutti i comportamenti accessibili tramite verbi intransitivi. Tra questi, la possibilità di ispezionare la <code>Room</code> corrente (<code>inspect</code>), navigare tra differenti stanze (<code>go North</code>)</p></li>
+<li><p><code>grounds</code>, contenente implementazioni standard del costrutto <code>Ground</code>. Contiene, ad esempio, un’implementazione di <code>Ground</code> tale da includere i <code>GroundBehavior</code> citati in precedenza;</p></li>
+<li><p><code>itemBehavior</code>, contenente dei <code>Behavior</code> che possono essere integrati all’interno di un <code>Item</code>, ovvero tutti i comportamenti accessibli tramite verbi transitivi e ditransitivi. Tra questi, la possibilità di afferrare un <code>Item</code> (<code>take the sword</code>), aprire un <code>Item</code> (<code>open the door with the key</code>), o mangiarlo (<code>eat the apple</code>).</p></li>
+<li><p><code>items</code>, contenente delle implementazioni comuni di <code>BehaviorBasedItem</code>. Ad esempio, un <code>Chest</code> è un particolare <code>Item</code> che riversa nella <code>Room</code> corrente degli <code>Item</code> una volta aperto, un <code>Foood</code> è un <code>Item</code> mangiabile, e così via.</p></li>
+<li><p><code>pushing</code>, contenente alcune implementazioni di <code>Message</code> e una per il <code>Pusher</code>, comunemente utilizzate, e sfruttate ampiamente nell’implementazione dei package precedenti. <code>Pusher</code> riconosce tutti i <code>Message</code> del package <code>pushing</code> e produce risposte sotto forma di stringa. Tali messaggi sono già gestiti dal <code>Pusher</code>, ma la risposta può anche essere personalizzata dallo storyteller all’interno della storia;</p></li>
+<li><p><code>reactions</code>, contenente delle <code>Reaction</code> comunemente utilizzate. Assume particolere rilevanza in quanto al suo interno sono presenti delle funzioni che “wrappano” delle Lens che agiscono sullo <code>State</code>, permettendo di utilizzare più facilmente le stesse.</p></li>
+</ul>
+<figure>
+<img src="./images/commons-traits.png" alt="Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons." /><figcaption aria-hidden="true">Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.</figcaption>
+</figure>
+<h3 data-number="6.4.3" id="sec:resolver"><span class="header-section-number">6.4.3</span> Resolver</h3>
+<p>Dato il risultato del <code>Parser</code> (un AST), il <strong>Resolver</strong> associa ad ogni suo elemento un significato all’interno del sistema, producendo in output uno <strong>Statement</strong>, ossia un comando comprensibile dal modello;</p>
+<p>Per l’implementazione, si sfrutta una classe astratta <code>AbstractSyntaxTreeResolver</code>, la quale fornisce una gestione completa delle possibili casistiche ottenibili dal risultato della parte di parsing <code>ParsingResult</code>: l’ abstract syntax tree contenuto nel risultato viene distinto mediante pattern matching sulle classi <code>AbstractSyntaxTree.Intransitive</code>, <code>AbstractSyntaxTree.Transitive</code> e <code>AbstractSyntaxTree.Ditransitive</code>. In ultimo caso, se la classe non fosse di una delle ammesse, verrebbe restituita una stringa, contenente potenzialmente il messaggio di errore, ed essa sarà propagata come risultato alternativo del ciclo di pipeline. Nei casi ammessi, vengono estratti gli attributi presenti e si verifica se essi sono presenti tra le <code>actions</code> e gli <code>items</code> ammessi, tornando in caso affermativo uno <code>Statement</code> di tipo corrispondente a quello matchato, che sarà wrappato da un oggetto <code>ResolverResult</code>. Se vi fossero mancate corrispondenze con <code>actions</code> o <code>items</code>, al pari della casistica di errore precedente, verrebbe restituita una stringa di errore.</p>
+<p>La classe <code>Resolver</code> fornisce una possibile implementazione di <code>AbstractSyntaxTreeResolver</code>, implementando in <code>::actions</code> il controllo sulla presenza della action passata nello stato, e in <code>::items</code> il controllo sulla presenza dell’item passato nello scope di gioco (insieme degli oggetti presenti nella bag o nella location del player). L’implementazione si basa su un <strong>criterio di confronto</strong> tra <code>ItemDescription</code> dell’ oggetto con quella degli altri nello scope: per poter avere un match il nome deve essere il medesimo, ed eventuali aggettivi dell’oggetto ricercato devono essere un sottoinsieme dell’altro oggetto preso in considerazione. Ad esempio, se nello scope fosse presente una sola mela (senza aggettivi) e si cercasse una mela verde, non si otterrebbe alcuna corrispondenza. Se fosse presente una mela verde e si cercasse una mela rossa, non si avrebbe alcuna corrispondenza, mentre se fossero presenti entrambe le mele con aggettivi e se ne cercasse una senza alcuno vi sarebbero corrispondenze multiple quindi si renderebbe necessaria una disambiguazione.</p>
+<h3 data-number="6.4.4" id="sec:interpreter"><span class="header-section-number">6.4.4</span> Interpreter</h3>
+<p>Dato il risultato del <code>Resolver</code>, l’<strong>Interpreter</strong> si verifica che sia possibile applicare lo <code>Statement</code> sullo stato corrente del gioco. Quando possibile, viene generata in output una <code>Reaction</code>, ossia una funzione contenente le eventuali modifiche da applicare sullo stesso.</p>
+<p>Utilizzando <code>ResolverResult</code> ottenuto da <code>Resolver</code>, la classe <code>Interpreter</code> si occupa di eseguire un pattern matching sullo <code>Statement</code> contenuto in esso, distinguendolo in base alla classe <code>Intransitive</code>, <code>Transitive</code>, <code>Ditransitive</code>.</p>
+<p>In assenza di match, viene restituito, come nel caso riportato in <code>Resolver</code>, una stringa di errore.</p>
+<p>Nel caso <code>Intransitive</code>, il metodo <code>::use</code> è invocato su un oggetto di tipo <code>Ground</code>, che rappresenta un sorta di oggetto “virtuale” ed è contenuto all’ interno dello stato. Nei casi <code>Transitive</code> e <code>Ditransitive</code> è stata utilizzata una classe di utility chiamata <code>RefToItem</code>, che consiste in un extractor da utilizzare per ottenere l’ <code>Item</code> partendo da <code>ItemRef</code>, reperendolo da un dato dizionario degli elementi, in questo caso quello contenuto all’ interno dello stato. In questi ultimi 3 casi, viene restituita una <code>Reaction</code> wrappata all’ interno di un oggetto <code>InterpreterResult</code>.</p>
+<h3 data-number="6.4.5" id="sec:reducer"><span class="header-section-number">6.4.5</span> Reducer</h3>
+<p>Data la <code>Reaction</code> ottenuta al termine del passo precedente, il <strong>Reducer</strong> provvede ad applicarla allo <code>State</code> del gioco, aggiornandolo e generando eventuali messaggi utili per l’interazione con lo user.</p>
+<p>Utilizzando <code>InterpreterResult</code> ottenuto da <code>Interpreter</code>, prendendo la <code>Reaction</code> contenuta, essa viene applicata sullo stato. Il risultato, nella implementazione realizzata, consiste in una tupla contenente 2 elementi:</p>
+<ul>
+<li>stato aggiornato a seguito dell’ applicazione della <code>Reaction</code></li>
+<li>messaggi per lo user, generati a seguito dell’ applicazione della <code>Reaction</code></li>
+</ul>
+<p>Questa tupla è wrappata all’ interno della classe <code>ReducerResult</code>.</p>
+<h3 data-number="6.4.6" id="sec:generators"><span class="header-section-number">6.4.6</span> Generators</h3>
+<p>Le type class <code>Generator</code> e <code>GeneratorK</code> che si trovano all’interno di questo modulo sono state realizzate utilizzando le type class offerte da Cats. L’implementazione di <code>Generator[A, B]</code> risulta essere un banale wrapper di una funzione <code>A =&gt; B,</code> mentre l’implementazione di <code>GeneratorK[F[_], A, B]</code> richiede che siano state definite istanze per le seguenti type class:</p>
+<ul>
+<li><code>Generator[A, B]:</code> essere in grado di generare da ogni valore a: A un output b: B;</li>
+<li><code>Functor[F]</code> e <code>Foldable[F]:</code> in quanto sono necessarie le funzioni map e fold, per trasformare all’interno ed infine estrarre un valore b: B a partire dal contesto <code>F[_];</code></li>
+<li><code>Monoid[B]:</code> in quanto è necessaria un’operazione binaria associativa e un valore empty per effettuare l’operazione di fold.</li>
+</ul>
+<h3 data-number="6.4.7" id="sec:dictionary"><span class="header-section-number">6.4.7</span> Dictionary</h3>
+<p>Contiene i costrutti, realizzati tramite algebraic data types, che consentono la dichiarazione di verbi, utilizzati in fase di scrittura di una storia da parte dello storyteller. A partire da un verbo deve essere possibile generare le seguenti informazioni:</p>
+<ul>
+<li>una regola Prolog, che descrive la grammatica del verbo;</li>
+<li>una tupla <code>(Verb, Preposition) -&gt; Action</code> (o <code>Verb -&gt; Action</code>), che collega l’uso del verbo al suo significato.</li>
+</ul>
+<figure>
+<img src="images/class-diagram-verb.png" alt="Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi." /><figcaption aria-hidden="true">Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.</figcaption>
+</figure>
+<p>Contiene inoltre una funzione in grado di generare, a partire dal dizionario di una storia e dalla grammatica di base, una teoria Prolog utilizzata per inizializzare un <code>Engine</code>. Per fare ciò utilizza due istanze di <code>GeneratorK[List, Verb, Program]</code> e <code>GeneratorK[List, Item, Program],</code> in grado di generare per ogni classe di elemento del dizionario un programma Prolog valido. Infine questi programmi vengono concatenati tra di loro e alla grammatica di base.</p>
+<h3 data-number="6.4.8" id="sec:scalog"><span class="header-section-number">6.4.8</span> Scalog</h3>
+<p>Questo package contiene le strutture necessarie per la modellazione di espressioni Prolog. La realizzazione della gerarchia è avvenuta tramite algebraic data types e ha origine nel tipo <code>CodeGen</code>, una struttura in grado di generare un’espressione Prolog sotto forma di stringa, che in seguito si suddivide in <code>Clause</code> e <code>Term</code>, che rappresentano rispettivamente una clausola e un termine (fig. 6.1).</p>
+<figure>
+<img src="images/scalog-hierarchy.png" id="fig:scalog_hierarchy" alt="Figure 6.1: Diagramma delle classi che rappresenta la gerarchia realizzata per clausole e termini." /><figcaption aria-hidden="true">Figure 6.1: Diagramma delle classi che rappresenta la gerarchia realizzata per clausole e termini.</figcaption>
+</figure>
+<p>I tipi di clausola che sono stati modellati sono:</p>
+<ul>
+<li><code>Fact</code>, che rappresenta un semplice fatto senza corpo;</li>
+<li><code>Rule</code>, che rappresenta una clausola di Horn con testa e corpo;</li>
+<li><code>DCGRule</code>, che rappresenta una clausola espressa in forma DCG.</li>
+</ul>
+<p>I tipi di termine che sono stati modellati sono:</p>
+<ul>
+<li><code>Atom</code>, che rappresenta un atomo;</li>
+<li><code>Number</code>, che rappresenta un numero (è stato modellato il solo uso di numeri interi);</li>
+<li><code>Variable</code>, che rappresenta una variabile;</li>
+<li><code>Compound</code>, che rappresenta un termine composto da funtore e argomenti;</li>
+<li><code>ListP</code>, che rappresenta una lista.</li>
+</ul>
+<p>Inoltre è stato implementato un piccolo DSL, che consente la creazione di clausole e termini tramite una sintassi molto simile a quella di Prolog (esempio in lst. 6.1).</p>
+<div id="lst:scalog_dsl" class="listing scala">
+<p>Listing 6.1: Esempio di utilizzo del DSL per la creazione di una regola DCG.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> io<span class="op">.</span>github<span class="op">.</span>scalaquest<span class="op">.</span>core<span class="op">.</span>parsing<span class="op">.</span>scalog<span class="op">.</span>dsl<span class="op">.</span>_</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> io<span class="op">.</span>github<span class="op">.</span>scalaquest<span class="op">.</span>core<span class="op">.</span>parsing<span class="op">.</span>scalog<span class="op">.</span>_</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> hello <span class="op">=</span> <span class="fu">CompoundBuilder</span><span class="op">(</span><span class="st">&quot;hello&quot;</span><span class="op">).</span>constructor</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> X <span class="op">=</span> <span class="fu">Variable</span><span class="op">(</span><span class="st">&quot;X&quot;</span><span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">hello</span><span class="op">(</span>X<span class="op">)</span> <span class="op">--&gt;</span> <span class="fu">ListP</span><span class="op">(</span><span class="st">&quot;hello&quot;</span><span class="op">,</span> X<span class="op">)).</span>generate</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">// val res0: String = &quot;hello(X) --&gt; [hello,X].&quot;</span></span></code></pre></div>
+</div>
+<p>L’uso di algebraic data types rende molto semplice il pattern matching, rendendo l’uso di queste strutture molto comodo come formato di scambio dati tra diversi componenti, per esempio tra <code>PrologParser</code> e <code>Engine</code>. A tal fine sono stati introdotti ulteriori metodi per rendere il pattern matching ancora più espressivo (esempio in lst. 6.2).</p>
+<div id="lst:scalog_matching" class="listing scala">
+<p>Listing 6.2: Esempio di utilizzo del DSL per il pattern matching di una struttura.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> nickname <span class="op">=</span> <span class="fu">CompoundBuilder</span><span class="op">(</span><span class="st">&quot;nickname&quot;</span><span class="op">).</span>extractor<span class="op">.</span>toStrings</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> record <span class="op">=</span> <span class="fu">Compound</span><span class="op">(</span><span class="st">&quot;nickname&quot;</span><span class="op">,</span> <span class="st">&quot;robert&quot;</span><span class="op">,</span> <span class="bu">List</span><span class="op">(</span><span class="st">&quot;bob&quot;</span><span class="op">))</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>record<span class="op">.</span>generate</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// val res0: String = &quot;nickname(robert, bob)&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>record <span class="cf">match</span> <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">nickname</span><span class="op">(</span>_<span class="op">)</span> <span class="op">=&gt;</span> <span class="st">&quot;wrong usage of nickname/2&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">nickname</span><span class="op">(</span>_<span class="op">,</span> _<span class="op">,</span> _<span class="op">)</span> <span class="op">=&gt;</span> <span class="st">&quot;wrong usage of nickname/2&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">nickname</span><span class="op">(</span>full<span class="op">,</span> nick<span class="op">)</span> <span class="op">=&gt;</span> <span class="ss">s&quot;${</span>nick<span class="ss">}</span><span class="st"> stands for </span><span class="ss">${</span>full<span class="ss">}&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> _ <span class="op">=&gt;</span> <span class="st">&quot;you didn&#39;t say hello to anyone&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">// val res1: String = &quot;bob stands for robert&quot;</span></span></code></pre></div>
+</div>
+<h3 data-number="6.4.9" id="sec:struttura-di-default-dellapplicazione"><span class="header-section-number">6.4.9</span> Struttura di default dell’applicazione</h3>
+<p>All’interno del package <code>application</code>, tra i dettagli implementativi più interessanti vi è l’utilizzo del pattern “Template Method” all’interno di <code>DefaultPipelineProvider</code> (fig. 6.2) per creare la pipeline di default. In particolare è interessante notare che definendo solamente una teoria Prolog, sia possibile fruire di una pipeline pronta all’uso.</p>
+<h3 data-number="6.4.10" id="sec:parser"><span class="header-section-number">6.4.10</span> Parser</h3>
+<p>Nell’implementazione di <code>Parser</code> viene utilizzato nuovamente il pattern “Template Method”, con il notevole beneficio di poter sviluppare completamente questa parte della pipeline senza dover necessariamente conoscere quale motore Prolog venisse implementato. Per questo motivo è stato possibile creare il package <code>parser</code> ben prima di sviluppare il modulo <code>engine</code>. Inoltre, in questo modo il codice risulta essere particolarmente scalabile e modulare, in quanto in maniera molto semplice ed in poco tempo, è possibile implementare un altro motore Prolog, che ad esempio lavora con <strong>SWI-Prolog</strong>.</p>
+<h3 data-number="6.4.11" id="sec:natural-language-processing-in-prolog"><span class="header-section-number">6.4.11</span> Natural Language Processing in Prolog</h3>
+<p>La scelta per l’implementazione del natural language processing è ricaduta su Prolog, per via del particolare paradigma di programmazione che esso offre. Infatti la programmazione logica si presta molto bene allo sviluppo di analizzatori sintattici per il linguaggio naturale. È stata presa come riferimento la lingua inglese in quanto la forma dei verbi non varia con il variare del soggetto e per la vastità della letteratura sul NLP.</p>
+<p>L’implementazione realizzata di parser del linguaggio naturale è basata su regole in forma <em>definite clause grammar</em>. Questa modalità di esprimere regole consente di definire una grammatica utilizzando dei costrutti molto espressivi.</p>
+<p>Nell’implementazione della comunicazione tra il <code>PrologParser</code> e il motore Prolog si è scelto di utilizzare le frasi in forma imperativa, in quanto adatta ad impartire comandi al personaggio, e di rappresentare le strutture grammaticali nel seguente modo:</p>
+<div id="lst:nlp_example" class="listing prolog">
+<p>Listing 6.3: Esempio di risoluzione di query utilizzando la teoria prodotta per il NLP.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">phrase</span>(i(<span class="dt">X</span>)<span class="kw">,</span> [take, the, key])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">% yes. X / sentence(take/{}, you, key)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">phrase</span>(i(<span class="dt">X</span>)<span class="kw">,</span> [<span class="fu">open</span>, the, door, with, the, key])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">% yes. X / sentence(open/with, you, door, key).</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">phrase</span>(i(<span class="dt">X</span>)<span class="kw">,</span> [inspect])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">% yes. X / sentence(inspect/{}, you)</span></span></code></pre></div>
+</div>
+<div id="lst:nlp_example2" class="listing prolog">
+<p>Listing 6.4: Esempio di parsing di un nome con aggettivi.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">phrase</span>(substantive(<span class="dt">X</span>)<span class="kw">,</span> [the, big, red, key])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">% yes. X / decorated(big, decorated(red, key))</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">phrase</span>(substantive(<span class="dt">X</span>)<span class="kw">,</span> [the, key])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">% yes. X / key</span></span></code></pre></div>
+</div>
+<ul>
+<li>il soggetto è sempre <code>you</code> (poiché il modo del verbo è imperativo);</li>
+<li>il verbo è rappresentato dal termine composto <code>/(&lt;verbo&gt;, &lt;preposizione&gt;)</code>, se non è presente nessuna preposizione è stato usato il termine <code>{}</code> (esempio in lst. 6.3); un verbo può essere in una di queste tre forme:
+<ul>
+<li>intransitivo</li>
+<li>transitivo</li>
+<li>ditransitivo</li>
+</ul></li>
+<li>il complemento può essere preceduto o seguito da una preposizione, questa verrà associata al verbo; inoltre può essere preceduto da un articolo;</li>
+<li>un nome può essere preceduto da un numero arbitrario di aggettivi, la rappresentazione utilizzata è stata <code>decorated(&lt;aggettivo&gt;, &lt;nome&gt;)</code> (esempio in lst. 6.4).</li>
+</ul>
+<p>Il motore TuProlog, che offre API fruibili da linguaggi basati sulla JVM, viene inizializzato con la necessaria teoria ed eseguito all’interno di un <code>Engine</code>, che esporrà il risultato della risoluzione di una query utilizzando i costrutti di <code>scalog</code>.</p>
+<h3 data-number="6.4.12" id="sec:engine-prolog"><span class="header-section-number">6.4.12</span> Engine Prolog</h3>
+<p>Questa soluzione utilizza il pattern “Adapter” per wrappare e permettere di utilizzare la libreria <strong>tuProlog</strong> all’interno del codice. Successivamente questa è stata arraggiata per modellare correttamente il nostro dominio; ad esempio è stata creata una interfaccia <code>Engine</code> la quale prevede di essere definita solamente attraverso <code>Theory</code> e <code>Library</code>.</p>
+<p>Occorre sottolineare che in alcuni parti del codice, vengono gestite solo parzialmente le eccezioni che potrebbero essere sollevate nell’utilizzo del Prolog. Questa scelta è stata dettata da un duplice fattore: il codice altrimenti si sarebbe notevolmente “sporcato” con l’utilizzo di costrutti try/catch o di Option. Tuttavia, questa parte viene utilizzata e gestita interamente da i membri del team e quindi sappiamo come rispettare le interfacce, evitando di sollevare eccezioni.</p>
+<figure>
+<img src="images/class-diagram-parser.png" alt="Diagramma delle classi che mostra come è stato realizzato il Parser" /><figcaption aria-hidden="true">Diagramma delle classi che mostra come è stato realizzato il Parser</figcaption>
+</figure>
+<h3 data-number="6.4.13" id="sec:modulo-cli"><span class="header-section-number">6.4.13</span> Modulo <code>cli</code></h3>
+<p>Questo modulo si occupa di fornire dei costrutti per creare un’applicazione a linea di comando che consenta di interagire con un’istanza di gioco. La sua implementazione è basata sul framework <strong>ZIO</strong>, che consente di creare effetti (ovvero codice con side-effects) tramite costrutti type-safe, funzionali, quindi facilmente componibili e testabili.</p>
+<p>L’interfaccia principale è <code>CLI</code>, ovvero un wrapper per un effetto <code>ZIO[Console, IOException, Unit]</code>, che può essere semplificato in <code>Console =&gt; Either[IOException, Unit]</code>, ovvero una funzione che necessita di un’implementazione di <code>Console</code> e ritorna un’eccezione di tipo IO oppure un valore unit. <strong>ZIO</strong> offre un costrutto <code>App</code> che fornisce tramite un template method di realizzare facilmente un’applicazione eseguibile. Questo è stato esteso per creare <code>GameCLIApp</code>: una classe astratta, configurabile con istanze di <code>Model</code>, <code>State</code>, <code>MessagePusher</code> e gli elementi del dizionario tramite template method, realizza un applicazione eseguibile costruendo un’istanza di <code>Game</code> tramite una <code>Pipeline</code> di default.</p>
+<figure>
+<img src="images/cli-hierarchy.png" id="fig:cli_hierarchy" alt="Figure 6.2: Diagramma delle classi UML che rappresenta la relazione tra i costrutti del modulo core e quelli del modulo cli." /><figcaption aria-hidden="true">Figure 6.2: Diagramma delle classi UML che rappresenta la relazione tra i costrutti del modulo <code>core</code> e quelli del modulo <code>cli</code>.</figcaption>
+</figure>
+<h1 data-number="7" id="sec:retrospettiva"><span class="header-section-number">7</span> Retrospettiva</h1>
+<p>Rispetto a progetti trattati in precedenza dai singoli membri del gruppo, in questo si è posta un’attenzione particolare alla metodologia e all’organizzazione di progetto. Si è cercato per quanto possibile di approcciare lo sviluppo con mentalità ingegneristica, pragmatica e strutturata.</p>
+<h2 data-number="7.1" id="sec:il-backlog"><span class="header-section-number">7.1</span> Il backlog</h2>
+<p>Per il backlog di progetto è stato adottato GitHub Projects, un’alternativa a Trello che presenta una forte integrazione delle funzionalità di GitHub. Ragion per cui la quasi totalità dei task è associata a un issue o una pull request, tenendo traccia in maniera assolutamente trasparente del processo che ha portato alla risoluzione degli stessi. È possibile accedere alla board pubblica <a href="https://github.com/orgs/scalaquest/projects/1">da questo link</a>. La board è organizzata in diverse colonne:</p>
+<ul>
+<li><p>Una colonna <strong>Backlog</strong> tiene traccia dei task che si è programmato di svolgere in futuro, con priorità inferiore rispetto allo Sprint corrente. Essa viene popolata in particolare durante lo Scrum meeting settimanale, nella definizione degli obiettivi di lungo termine;</p></li>
+<li><p>Una colonna <strong>Backlog (current Sprint)</strong> tiene traccia dei task da svolgere nello Sprint corrente. Essa viene popolata principalmente durante lo Scrum meeting settimanale, permettendo una pianificazione dei task a maggiore priorità. Inoltre, nel caso in cui uno dei team riuscisse a terminare tutti i task ad esso assegnati durante lo Sprint, può aggiungerne degli altri, accingendo da quelli del backlog;</p></li>
+<li><p>Una colonna <strong>In progress (current Sprint)</strong> tiene traccia dei task ai quali dei membri stanno attualmente lavorando;</p></li>
+<li><p>Una colonna <strong>Done (current Sprint)</strong> tiene traccia dei task conclusi nello Sprint corrente. Dei trigger di automazione permettono di porre in automatico i task in questa colonna a seguito della chiusura di issue e al merge di pull request;</p></li>
+<li><p>Una colonna <strong>Done</strong> tiene traccia dei task completati negli Sprint precedenti. La colonna viene popolata a seguito della terminazione dello Sprint, accingendo dai task terminati nello stesso.</p></li>
+</ul>
+<p>Tale organizzazione non ha dato spazio ad equivoci, rendendo possibile monitorare in maniera continuativa l’operato del team, ed effettuare eventuali aggiustamenti in corso d’opera.</p>
+<h2 data-number="7.2" id="sec:organizzazione-in-sprint"><span class="header-section-number">7.2</span> Organizzazione in Sprint</h2>
+<p>Il lavoro si è svolto in Sprint settimanali, intermezzati da meeting portati avanti principalmente nel fine settimana, durante la quale si sono svolte le fasi di Retrospective e Planning. Durante ogni meeting si è andato ad aggiornare un documento di overview, tale da tener traccia di ciò che è stato effettivamente fatto durante lo Sprint, completo di link alle pull request e agli issue ad essi collegati. Il documento è accessibile tra la documentazione di progetto, tra i documenti di appendice, consultabili <a href="https://scalaquest.github.io/Reports/docs/appendix.html">via web</a> o come <a href="https://github.com/scalaquest/Reports/releases/latest">LaTeX PDF</a>.</p>
+<p>Questo documento permette di ricostruire ciò che effettivamente è stato fatto ad ogni Sprint. Da questo si può anche notare come all’atto pratico alcuni task abbiano sforato il periodo di Sprint previsto, e come alcuni altri siano stati invece terminati in anticipo, dando spazio al team di occuparsi di task aggiuntivi. Ciò non ha però compromesso in maniera eccessiva lo svolgimento del progetto. Ritardi e anticipi sui tempi previsti sono stati gestiti in itinere, adattando incrementalmente l’organizzazione sulla base dei problemi riscontrati.</p>
+<h2 data-number="7.3" id="sec:processo-di-sviluppo"><span class="header-section-number">7.3</span> Processo di sviluppo</h2>
+<p>In generale, la fase implementativa è risultata essere particolarmente lineare ed efficace, comparata con altri progetti portati avanti in passato.</p>
+<p>Particolare importanza è stata assunta in questo contesto anche dalle sessioni preliminari di knowledge crunching, nelle quali si son potuti mettere a nudo in anticipo buona parte degli aspetti architetturali, dei requsiti e delle problematiche legate al progetto.</p>
+<p>In aggiunta, è risultata essenziale l’infrastruttura di automazione adottata. La messa in atto di workflow efficaci di Contiuous Integration, Quality Assurance, Linting del codice sorgente, combinati a sessioni di refactoring periodiche, ha permesso di individuare facilmente nel nascere e risolvere problematiche legate all’accumularsi di debito tecnico e alla qualità del codice.</p>
+<h2 data-number="7.4" id="sec:commenti-finali"><span class="header-section-number">7.4</span> Commenti finali</h2>
+<p>In conclusione, possiamo affermare che il progetto finale soddisfa in ogni parte i requisiti definiti in fase di analisi. Questo ha portato a grande soddisfazione da parte dei membri del team, in quanto raggiungere gli obiettivi prefissati a pieno non era considerato affatto scontato nelle fasi iniziali.</p>
+<p>Il livello di qualità del codice è da considerarsi buona per la maggior parte delle sezioni, avendo raggiunto al contempo il livello di espressività inizialmente prefissato. Ciò si rispecchia nella semplicità (sia di utilizzo delle API, sia per la presenza di elementi di base) con cui un utente “story teller” è in grado di creare storie più o meno complesse.</p>
+<p>Come membri del team ci teniamo inoltre ad aggiungere che nessuno di noi aveva in precedenza lavorato ad un progetto con un’organizzazione e una metodologia strutturata. Due membri del team provengono poi da una triennale differente dal percorso degli altri (Riccardo Maldini e Francesco Gorini, UniUrb), la quale proponeva un approccio ai progetti ben più approssimativo. Una sfida che si è accettata di buon grado, coscienti delle potenzialità dei singoli.</p></div>
+            <div class="d-none d-xl-block col-xl-3 bd-toc">
+               <ul class="section-nav">
+                  <li class="toc-entry"><ul>
+<li><a href="#sec:introduzione"><span class="toc-section-number">1</span> Introduzione</a>
+<ul>
+<li><a href="#sec:codice-sorgente-e-documentazione-aggiuntiva"><span class="toc-section-number">1.1</span> Codice sorgente e documentazione aggiuntiva</a></li>
+</ul></li>
+<li><a href="#sec:processo-di-sviluppo-adottato"><span class="toc-section-number">2</span> Processo di sviluppo adottato</a>
+<ul>
+<li><a href="#sec:strumenti-a-supporto-di-scrum"><span class="toc-section-number">2.1</span> Strumenti a supporto di Scrum</a>
+<ul>
+<li><a href="#sec:github-projects"><span class="toc-section-number">2.1.1</span> GitHub Projects</a></li>
+<li><a href="#sec:sod"><span class="toc-section-number">2.1.2</span> Scrum Overview Document</a></li>
+<li><a href="#sec:github-issues-e-pull-request"><span class="toc-section-number">2.1.3</span> GitHub Issues e Pull Request</a></li>
+<li><a href="#sec:discord"><span class="toc-section-number">2.1.4</span> Discord</a></li>
+</ul></li>
+<li><a href="#sec:meet"><span class="toc-section-number">2.2</span> Meeting e interazioni pianificate</a>
+<ul>
+<li><a href="#sec:meeting-settimanali"><span class="toc-section-number">2.2.1</span> Meeting settimanali</a></li>
+<li><a href="#sec:meeting-di-aggiornamento-periodici"><span class="toc-section-number">2.2.2</span> Meeting di aggiornamento periodici</a></li>
+</ul></li>
+<li><a href="#sec:team"><span class="toc-section-number">2.3</span> Organizzazione in team interni</a></li>
+<li><a href="#sec:modelli-di-sviluppo"><span class="toc-section-number">2.4</span> Modelli di sviluppo</a>
+<ul>
+<li><a href="#sec:github-flow-in-fase-embrionale"><span class="toc-section-number">2.4.1</span> GitHub Flow in fase embrionale</a></li>
+<li><a href="#sec:gitflow-a-regime"><span class="toc-section-number">2.4.2</span> GitFlow a regime</a></li>
+</ul></li>
+<li><a href="#sec:strumenti-di-test-build-e-ci"><span class="toc-section-number">2.5</span> Strumenti di test, build e CI</a>
+<ul>
+<li><a href="#sec:continuous-integration"><span class="toc-section-number">2.5.1</span> Continuous Integration</a></li>
+<li><a href="#sec:automazione-della-delivery"><span class="toc-section-number">2.5.2</span> Automazione della delivery</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sec:requisiti"><span class="toc-section-number">3</span> Requisiti</a>
+<ul>
+<li><a href="#sec:requisiti-di-business"><span class="toc-section-number">3.1</span> Requisiti di business</a></li>
+<li><a href="#sec:requisiti-utente"><span class="toc-section-number">3.2</span> Requisiti utente</a>
+<ul>
+<li><a href="#sec:storyteller"><span class="toc-section-number">3.2.1</span> Storyteller</a></li>
+<li><a href="#sec:user"><span class="toc-section-number">3.2.2</span> User</a></li>
+</ul></li>
+<li><a href="#sec:requisiti-funzionali"><span class="toc-section-number">3.3</span> Requisiti funzionali</a></li>
+<li><a href="#sec:requisiti-non-funzionali"><span class="toc-section-number">3.4</span> Requisiti non funzionali</a></li>
+<li><a href="#sec:requisiti-dimplementazione"><span class="toc-section-number">3.5</span> Requisiti d’implementazione</a></li>
+</ul></li>
+<li><a href="#sec:design-architetturale"><span class="toc-section-number">4</span> Design architetturale</a>
+<ul>
+<li><a href="#sec:architettura-di-massima"><span class="toc-section-number">4.1</span> Architettura di massima</a>
+<ul>
+<li><a href="#sec:core"><span class="toc-section-number">4.1.1</span> Core</a></li>
+<li><a href="#sec:cli"><span class="toc-section-number">4.1.2</span> CLI</a></li>
+<li><a href="#sec:examples"><span class="toc-section-number">4.1.3</span> Examples</a></li>
+</ul></li>
+<li><a href="#sec:pattern-architetturali"><span class="toc-section-number">4.2</span> Pattern architetturali</a></li>
+<li><a href="#sec:scelte-tecnologiche"><span class="toc-section-number">4.3</span> Scelte tecnologiche</a>
+<ul>
+<li><a href="#sec:tuprolog"><span class="toc-section-number">4.3.1</span> TuProlog</a></li>
+<li><a href="#sec:zio"><span class="toc-section-number">4.3.2</span> ZIO</a></li>
+<li><a href="#sec:monocle-lens"><span class="toc-section-number">4.3.3</span> Monocle Lens</a></li>
+<li><a href="#sec:cats"><span class="toc-section-number">4.3.4</span> Cats</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sec:design-di-dettaglio"><span class="toc-section-number">5</span> Design di dettaglio</a>
+<ul>
+<li><a href="#sec:riconoscimento-dei-comandi-testuali"><span class="toc-section-number">5.1</span> Riconoscimento dei comandi testuali</a>
+<ul>
+<li><a href="#sec:manipolazione-di-espressioni-prolog"><span class="toc-section-number">5.1.1</span> Manipolazione di espressioni Prolog</a></li>
+<li><a href="#sec:prolog-parser"><span class="toc-section-number">5.1.2</span> Prolog parser</a></li>
+</ul></li>
+<li><a href="#sec:application-structure"><span class="toc-section-number">5.2</span> Application structure</a></li>
+<li><a href="#sec:generator-e-generatork"><span class="toc-section-number">5.3</span> Generator e GeneratorK</a></li>
+<li><a href="#sec:il-modello"><span class="toc-section-number">5.4</span> Il modello</a>
+<ul>
+<li><a href="#sec:aggiornamento-dello-stato-e-behavior-based-model"><span class="toc-section-number">5.4.1</span> Aggiornamento dello stato e behavior-based model</a></li>
+<li><a href="#sec:reaction"><span class="toc-section-number">5.4.2</span> Reaction</a></li>
+<li><a href="#sec:i-message-e-il-pusher"><span class="toc-section-number">5.4.3</span> I Message e il Pusher</a></li>
+<li><a href="#sec:commons"><span class="toc-section-number">5.4.4</span> Commons</a></li>
+</ul></li>
+<li><a href="#sec:cli-1"><span class="toc-section-number">5.5</span> CLI</a></li>
+</ul></li>
+<li><a href="#sec:implementazione"><span class="toc-section-number">6</span> Implementazione</a>
+<ul>
+<li><a href="#sec:aspetti-trattati-in-comune"><span class="toc-section-number">6.1</span> Aspetti trattati in comune</a></li>
+<li><a href="#sec:aspetti-trattati-in-sotto-team"><span class="toc-section-number">6.2</span> Aspetti trattati in sotto-team</a>
+<ul>
+<li><a href="#sec:team-1"><span class="toc-section-number">6.2.1</span> Team 1</a></li>
+<li><a href="#sec:team-2"><span class="toc-section-number">6.2.2</span> Team 2</a></li>
+</ul></li>
+<li><a href="#sec:responsabilità-personali"><span class="toc-section-number">6.3</span> Responsabilità personali</a></li>
+<li><a href="#sec:dettagli-implementativi"><span class="toc-section-number">6.4</span> Dettagli implementativi</a>
+<ul>
+<li><a href="#sec:model"><span class="toc-section-number">6.4.1</span> Model</a></li>
+<li><a href="#sec:commons-1"><span class="toc-section-number">6.4.2</span> Commons</a></li>
+<li><a href="#sec:resolver"><span class="toc-section-number">6.4.3</span> Resolver</a></li>
+<li><a href="#sec:interpreter"><span class="toc-section-number">6.4.4</span> Interpreter</a></li>
+<li><a href="#sec:reducer"><span class="toc-section-number">6.4.5</span> Reducer</a></li>
+<li><a href="#sec:generators"><span class="toc-section-number">6.4.6</span> Generators</a></li>
+<li><a href="#sec:dictionary"><span class="toc-section-number">6.4.7</span> Dictionary</a></li>
+<li><a href="#sec:scalog"><span class="toc-section-number">6.4.8</span> Scalog</a></li>
+<li><a href="#sec:struttura-di-default-dellapplicazione"><span class="toc-section-number">6.4.9</span> Struttura di default dell’applicazione</a></li>
+<li><a href="#sec:parser"><span class="toc-section-number">6.4.10</span> Parser</a></li>
+<li><a href="#sec:natural-language-processing-in-prolog"><span class="toc-section-number">6.4.11</span> Natural Language Processing in Prolog</a></li>
+<li><a href="#sec:engine-prolog"><span class="toc-section-number">6.4.12</span> Engine Prolog</a></li>
+<li><a href="#sec:modulo-cli"><span class="toc-section-number">6.4.13</span> Modulo <code>cli</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sec:retrospettiva"><span class="toc-section-number">7</span> Retrospettiva</a>
+<ul>
+<li><a href="#sec:il-backlog"><span class="toc-section-number">7.1</span> Il backlog</a></li>
+<li><a href="#sec:organizzazione-in-sprint"><span class="toc-section-number">7.2</span> Organizzazione in Sprint</a></li>
+<li><a href="#sec:processo-di-sviluppo"><span class="toc-section-number">7.3</span> Processo di sviluppo</a></li>
+<li><a href="#sec:commenti-finali"><span class="toc-section-number">7.4</span> Commenti finali</a></li>
+</ul></li>
+</ul></li>
+               </ul>
+            </div>
+         </div>
+               </div>
+            <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+      <!-- Mathjax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>
+         /* Bootstrap styles to tables */
+         function bootstrapStylePandocTables() {
+         $('tr.header').parent('thead').parent('table').addClass('table table-condensed'); }
+         $(document).ready(function () { bootstrapStylePandocTables(); });
+         /* Adjust the height when click the toc */
+         var shiftWindow = function() { scrollBy(0, -60) };
+         window.addEventListener("hashchange", shiftWindow);
+         function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+   </body>
+</html>

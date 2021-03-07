@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      <meta name="author" content="Thomas AngeliniJacopo CorinaFrancesco GoriniRiccardo MaldiniFilippo Nardini">
+      
+      <title>ScalaQuest Appendix Documents</title>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Font-awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Styles -->
+      <link rel="stylesheet" href="https://ashki23.github.io/styles.css">
+         </head>
+   <body>
+            <div class="container">
+         <h1 class="title">ScalaQuest Appendix Documents</h1>
+                  <div class="row">
+            <div class="col-xl-9"><h1 data-number="1" id="sec:sprints-historical-overview"><span class="header-section-number">1</span> Sprints Historical Overview</h1>
+<p>In this document keep track of what we have done in the last Sprints (not the current). It is an historical document linking the issues and pull request that we opened or used in a given Sprints, so that we have an historical unique entry point for the work we have done.</p>
+<p>The typical Sprint in our organizaion should last a week, but the first ones have a different duration as they are done into the holidays.</p>
+<h2 data-number="1.1" id="sec:sprint-0-21st-december---24th-december"><span class="header-section-number">1.1</span> Sprint 0 (21st December - 24th December)</h2>
+<p>This is not exactly a real Sprint, but a first basic footprint for the future work (this is the reason for name “Sprint 0”). We made a lot of internal meetings to define context bounds and do knowledge crunching.</p>
+<p>Precisely, we started doing some vague knowledge chrunching sessions from the submission of the project on the 6th of December, but we started making some heavy effort from the 24th.</p>
+<p>In addition, we set the foundations of the project, by giving the Gradle Subproject Structure, setting up the test framework (ScalaTest) and starting setting up the CI.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/1">(Issue) Project skeleton, Gradle sub-projects and test infrastructure</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/3">(Issue) CI infrastructure (Scala + Gradle)</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/5">(Issue) Basic application structure: traits and relations</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/11">(Issue) Check style in a split job in CI</a></li>
+</ul>
+<h2 data-number="1.2" id="sec:sprint-1-24th-december---2nd-january"><span class="header-section-number">1.2</span> Sprint 1 (24th December - 2nd January)</h2>
+<p>Here is how we really start the group work, splitting the team into two sub-teams, each one working into a different part of the project. We proceeded in parallel mostly, but we have done some intermediate meetings for integrate parts and solve common problems. The two parts are in progress yet, and they will be finished in the next Sprints. In addition, some minor tasks have been finished during the Sprint.</p>
+<p>Roles:</p>
+<ul>
+<li><strong>Team 1</strong>: <span class="citation" data-cites="maldins46">[@maldins46]</span>, <span class="citation" data-cites="corinz97">[@corinz97]</span>, <span class="citation" data-cites="ThomasAngeliniUnibo">[@ThomasAngeliniUnibo]</span>: in charge of developing the <code>Model</code> basics, and linked to it, also the <code>Interpreter</code> and <code>Resolver</code> components;</li>
+<li><strong>Team 2</strong>: <span class="citation" data-cites="lippo97">[@lippo97]</span>, <span class="citation" data-cites="francescogorini">[@francescogorini]</span>: in charge of developing the Prolog engine basics, and linked to it, also the <code>Parser</code> and <code>Lexer</code>components.</li>
+</ul>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/8">(Issue) Change Effect keyword to StateUpdate?</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/13">(Issue) Spotless problems</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/7">(Issue) Deepen model, interpreter and resolver component</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/6">(Issue) Deepen Prolog engine, parser and lexer components</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/19">(Issue) Sprint overview document</a></li>
+</ul>
+<h2 data-number="1.3" id="sec:sprint-2-3rd-january---9th-january"><span class="header-section-number">1.3</span> Sprint 2 (3rd January - 9th January)</h2>
+<p>In the second Sprint we basically continued the work started in the first one, divided in teams. Tasks regarding model and Prolog engine are two of the most funding part of the project, and as such they deserve particular attention. In particular, we have carried on various meeting to take some decisions about how to use the model in a more functional way, as described in the linked issue.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/17">(Issue) Rename Update into Reaction</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/7">(Issue) Deepen model, interpreter and resolver component</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/6">(Issue) Deepen Prolog engine, parser and lexer components</a></li>
+</ul>
+<h2 data-number="1.4" id="sec:sprint-3-10th-january---16th-january"><span class="header-section-number">1.4</span> Sprint 3 (10th January - 16th January)</h2>
+<p>In the third Sprint we basically continued the work started in the previous, divided in teams. Tasks about Model and Engine basic structure are basically finished. We handled merge conflicts about the two parts during the Sprint Review. In addition, some minor tasks have been resolved in common meetings.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/7">(Issue) Deepen model, interpreter and resolver component</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/6">(Issue) Deepen Prolog engine, parser and lexer components</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/29">(Issue) Improve Scaladoc format rules</a></li>
+</ul>
+<h2 data-number="1.5" id="sec:sprint-4-17th-january---23rd-january"><span class="header-section-number">1.5</span> Sprint 4 (17th January - 23rd January)</h2>
+<p>In this Sprint we closed the base structure tasks of the previous Sprint, and we continued working divided in teams: we finished Model’s ScalaDoc and refactoring, and started a re-organization of the <code>ItemRef</code> concept, as an `AST. Additionally, we started some minor tasks, as an automation structure for the report, and CI optimization.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/35">(Issue) Re-organize Model packages, ScalaDoc</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/30">(Issue) Represent ItemRefs as an ADT</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/20">(Issue) Report basic structure</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/23">(Issue) CI optimization</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/29">(Issue) Improve Scaladoc format rules</a></li>
+</ul>
+<h2 data-number="1.6" id="sec:sprint-5-24th-january---30th-january"><span class="header-section-number">1.6</span> Sprint 5 (24th January - 30th January)</h2>
+<p>In this Sprint we continued working in teams, bringing up more other tasks. <strong>Team 1</strong> revised the model, dealing with the concept of <code>MessagePusher</code> and <code>Message</code>s, improving the ScalaDoc and making some refactoring. In the meanwhile, <strong>Team 2</strong> started working in a more structured concept of <code>ItemDescription</code> and <code>Verbs</code>, as a lexical abstraction for the game concepts. In addition, the team refactored the <code>Prolog</code> generation and some of the related concepts.</p>
+<p>Furthermore, a task has been closed together, regarding a re-organization of the reports in a Gradle subproject, with a dedicated formatter and Linter for Markdown.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/47">(Issue) Messages and MessagePusher implementation</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/48">(Issue) Dictionary and Prolog Parser refactoring</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/30">(Issue) Represent ItemRefs as an ADT</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/20">(Issue) Reports basic structure</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/46">(Pull request) Set up Markdown subproject</a></li>
+</ul>
+<h2 data-number="1.7" id="sec:sprint-6-31st-january---6th-february"><span class="header-section-number">1.7</span> Sprint 6 (31st January - 6th February)</h2>
+<p>In this Sprint we continued working divided in groups. <strong>Team 2</strong> continued and finished the dictionary module, a sort of initial “wrapper” used to generate Prolog code initially. <strong>Team 1</strong> carried on various tasks regarding CI, QA enhancement, release generation, and created a bot for dependency update.</p>
+<p>In addition, reports and documentation now are located in a separate repository, and a new page for the project description has been deployed.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/48">(Issue) Dictionary and Prolog Parser refactoring</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/66">(Issue) Review and refactor model</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/22">(Issue) Set up delivery and deployment</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/52">(Issue) Further QA features</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/54">(Issue) Reports in a separate repository</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/64">(Issue) Dependabot</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/63">(Pull Request) Release with GitFlow and semantic versioning</a></li>
+</ul>
+<h2 data-number="1.8" id="sec:sprint-7-7th-february---13th-february"><span class="header-section-number">1.8</span> Sprint 7 (7th February - 13th February)</h2>
+<p>In this Sprint we continued working divided in groups. <strong>Team 1</strong> we re-organized the commons package, by splitting common reactions from the behaviors, we added some utility builders, and worked hard on the CI, by enabling a well-defined release workflow (with automatic scalaDoc generation and deploy at the end of the process), and by enabling coverage threshold, both on GH Actions and with the QA tool SonarCloud. <strong>Team 2</strong> worked into the CLI, by enabling a specific test framework for ZIO. In addition, they worked into the resolver, in order to manage ambiguous description. Then, in a common meeting with all members, we work into the Escape Room example, by creating a real story with our framework. We also created our first stable releases.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/89">(Pull request) Release 0.2.0</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/87">(Pull request) Common reactions and builder-based behaviors</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/86">(Pull request) Escape room tests</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/79">(Pull request) Allow resolver to better manage ambiguous descriptions</a></li>
+<li><a href="https://github.com/scalaquest/reports/pull/13">(Pull request) Generate html on release workflow</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/66">(Issue) Better Model API and DSL for the Storyteller</a></li>
+<li><a href="https://github.com/scalaquest/reports/pull/83">(Pull request) Minor workflow optimizations, readme badges</a></li>
+<li><a href="https://github.com/scalaquest/reports/pull/77">(Pull request) Sonarqube Scoverage integration</a></li>
+<li><a href="https://github.com/scalaquest/reports/pull/80">(Pull request) Improve CLI prompt</a></li>
+</ul>
+<h2 data-number="1.9" id="sec:sprint-8-14th-february---20th-february"><span class="header-section-number">1.9</span> Sprint 8 (14th February - 20th February)</h2>
+<p>The sprint 8 started with an important refactor of the model, carried out jointly from all members of the team. This was an important modification, regarding the split between <code>State</code> and <code>Message</code>s, that are separate entities actually, involved at different abstraction levels. In this joint group configuration, we also finished the second example, called PokeQuest. In the second part of the week, resuming the sub-team organization, we finished some minor tasks like a re-organization of the Reports’ CI and the common package based on the new State-Message configuration (in <strong>Team 1</strong>), and a refactoring/scaladoc addition for parser<code>and</code>dictionary` packages (in <strong>Team 2</strong>).</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/102">(Pull request) Remove messages from the state</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/105">(Pull request) PokeQuest example</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issue/95">(Issue) Compilation warnings</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/108">(Pull request) Add ScalaDoc, CommonReactions cleaning</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/97">(Pull request) Various commons additions</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/103">(Pull request) Completed tests</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issue/97">(Issue) Dictionary and Prolog Parser refactoring</a></li>
+<li><a href="https://github.com/scalaquest/Reports/issues/12">(Issue) PDF for appendix documents, yaml index</a></li>
+</ul>
+<h2 data-number="1.10" id="sec:sprint-9-21st-february---27th-february"><span class="header-section-number">1.10</span> Sprint 9 (21st February - 27th February)</h2>
+<p>In Sprint 9 we focused on reports, in particular into the PPS one. The plan was to join forces reorganizing pre-existent documentation produced throughout the duration of the project into a single report, and finish it. The initial plan was to work in sub-teams: from Monday to Wednesday the Team 1 should have worked on chapters 1, 2, 3, meanwhile <span class="citation" data-cites="scalaquest/team-2">[@scalaquest/team-2]</span> on 4,5,7. Then, in the second part of the week we should have switched roles, in order to complete, review and integrate the different parts. Due to various problems related to lessons and personal problems of the members, the second phase was prolonged, and continued until the next Sprint with both teams focusing on the last chapters. In addition, a major feature and some minor task has been completed, such as the enabling of continuous delivery on Maven Central, enabling of a development prerelease delivery system, and some minor adjustments.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/Reports/issues/18">(Issue) Focus on PPS report</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/112">(Pull request) Add how-to-use guide to the Readme</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issue/110">(Issue) Auto generate prerelease on each dev push</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/113">(Pull request) Release to Maven Central</a></li>
+</ul>
+<h2 data-number="1.11" id="sec:sprint-10-28th-february---6th-march"><span class="header-section-number">1.11</span> Sprint 10 (28th February - 6th March)</h2>
+<p>In Sprint 10 we focused onto finish the PPS report. We finished it at the end of the Sprint. In parallel, we started working on the LSS report, we finished the last example WizardQuest, and we finished some minor modifications to the CI. We are planning to close the works in the next Sprint.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issues/114">(Issue) Error in navigation with Lens</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/116">(Pull request) WizardQuest example</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/117">(Pull request) Release 0.3.1</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/issue/119">(Issue) Bug in EscapeRoom</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/120">(Pull request) More builders</a></li>
+<li><a href="https://github.com/scalaquest/Reports/pull/29">(Pull request) LSS report structure</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/122">(Pull request) Refactoring CLI component and minor fixes</a></li>
+<li><a href="https://github.com/scalaquest/PPS-19-ScalaQuest/pull/122">(Pull request) Enhance release flows</a></li>
+<li><a href="https://github.com/scalaquest/Reports/issues/30">(Issue) Pandoc CD fixes</a></li>
+<li><a href="https://github.com/scalaquest/Reports/pull/33">(Pull request) PPS revision</a></li>
+<li><a href="https://github.com/scalaquest/Reports/pull/34">(Pull request) LSS report</a></li>
+</ul>
+<h1 data-number="2" id="sec:guide-to-the-examples"><span class="header-section-number">2</span> Guide to the examples</h1>
+<h2 data-number="2.1" id="sec:escaperoom"><span class="header-section-number">2.1</span> EscapeRoom</h2>
+<p>EscapeRoom is the first example created for ScalaQuest. The example is created using mainly configuring builders and <code>Item</code>s given by the library.</p>
+<p>In the following lines there is shown a little guide for playing this example, explaining the steps to do in order to win the match.</p>
+<p>After have red the initial message shown at the beginning, it’s always recommended typing the command <code>inspect</code> and send it pressing the Enter button. Furthermore, this command is essential to understand the environment design and content.</p>
+<p>About sentences, articles are always optional, and adjectives also but just if there aren’t ambiguity.</p>
+<h3 data-number="2.1.1" id="sec:lets-start"><span class="header-section-number">2.1.1</span> Let’s start</h3>
+<p>Initially, you are in a basement. Inspecting the room there are:</p>
+<ul>
+<li>a <em>brown chest</em></li>
+<li>an <em>iron hatch</em></li>
+<li>a <em>rusty heavy crowbar</em></li>
+</ul>
+<p>You may try the command <code>open the hatch with the crowbar</code>, but it will be ineffective. Sending <code>open the chest</code> will open it, without needing a chest key. An <code>old rusty key</code> will appear in the room. Now the command <code>open the hatch with the key</code> will work and you can go in the living room using <code>go u</code>,<code>go up</code> or <code>enter the hatch</code>. Now you can go in the bathroom using <code>go north</code>, but it will contain nothing! So go back, and you may want to eat an apple… but which? <code>Eat red apple</code> will be a tasty action, while <code>eat the green apple</code> will bring in a sad ending, because is poisoned. Anyway, there is a big doorway, which is locked, so it needs some tool, like the chest previously. So, neither <code>open the doorway</code> nor <code>open doorway with key</code>, because it’s not avalaible anymore. Going back in the basement, there is a crowbar (maybe will be effective?). <code>go down</code> and <code>take crowbar</code> will bring it in your bag, as you can see with <code>inspect bag</code>. This allows you to move the object in another room. Go up again and <code>open the doorway with crowbar</code> will let you win.</p>
+<h2 data-number="2.2" id="sec:pokequest"><span class="header-section-number">2.2</span> PokeQuest</h2>
+<p>Pokequest is the second example created for ScalaQuest. The example is created using mainly custom <code>Item</code>s.</p>
+<p>In the following lines there is shown a little guide for playing this example, explaining the steps to do in order to win the match.</p>
+<p>After have red the initial message shown at the beginning, it’s always recommended to type the command <code>inspect</code> and send it pressing the Enter button. Furthermore, this command is essential to understand the environment design and content.</p>
+<p>About sentences, articles are always optional, and adjectives also but just if there aren’t ambiguity.</p>
+<h3 data-number="2.2.1" id="sec:lets-start-1"><span class="header-section-number">2.2.1</span> Let’s start</h3>
+<p>Initially, you are in Vermilion City. Inspecting the room there is a sleeping snorlax. <code>inspect bag</code> will tell there are a pikachu, a pokeball, a pokeflute.</p>
+<p>Snorlax is sleeping and blocking the way, but <code>wake snorlax</code> would be ineffective and lead you to death. So, the pokeflute may be useful…</p>
+<p><code>play the pokeflute</code> or <code>wake snorlax with pokeflute</code> allows you to have the free way, going north with <code>go n</code> and moving into the forest.</p>
+<p>There is a Charizard into the forest! You should capture it!</p>
+<p>With <code>catch charizard with pokeball</code> it could happen, but at first time it is too strong, and in that case it would fly away.</p>
+<p>This means it’s Pikachu’s turn!</p>
+<p><code>attack charizard with pikachu</code> is very effective, so don’t do it again, or Charizard will die!</p>
+<p>Now <code>catch charizard with pokeball</code> will work and let you win the match!</p>
+<h2 data-number="2.3" id="sec:wizardquest"><span class="header-section-number">2.3</span> WizardQuest</h2>
+<p>WizardQuest is the last example given for the project. This makes use of custom <code>Item</code>s and a custom <code>Ground</code>, showing the potentiality of the last construct, mainly.</p>
+<p>In the following lines there is a little guide for playing this example, explaining the steps to take in order to win the match.</p>
+<p>After reading the initial message, it’s always recommended typing the command <code>inspect</code> and send it pressing the Enter button. Furthermore, this command is essential to understand the environment design and content.</p>
+<p>About sentences, articles are always optional, and adjectives also but just if there aren’t ambiguity.</p>
+<h3 data-number="2.3.1" id="sec:lets-start-2"><span class="header-section-number">2.3.1</span> Let’s start</h3>
+<p>You are Harry Potter. And probably in the worst situation. Inspecting the room, you discover that you are in the Chamber of Secrets, with Tom Riddle in the front of you.</p>
+<p>Tom has been subjugated a terrible basilisk and the poor Ginny Weasley is lying in the ground. Fortunately the basilisk is blind, but you don’t have any weapon to kill it.</p>
+<p>You have to run away, through a tunnel in direction East with the command <code>go east</code>. The basilisk follows your sound, and you can’t return to the Chamber.</p>
+<p>With <code>inspect</code> you notice that there’s a little stone in the ground behind you. <code>throw the stone</code> to distract the basilisk. Now you can go back to the Chamber with <code>go west</code>.</p>
+<p>But the terrible basilisk is following you, so you have to find a sword or something else to kill it! In the Chamber there is the sorting hat and <code>look inside the hat</code> to find what you need.</p>
+<p>Now <code>kill the basilisk with the gryffindor sword</code>!</p>
+<p>The problems aren’t over! Now you have to destroy Tom Riddle for ever (or better, until next film). The basilisk hurts you, and a tooth of the basilisk remains on the ground. To kill Tom you have to <code>destroy the diary with the tooth</code>.</p></div>
+            <div class="d-none d-xl-block col-xl-3 bd-toc">
+               <ul class="section-nav">
+                  <li class="toc-entry"><ul>
+<li><a href="#sec:sprints-historical-overview"><span class="toc-section-number">1</span> Sprints Historical Overview</a>
+<ul>
+<li><a href="#sec:sprint-0-21st-december---24th-december"><span class="toc-section-number">1.1</span> Sprint 0 (21st December - 24th December)</a></li>
+<li><a href="#sec:sprint-1-24th-december---2nd-january"><span class="toc-section-number">1.2</span> Sprint 1 (24th December - 2nd January)</a></li>
+<li><a href="#sec:sprint-2-3rd-january---9th-january"><span class="toc-section-number">1.3</span> Sprint 2 (3rd January - 9th January)</a></li>
+<li><a href="#sec:sprint-3-10th-january---16th-january"><span class="toc-section-number">1.4</span> Sprint 3 (10th January - 16th January)</a></li>
+<li><a href="#sec:sprint-4-17th-january---23rd-january"><span class="toc-section-number">1.5</span> Sprint 4 (17th January - 23rd January)</a></li>
+<li><a href="#sec:sprint-5-24th-january---30th-january"><span class="toc-section-number">1.6</span> Sprint 5 (24th January - 30th January)</a></li>
+<li><a href="#sec:sprint-6-31st-january---6th-february"><span class="toc-section-number">1.7</span> Sprint 6 (31st January - 6th February)</a></li>
+<li><a href="#sec:sprint-7-7th-february---13th-february"><span class="toc-section-number">1.8</span> Sprint 7 (7th February - 13th February)</a></li>
+<li><a href="#sec:sprint-8-14th-february---20th-february"><span class="toc-section-number">1.9</span> Sprint 8 (14th February - 20th February)</a></li>
+<li><a href="#sec:sprint-9-21st-february---27th-february"><span class="toc-section-number">1.10</span> Sprint 9 (21st February - 27th February)</a></li>
+<li><a href="#sec:sprint-10-28th-february---6th-march"><span class="toc-section-number">1.11</span> Sprint 10 (28th February - 6th March)</a></li>
+</ul></li>
+<li><a href="#sec:guide-to-the-examples"><span class="toc-section-number">2</span> Guide to the examples</a>
+<ul>
+<li><a href="#sec:escaperoom"><span class="toc-section-number">2.1</span> EscapeRoom</a>
+<ul>
+<li><a href="#sec:lets-start"><span class="toc-section-number">2.1.1</span> Let’s start</a></li>
+</ul></li>
+<li><a href="#sec:pokequest"><span class="toc-section-number">2.2</span> PokeQuest</a>
+<ul>
+<li><a href="#sec:lets-start-1"><span class="toc-section-number">2.2.1</span> Let’s start</a></li>
+</ul></li>
+<li><a href="#sec:wizardquest"><span class="toc-section-number">2.3</span> WizardQuest</a>
+<ul>
+<li><a href="#sec:lets-start-2"><span class="toc-section-number">2.3.1</span> Let’s start</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+               </ul>
+            </div>
+         </div>
+               </div>
+            <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+      <!-- Mathjax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>
+         /* Bootstrap styles to tables */
+         function bootstrapStylePandocTables() {
+         $('tr.header').parent('thead').parent('table').addClass('table table-condensed'); }
+         $(document).ready(function () { bootstrapStylePandocTables(); });
+         /* Adjust the height when click the toc */
+         var shiftWindow = function() { scrollBy(0, -60) };
+         window.addEventListener("hashchange", shiftWindow);
+         function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+   </body>
+</html>

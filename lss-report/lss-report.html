@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      <meta name="author" content="Thomas AngeliniJacopo CorinaFrancesco GoriniRiccardo MaldiniFilippo Nardini">
+      
+      <title>ScalaQuest LSS Report</title>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Font-awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Styles -->
+      <link rel="stylesheet" href="https://ashki23.github.io/styles.css">
+         </head>
+   <body>
+            <div class="container">
+         <h1 class="title">ScalaQuest LSS Report</h1>
+                  <div class="row">
+            <div class="col-xl-9"><h1 data-number="1" id="sec:introduzione"><span class="header-section-number">1</span> Introduzione</h1>
+<p>Il progetto ScalaQuest si pone come obiettivo quello di realizzare un framework per permettere l’implementazione di giochi del genere <strong><a href="https://en.wikipedia.org/wiki/Interactive_fiction">Interactive Fiction</a></strong> (come ad esempio <a href="https://en.wikipedia.org/wiki/Zork">Zork</a>), nei quali il giocatore può utilizzare comandi di testo per influenzare l’ambiente e proseguire nel gioco.</p>
+<p>Esso dovrà in primis fornire una libreria, tale da permettere la <strong>creazione di storie giocabili</strong> da utenti terzi, tramite un API facilmente accessibile.</p>
+<p>Dovrà inoltre fornire una <strong>piattaforma per l’esecuzione delle storie</strong>, basata su un’interfaccia da linea di comando. Questa permetterà ad utenti terzi di interagire con le storie create precedentemente, modificando lo stato nel gioco e avanzando man mano nella storia.</p>
+<p>Il progetto è stato pensato per essere oggetto di esame in maniera mutuata per i corsi di PPS e LSS. A tale scopo, fin dalla definizione delle fondamenta del progetto si è posta particolare attenzione nell’adozione di una metodologia tale da integrare le peculiarità di entrambi i corsi. Il report di PPS descrive estensivamente gli aspetti relativi allo stesso corso, mentre nel report corrente vengono approfonditi nel dettaglio gli aspetti inerenti al corso di Laboratorio di Sistemi Software, tra cui:</p>
+<ul>
+<li>Il processo di sviluppo e di design, incentrato su un approccio di tipo Domain Driven;</li>
+<li>Le pratiche DevOps poste in atto.</li>
+</ul>
+<p>In tutte le fasi il progetto è stato fortemente influenzato da questi aspetti, al quale è stato dedicato un ammontare di ore di lavoro equivalente a quello di PPS, considerando oltre alla mera implementazione anche il lavoro di approfondimento e studio delle pratiche, in parte nuove per i membri del team.</p>
+<h2 data-number="1.1" id="sec:codice-sorgente-e-documentazione-aggiuntiva"><span class="header-section-number">1.1</span> Codice sorgente e documentazione aggiuntiva</h2>
+<p>Complessivamente, i sorgenti di progetto consistono nell’insieme di repository GitHub parte dell’<a href="https://github.com/scalaquest">organizzazione ScalaQuest</a>.</p>
+<p>Tutti i sorgenti sono resi disponibile sotto <strong>licenza MIT</strong>, in quanto chiara, breve e concisa. Non vengono poste particolari limitazioni riguardo la consultazione e il riuso da parte di terzi del software fornito.</p>
+<p>Ulteriori informazioni, documentazione e guide possono essere reperite a partire dal <a href="https://scalaquest.github.io/PPS-19-ScalaQuest">sito di progetto</a>.</p>
+<h1 data-number="2" id="sec:aspetti-di-domanin-driven-design"><span class="header-section-number">2</span> Aspetti di Domanin Driven Design</h1>
+<p>Sin dalle prime iterazioni di progetto, particolare attenzione è stata posta nell’utilizzo di metodologie di topo Domain Driven. Nella pratica, <a href="https://miro.com/app/board/o9J_lfd9ZK0=/">una board collaborativa <strong>Miro</strong></a> è stata utilizzata per mettere nero su bianco idee e concetti base. È bene sottolineare che oltre ai costrutti richiesti dal DDD, la board contiene anche molteplici sketch che hanno portato il gruppo alla definizione di vari componenti.</p>
+<h2 data-number="2.1" id="sec:knowledge-crunching"><span class="header-section-number">2.1</span> Knowledge Crunching</h2>
+<p>Prima ancora di mettere mano all’architettura di progetto, per diverse settimane sono state portate avanti sessioni di knowledge crunching che hanno visto la partecipazione di tutti i membri del team. Scopo di queste sessioni era lo studio del dominio applicativo, e la definizione di paletti tali da guidare lo sviluppo in un’ottica DDD.</p>
+<p>Si sono in primo luogo andati a delineare in linea di massima i casi d’uso, per poi definire Ubiquitous Language e Bounded Context. Alla prima bozza degli stessi sono seguiti raffinamenti successivi, fino alla definizione di una struttura quanto più precisa e dettagliata.</p>
+<p>Dal documento di Scrum Overview allegato in appendice è possibile individuare chiaramente come il primo Sprint tracciato (quello conseguente all’approvazione del progetto da parte del prof. Viroli) è stato interamente dedicato a questa fase. È però importante sottolineare come il lavoro di knowledge crunching sia iniziato ben prima, seppir con minore impegno, già dagli inizi di dicembre, ovvero dalla data di sottomissione dello stesso.</p>
+<h2 data-number="2.2" id="sec:ubiquitous-language"><span class="header-section-number">2.2</span> Ubiquitous Language</h2>
+<p>Di particolare importanza si è rilelvata l’individuazione di un Ubiquitous Language associato ai concetti alla base del progetto. Qui ne viene riportata la versione finale, che comprende tutti i concetti principali. Sulla <a href="https://miro.com/app/board/o9J_lfd9ZK0=/">board Miro</a> è disponibile una versione dello stesso nel quale viene ampliata la descrizione di ogni termine.</p>
+<figure>
+<img src="./images/ul.jpg" alt="Ubiquitous Language del progetto." /><figcaption aria-hidden="true">Ubiquitous Language del progetto.</figcaption>
+</figure>
+<h2 data-number="2.3" id="sec:individuazione-dei-requisiti-e-dei-casi-duso"><span class="header-section-number">2.3</span> Individuazione dei requisiti e dei casi d’uso</h2>
+<p>Nell’ambito di progetto sono stati individuati due principali attori, tali da interagire con lo stesso. Sulla base della loro definizione, sono stati quindi individuati vari casi d’uso:</p>
+<ul>
+<li><p><strong>Storyteller</strong>: rappresenta l’attore in grado di creare delle storie giocabili. Questo è di fatto un programmatore che usufruisce del framework, e si assume quindi presenti delle conoscenze di programmazione Scala. La creazione della storia consiste nella creazione delle <code>Room</code> e degli <code>Item</code> ad essi associate (includendo come parte di questa interazione la definizione del <em>come</em> tali entità reagiscono ai comandi utente), e alla definizione della grammatica alla base del motore per il riconoscimento dei comandi;</p></li>
+<li><p><strong>User</strong>: il termine indica l’attore che usufruisce della storia giocabile. Esso interagisce con il sistema immettendo comandi testuali, e consultandone l’output risultante.</p></li>
+</ul>
+<figure>
+<img src="./images/use-case.jpg" alt="Diagramma dei casi d’uso del progetto." /><figcaption aria-hidden="true">Diagramma dei casi d’uso del progetto.</figcaption>
+</figure>
+<h2 data-number="2.4" id="sec:bounded-context-e-context-map"><span class="header-section-number">2.4</span> Bounded context e Context map</h2>
+<p>A seguito dell’individuazione dei casi d’uso, si è andata a espandere l’analisi andando ad individuare i principali bounded context associati al progetto.</p>
+<figure>
+<img src="./images/context-map.jpg" alt="Context map di progetto." /><figcaption aria-hidden="true">Context map di progetto.</figcaption>
+</figure>
+<p>L’immagine riporta i principali bounded context, disposti con particolare attenzione alla complessità di modellazione degli stessi e all’importanza per il business. Si è intesa quest’ultima misura come rilevanza ti tale context, dal punto di vista di user e storyteller. Dal grafico si può individuare anche come le operazioni DevOps siano state elevate a vero e proprio bounded context: in ottica di effettuare un progetto di esame per LSS, esso rappresenta un vero e proprio requisito, ad alta complessità. L’utente finale, inteso come storyteller/user, può percepire da tali operazioni benefici indiretti (es. nella velocità delle release, nella qualità dell’API), ma di fatto maniera indiretta.</p>
+<p>I bounded context individuati nella sezione verde del grafico rappresentano i context core di progetto.</p>
+<!-- todo individuazione della mappa dei context estesa -->
+<h1 data-number="3" id="sec:gradle-e-struttura-multi-progetto"><span class="header-section-number">3</span> Gradle e struttura multi-progetto</h1>
+<p>Una volta definiti i bounded context, si è proseguito andando a definire l’architettura di progetto. È stata predisposta la repository di base di progetto, dal nome <a href="https://github.com/scalaquest/PPS-19-ScalaQuest">PPS-19-ScalaQuest</a>. È qui che risiede il sorgente alla base dei principali moduli.</p>
+<p>Si è deciso di utilizzare il tool di build automation <strong>Gradle</strong> per strutturare il progetto. Pur non essendo pensato primariamente per il linguaggio Scala, Gradle fornisce supporto per lo stesso.</p>
+<p>Si è predisposta una <strong>struttura multi-progetto</strong> il più possibile aderente all’analisi DDD effettuata. Sono stati definiti i seguenti sotto-progetti:</p>
+<ul>
+<li><strong>core</strong>: modulo che va a rappresentare di fatto i bounded context core di progetto. Esso è stato pensato infatti per definire specifiche alla base del model, della pipeline di progetto, la definizione del’API per lo storyteller, e il motore semantico del gioco per l’interpretazione dei comandi;</li>
+<li><strong>cli</strong>: modulo che va a mappare il bounded context CLI. Rappresenta una “piattaforma” sulle quali giocare le storie, basata su un’implementazione a linea di comando. A livello pratico, CLI eredita come dipendenza il modulo core, permettendo allo storyteller di iniziare a creare storie importando il solo modulo cli.</li>
+<li><strong>examples</strong>: sono stati definiti diversi moduli che consistono di fatto in delle storie di esempio, giocabili da un’utente finale.</li>
+</ul>
+<h2 data-number="3.1" id="sec:strategia-basata-su-convention-plugin"><span class="header-section-number">3.1</span> Strategia basata su convention plugin</h2>
+<p>Ogni modulo necessita di differenti plugin Gradle per poter funzionare correttamente. Il dettaglio dei plugin specifici richiesti da ogni modulo viene trattato nei capitoli successivi.</p>
+<p>Di particolare interesse è invece una scelta architetturale che ha permesso di condividere tra vari insiemi di sub-projects plugin e configurazioni comuni. Si è infatti deciso di sfruttare una strategia fortemente raccomandata da Gradle nella sua documentazione, basata sui <strong>convention plugins</strong>.</p>
+<p>Questa consiste nella definizione di vari plugin custom all’interno della directory standard <code>buildSrc</code>, ognuno comprendente configurazioni comuni a insiemi di sub-project. Una volta definiti, è quindi possibile includere tutte le configurazioni comuni semplicemente includendo all’interno dei singoli sub-project i convention plugin richiesti. In particolare:</p>
+<ul>
+<li><p><code>scalaquest.common-scala-conventions.gradle.kts</code>: definisce le configurazioni comuni a tutti i sotto-progetti basati su linguaggio Scala (di fatto, tutti i sub-project). Questo comprende quindi i plugin Scala e la sua configurazione, scalatest e scoverage per la gestione dei test, un plugin per operazioni di lint-formatting del codice, varie opzioni comuni di configurazione del compilatore Scala, un plugin per il semantic versioning basato su Git;</p></li>
+<li><p><code>scalaquest.libraries-conventions.gradle.kts</code>: definisce le configurazioni comuni a tutti i sotto-progetti che vanno a comporre una libreria Scala. Il plugin a sua volta importa il plugin <code>common-scala-conventions</code>, rendendo possibile configurare i moduli <code>core</code> e <code>cli</code> importando solamente <code>libraries-conventions</code>. Comprende il plugin java-library, la configurazione Scoverage specifica per le librerie, e la configurazione necessaria per la pubblicazione su Maven Central.</p></li>
+<li><p><code>scalaquest.examples-conventions.gradle.kts</code>: definisce le configurazioni comuni a tutti i sotto-progetti esempio. Il plugin a sua volta importa il plugin <code>common-scala-conventions</code>, rendendo possibile configurare gli esempi importando solamente <code>examples-conventions</code>. Complende il plugin application, la configurazione di Scoversage specifica per gli esempi, e la configurazione necessaria a rendere gli esempi giocabili da linea di comando.</p></li>
+</ul>
+<h1 data-number="4" id="sec:continuous-integration-quality-assurance"><span class="header-section-number">4</span> Continuous Integration, Quality Assurance</h1>
+<p>Particolare sforzo è stato posto nel porre in atto workflow efficaci e automatizzati, in grado di garantire la qualità del codice, e la Contiuous Integration. Per la realizzazione di questi, si è utilizzato il tool di CI GitHub Actions, in parte per la prononda integrazione con GitHub, e in parte a causa delle <a href="https://blog.travis-ci.com/2020-11-02-travis-ci-new-billing">recenti modifiche al piano di pricing in Travis CI</a>. Questi a loro volta sfruttano delle funzionalità integrate all’interno del progetto grazie al tool di build automation Gradle.</p>
+<h2 data-number="4.1" id="sec:gradle-e-convention-plugin"><span class="header-section-number">4.1</span> Gradle e convention plugin</h2>
+<p>Uno dei primissimi accorgimenti posti in atto nel progetto ha riguardato dei controlli di qualità posti in atto sul codice Kotlin dei convention plugin stessi, e nei file <code>build.gradle.kts</code> dei vari sub-project. Lo scopo era quello di innalzare la qualità, prima ancora dell codebase Scala vera e propria, della stessa struttura Gradle a contorno del progetto.</p>
+<p>A tal scopo, è stato abilitato il plugin <strong>detekt</strong>, un linter per Kotlin, posto in modalità strict: in questo modo, la build gradle fallisce nel caso in cui il codice Kotlin non rispetti determinati requisiti qualitativi, riportati in maniera dichiarativa all’interno del file <code>buildSrc/config/detekt.yml</code>.</p>
+<p>Inoltre, per facilitare l’aggiornamento di dipendenze e plugin, è stato adottato il plugin <strong>refreshVersions</strong>, che consente di estrapolare le versioni di dipendenze e plugin Gradle in un file separato <code>versions.properties</code>, permettendo l’aggiornamento automatizzato delle stesse.</p>
+<p>A tal proposito, a livello di organizzazione è stato definito un bot, denominato <strong><a href="https://github.com/scalaquest/Dependabot">dependabot</a></strong> (nome ispirato al sistema di GitHub per l’aggiornamento delle dipendenze). Questa altro non è che una semplice repository con un workflow schedulato, eseguito automaticamente ogni notte, per rilevare all’interno delle varie repository di progetto eventuali dipendenze non aggiornate, e generando automaticamente una pull request nella quale si va ad aggiornare tale dipendenza. Tale bot non fa altro che sfruttare il bot esistente <a href="https://github.com/DanySK/upgradle">UpGradle</a>, configurandolo appositamente per agire all’interno dell’organizzazione.</p>
+<h2 data-number="4.2" id="sec:framework-di-test-e-soglie-di-coverage"><span class="header-section-number">4.2</span> Framework di test e soglie di coverage</h2>
+<p>I test sono portati avanti tramite il framework <strong>ScalaTest</strong>, seguendo lo stile di test <strong>WordSpec</strong>. Integrare ScalaTest all’interno del progetto non si è rivelato banale. A seguito di varie ricerche, si è deciso di integrarli tramite il plugin <strong>ScalaTest di Maiflai</strong>, un plugin che integra e configura in maniera pressoché trasparente ScalaTest, basato su jUnit 5.</p>
+<p>In aggiunta a questo, è stato utilizzato un secondo framework di test, per rendere possibile testare il modulo <code>cli</code>. Basandosi infatti questo sulla libreria funzionale <strong>ZIO</strong>, il test dello stesso può essere effettuato solo con un framework apposito basato sempre su jUnit, denomitato <strong>zio-test-junit</strong>. L’omonima dipendenza è stata quindi aggiunta al <code>build.gradle.kts</code> dello specifico sub-project.</p>
+<p>Infine, si è reso necessario trovare un modo per poter gestire i controlli di coverage. È infatti noto che Jacoco, uno dei tool più diffusi per i controlli di coverage su JVM, mal si adatta ai controlli su sorgente Scala. Jacoco opera infatti a livello bytecode, andando a coprire del codice autogenerato da Scala, e che può portare a stime di coverage del tutto sballate. Lo stato dell’arte per la messa in atto di controlli di coverage Scala con Gradle passa per l’utilizzo di plugin dedicati che tengono conto di queste caratteristiche, come <strong>Scoverage di Maiflai</strong>. Questo permette di generare, tra gli altri, report di coverage in formato html, oltre ad esporre un task <code>:scoverageCheck</code>, che permette di far fallire la build in presenza di coverage più bassa di una determinata soglia. Si è quindi installato nel progetto questo plugin, andando anche a configurare una soglia di coverage mandatoria del 75% per i moduli <code>core</code> e <code>cli</code>.</p>
+<h2 data-number="4.3" id="sec:lint-e-code-style"><span class="header-section-number">4.3</span> Lint e code style</h2>
+<p>Particolare attenzione è stata posta anche alla qualità del codice e allo stile dello stesso, definendo una serie di constraint atti ad innalzare la coesione stilistica del codice Scala tra le varie sezioni del progetto.</p>
+<p>Sono presenti molteplici alternative in grado di gestire funzionalità di linting e styling di codice Scala tramite Gradle. Si è deciso a tal scopo di utilizzare il plugin <strong>spotless</strong>: questo aggiunge al progetto vari task per lo styling automatico del codice (<code>:spotlessApply</code>) e per il check dello stesso (<code>:spotlessCheck</code>), supportando al contempo molteplici linguaggi di programmazione tramite tecniche differenti. Per Scala, Spotless sfrutta internamente <code>scalafmt</code>, un tool per lo styling del codice Scala. Le regole di styling applicate sono accessibili in un formato dichiarativo all’interno del file <code>.scalafmt.conf</code>.</p>
+<h2 data-number="4.4" id="sec:sonarcloud"><span class="header-section-number">4.4</span> SonarCloud</h2>
+<p>Un ulteriore strumento posto in atto per innalzare la qualità del codice e certificarla è <strong>SonarCloud</strong>. Questo tool permette di porre in atto controlli automatizzati sul codice, estraendo varie metriche qualitative riguardo la codebase, legate a mantenibilità, coverage, debito tecnico, duplicazione e molto altro. Lo strumento fornisce inoltre una dashboard pubblica che ne raccoglie le principali metriche, accessibile <a href="https://sonarcloud.io/dashboard?id=scalaquest_PPS-19-ScalaQuest">da qua</a>.</p>
+<p>Di particolare rilevanza per il progetto è stata la funzionalità <strong>quality gate</strong>: SonarCloud integra infatti un bot, che ad ogni push all’interno di una pull request in direzione di branch stabili, effettua un controllo di CI, fallendo nel caso in cui le metriche rilevate non superino delle soglie preimpostate.</p>
+<p>Allo scopo di configurare correttamente SonarCloud, si è reso necessario aggiungere un plugin al progetto, denominato <strong>Sonarqube</strong>. Questo rappresenta uno strumento cosiddetto di “scanner” per SonarCloud, andando ad estrarre in maniera più mirata le metriche. Il plugin fornisce il task <code>:sonarqube</code>, che va eseguito in CI nel momento in cui si voglia eseguire un controllo di quality gate.</p>
+<h2 data-number="4.5" id="sec:il-workflow-ci"><span class="header-section-number">4.5</span> Il workflow CI</h2>
+<p>Allo scopo di porre in atto la maggior parte dei controlli citati in precedenza, si è reso necessario definire un apposito workflow GirHub Actions, denominato semplicemente <code>ci.yml</code>. Questo viene eseguito ad ogni push e pull request effettuata in direzionde dei branch <code>main</code> e <code>dev</code>. Il workflow è stato organizzato in differenti job, i quali agiscono in maniera completamente parallela. Ciò permette di otttenere una logica di tipo fail-fast, desiderabile nelle routine di CI. I job eseguiti sono i seguenti:</p>
+<ul>
+<li><p><strong>Build</strong>: responsabile di verificare che il software venga buildato correttamente. Il task <code>:build</code> viene in questo caso “sezionato” nei suoi due sotto-task <code>:assemble</code> e <code>:check</code>, permettendo una più facile interpretazione del log di GH Actions in caso di fail. Il job viene eseguito su una matrice di sistemi operativi, mentre si è ritenuto non di interesse testare la build su versioni differenti di Java (avendo posto come necessario il solo supporto a Java 11 con Scala 2.13);</p></li>
+<li><p><strong>Lint</strong>: responsabile della correttezza stilistica del codice. Al suo interno, viene semplicemente eseguito il task <code>:spotlessCheck</code>;</p></li>
+<li><p><strong>Coverage</strong>: controlla che le soglie di coverage impostate vengano rispettate, tramite il task <code>:checkScoverage</code>.</p></li>
+</ul>
+<h2 data-number="4.6" id="sec:il-workflow-opt-in-ci"><span class="header-section-number">4.6</span> Il workflow Opt-in CI</h2>
+<p>Ulteriore controllo di CI è stato posto tramite il workflow <strong>Opt-in CI</strong>. Questo permette di attivare determitate funzioni di CI, come lo style check, la build, o il controllo di coverage, a partire dai branch <code>feature/*</code>. Viene definito “opt-in” in quanto di base questi controlli sono disabilitati. Vengono di fatto utilizzati solo per dei test, e possono essere invocati includendo, nel contenuto del commit che ha generato il push nel branch, i tag <code>[lint]</code>, <code>[build]</code>, <code>[coverage]</code>.</p>
+<h2 data-number="4.7" id="sec:modelli-di-sviluppo"><span class="header-section-number">4.7</span> Modelli di sviluppo</h2>
+<p>Si è ritenuto opportuno accennare all’interno di questo capitolo anche maggiori dettagli riguardo i modelli di sviluppo adottati. Questo poiché strettamente legati ai workflow di CI.</p>
+<p>Durante lo sviluppo del progetto, non si è adottato sempre lo stesso modello di sviluppo. Nelle prime fasi di progetto, durante le quali non si aveva del codice abbastanza stabile da essere “rilasciabile”, si è seguito un approccio più flessibile e prototipale, denominato GitFlow, per poi evolvere il modello ad un più strutturato GitFlow.</p>
+<h2 data-number="4.8" id="sec:github-flow-in-fase-embrionale"><span class="header-section-number">4.8</span> GitHub Flow in fase embrionale</h2>
+<p><strong>GitHub Flow</strong> è un modello di sviluppo ispirato a GitFlow, ma con alcune caratteristiche che lo rendono più flessibile e semplice da porre in atto.</p>
+<p>Il modello richiede ad esempio che la versione stabile del software sia mantenuta su un branch <code>main</code> (o <code>master</code>), senza però la necessità di un branch <code>dev</code> parallelo. Allo stesso tempo, però, GitHub Flow suggerisce di organizzare il lavoro in <code>feature/*</code> branch, come in GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo utente.</p>
+<p>Alla luce di ciò, le prime iterazioni di progetto hanno presentato particolare flessibilità sulle modalità di modifica del codice. Le varie feature sono state sviluppate sui rispettivi <code>feature/*</code> branch, poi riversati nel <code>main</code> tramite pull request. Si è subordinato la chiusura di queste alla revisione da parte di un membro del team (solitamente, non appartenente allo stesso sub-team) e al passaggio di determitati workflow di CI e QA.</p>
+<h2 data-number="4.9" id="sec:gitflow-a-regime"><span class="header-section-number">4.9</span> GitFlow a regime</h2>
+<p>Una volta predisposta una codebase sufficientemente stabile, e una volta abilitati i workflow di Continuous Deploy, si è migrato al più strutturato modello <strong>GitFlow</strong>. Questo permette di avere nel branch <code>main</code> la versione ufficiale e stabile, sempre associata a una release. A ogni push nel <code>main</code> deve corrispondere un tag, associato a sua volta a un numero di versione. La versione “di lavoro” del codice, stabile ma potenzialmente parziale, risiede nel branch <code>dev</code>.</p>
+<p>I vari <code>feature/*</code> branch confluiscono ora tramite pull request in <code>dev</code>, con gli stessi vincoli formulati per modello precedente (controlli di CI obbligatori e revisione di un utente). In aggiunta, per una maggiore leggibilità e organizzazione del codice, si è adottata una precisa politica di merge, che prevede che queste pull request vengano chiuse tramite <strong>squash and merge</strong>.</p>
+<p>Il <code>main</code> viene aggiornato tramite delle pull request sullo stesso originate da branch <code>release/X.Y.Z</code> (o <code>hotfix/X.Y.Z</code>), originati dal <code>dev</code>, dove con <code>X.Y.Z</code> si intende un numero di versione formulato secondo semantic versioning. Queste pull request presentano, oltre ai vincoli di validazione visti per le precedenti (controlli di CI e revisione di un membro del team), anche la necessità di presentare una coverage superiore al 75% nei moduli <code>core</code> e <code>cli</code>. Sono poi presenti degli accorgimenti di automazione ulteriori per la delivery automatizzata degli artefatti, e la gestione dei tag, indicati nel capitolo successivo.</p>
+<h1 data-number="5" id="sec:continuous-delivery-e-deployment"><span class="header-section-number">5</span> Continuous Delivery e Deployment</h1>
+<p>Tra gli obiettivi di progetto è stato posto fin da subito quello di realizzare dei processi efficaci di Continuous Delivery e Deployment degli artefatti. Nonostante ciò, a differenza di quanto fatto per i workflow di CI, quelli di CD non sono stati realizzati immediatamente. Questo in quanto nei primi Sprint di progetto non si aveva del codice abbastanza stabile da poterne ricavare degli artefatti concretamente utilizzabili. I workflow di Continuous Delivery e Deployment sono stati predisposti durante il passaggio da GitHubFlow a GitFlow, e hanno subìto diverse modifiche lungo lo sviluppo del progetto.</p>
+<h2 data-number="5.1" id="sec:il-workflow-release"><span class="header-section-number">5.1</span> Il workflow Release</h2>
+<p>Il primo e più importante workflow per il deploy degli artefatti è denominato <strong>Release</strong>. Questo viene lanciato ogniqualvolta viene chiusa con successo (ovvero generando un evento di merge) una pull request in direzione del <code>main</code>, a partire da un branch <code>release/X.Y.Z</code>. Tale workflow:</p>
+<ol type="1">
+<li><p>Inferisce il nome del tag da associare alla release, a partire del nome del branch di provenienza, e crea un annotated tag in corrispondenza del commit di merge;</p></li>
+<li><p>Genera una release GitHub nell’apposita sezione Releases, ponendo all’interno di questa gli artefatti necessari (jar per le librerie <code>core</code> e <code>cli</code>, delle distribution in formato <code>zip</code> e <code>tar.gz</code> per gli esempi, il file <code>README.md</code>);</p></li>
+<li><p>In parallelo al punto 2, effettua una pubblicazione su Maven Central;</p></li>
+<li><p>Una volta completati i punti 2 e 3, viene generata una pull request dal <code>main</code>, diretta al branch <code>dev</code>. Ciò permette di integrare nel branch di sviluppo le eventuali modifiche occorse all’interno dei branch <code>release/X.Y.Z</code>. Su di questi infatti si è delle volte agito con delle modifiche minori.</p></li>
+<li><p>Una volta completati i punti 2 e 3, vengono generati ScalaDoc e report di coverage per i moduli <code>core</code> e <code>cli</code>, e resi disponibili nello spazio web del progetto.</p></li>
+</ol>
+<h2 data-number="5.2" id="sec:il-workflow-prerelease"><span class="header-section-number">5.2</span> Il workflow Prerelease</h2>
+<p>Oltre al workflow di release principale, si è predisposto un secondo workflow, che va a creare delle release GitHub ogniqualvolta viene effettuato un push nel branch <code>dev</code>. Tali release vengono marcate come non perfettamente stabili, appunto con il marcatore prerelease, da cui il nome del workflow. Particolarità di questa routine è che non necessita di definire manualmente il nome della release: questa viene generata in automatico, tramite il plugin <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin/blob/master/src/main/kotlin/org/danilopianini/gradle/gitsemver/GitSemVer.kt"><code>git-sensitive-semantic-versioning</code></a>, a partire dall’ultimo tag disponibile.</p>
+<p>Ricapitolando, il workflow:</p>
+<ol type="1">
+<li><p>Inferisce il nome del tag da associare alla prerelease, in modo del tutto automatico, tramite il plugin Gradle <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin/blob/master/src/main/kotlin/org/danilopianini/gradle/gitsemver/GitSemVer.kt"><code>git-sensitive-semantic-versioning</code></a>. Un task personalizzato permette di estrre il numero di versione e salvarlo su un file; il contenuto viene quindi prelevato, salvato come variabile d’ambiente, e viene creato un annotated tag in corrispondenza del commit di merge;</p></li>
+<li><p>Genera una release GitHub nell’apposita sezione Releases, con il flag prerelease abilitato, ponendo all’interno di questa gli artefatti necessari (jar per le librerie <code>core</code> e <code>cli</code>, delle distribution in formato <code>zip</code> e <code>tar.gz</code> per gli esempi, il file <code>README.md</code>);</p></li>
+<li><p>In parallelo al punto 2, effettua una pubblicazione su Maven Central.</p></li>
+</ol>
+<h2 data-number="5.3" id="sec:maven-central"><span class="header-section-number">5.3</span> Maven Central</h2>
+<p>Si è deciso di dedicare una sezione a parte per approfondire il procedimento che ha portato alla pubblicazione delle librerie di progetto sul repository pubblico <strong>Maven Central</strong>.</p>
+<p>La predisposizione del delivery in una repository pubblica è stata prevista sin dall’inizio nel progetto. Anche solo la scelta di porre tutte le repository di progetto sotto una stessa organizzazione è stata eseguita in quest’ottica, così da poter ottenere il dominio <code>scalaquest.github.io</code>, e utilizzare <code>io.github.scalaquest</code> quale groupId per il rilascio.</p>
+<p>L’attuazione di questo obiettivo però è stato demandato a fasi più avanzate di progetto, individuando tale possiblità come requisito da valutare in corso d’opera.</p>
+<p>Ci si è iniziati a muovere in tal senso durante la migrazione da GitHubFlow a GitFlow. In questo frangente si è aperto un <strong>ticket presso Sonatype</strong>, richiedendo la possibilità di pubblicare sotto il groupId <code>io.github.scalaquest</code>.</p>
+<p>Tale processo è stato completato abbastanza velocemente. Lo sviluppo di questa soluzione ha però subito a questo punto una fase d’arresto, legata principalmente alla complessità nella configurazione del plugin Gradle <code>maven-publish</code> e alla firma degli artefatti, in particolare in ambiente CI. I workflow di release sono quindi stati inizialmente realizzati senza la possibilità di pubblicare su Maven.</p>
+<p>Solo più avanti, con il raggiungimento di una relativa stabilità di progetto, si è deciso di approfondire e portare a termine questo task, concludendo la configurazione del plugin e dei workflow collegati.</p>
+<p>Nella configurazione, una volta pubblicati gli artefatti, saranno i membri del team a concludere la release, effettuando il <strong>close</strong> o il <strong>drop</strong> della release, direttamente dall’interfaccia web <strong>Nexus Repository Manager</strong>, previa autenticazione.</p>
+<p>Il team tiene a sottolineare che pubblicare su una repository pubblica popolare quale Maven Central è stata una grande fonte di soddisfazione per i propri membri.</p>
+<h1 data-number="6" id="sec:reports-repository"><span class="header-section-number">6</span> Reports repository</h1>
+<p>Nelle prime fasi del progetto, il repository principale conteneva un ulteriore sotto-progetto denominato <code>reports</code>. All’interno di questo si erano andati a porre i report di LSS e PPS, oltre ai documenti a margine come lo Sprint Overview. La scelta di utilizzare un sotto-progetto è stata dettata dalla necessità di dare una struttura al codice, e alla possilità di utilizzare il plugin <code>Spotless</code> di Gradle anche per lo styling del Markdown, grazie al ai task <code>:spotlessCheck</code> per il controllo sul rispetto delle regole di stile, e <code>:spotlessApply</code> per l’applicazione automatica delle stesse.</p>
+<p>Con l’aumentare con la complessità del progetto, però si è deciso di cambiare tale infrastruttura. Il sottoprogetto <code>reports</code> è stato quindi migrato in un repository del tutto slegato da quello principale, denominato <a href="https://github.com/scalaquest/Reports"><strong>Reports</strong></a>. Scelta è stata dettata anche allo scopo di costruire un’infrastruttura più complessa attorno ai report stessi.</p>
+<p>Reports è un progetto Gradle, con abilitato il plugin <code>Spotless</code> per lo styling (con una configurazione dedicata per il Markdown), e i sorgenti della documentazione (in Markdown) contenuti all’interno della directory <code>/src</code>. Il modello di sviluppo adottato è ancora una volta GitFlow, in maniera del tutto equivalente nelle modalità a quelle del repository principale.</p>
+<h2 data-number="6.1" id="sec:continuous-integration"><span class="header-section-number">6.1</span> Continuous Integration</h2>
+<p>A guardia dei branch stabili, è stato posto un workflow di CI che va ad applicare <code>:spotlessCheck</code>, e fallisce nel caso in cui non vengano rispettate determinate regole di stile (come la lunghezza della riga posta a 80 caratteri).</p>
+<h2 data-number="6.2" id="sec:continuous-delivery-e-deployment-1"><span class="header-section-number">6.2</span> Continuous Delivery e Deployment</h2>
+<p>Assolutamente peculiari sono invece i workflow di delivery e deployment. I file Markdown si prestano infatti molto bene ad essere convertiti in altri formati, utilizzando i tool adatti. Si è deciso quindi di fornire, per una consultazione più agevole, i report nei formati LaTeX PDF e in una versione web, autogenerati ad ogni nuova release. Ciò è stato possibile grazie a <strong>Pandoc</strong>, un tool che permette la conversione di file testuali in una moltitudine di formati differenti.</p>
+<p>Con queste specifiche, si sono andati quindi a definire un workflow <strong>Release</strong> e uno <strong>Prerelease</strong>, lanciati con le stesse modalità descritte per il repository principale:</p>
+<h3 data-number="6.2.1" id="sec:il-workflow-release-1"><span class="header-section-number">6.2.1</span> Il workflow Release</h3>
+<p><strong>Release</strong> viene lanciato alla chiusura dei branch <code>release/X.Y.Z</code>. Effettua le seguenti operazioni:</p>
+<ol type="1">
+<li><p>Inferisce il nome del tag da associare alla release, a partire del nome del branch di provenienza, e crea un annotated tag in corrispondenza del commit di merge;</p></li>
+<li><p>Genera una release GitHub nell’apposita sezione Releases. Tale release contiene i report di PPS, LSS e un file di appendice (oltre al file <code>README.md</code>), a partire dai file Markdown, tramite un’immagine Docker con integrata un’installazione Pandoc;</p></li>
+<li><p>Genera una versione HTML dei report e del file di appendice, a partire dai file Markdown, tramite un’immagine Docker con integrata un’installazione Pandoc. Posiziona quindi tali file all’interno del branch <code>gh-pages</code> di progetto, e effettua automaticamente un commit su questo branch, integrando la versione aggiornata della documentazione. In questo modo, questa sarà accessibile dallo spazion web del progetto;</p></li>
+<li><p>Una volta completati i punti 2 e 3, viene generata una pull request dal <code>main</code>, diretta al branch <code>dev</code>. Ciò permette di integrare nel branch di sviluppo le eventuali modifiche occorse all’interno dei branch <code>release/X.Y.Z</code>. Su di questi infatti si è delle volte agito con delle modifiche minori.</p></li>
+</ol>
+<h3 data-number="6.2.2" id="sec:il-workflow-prerelease-1"><span class="header-section-number">6.2.2</span> Il workflow Prerelease</h3>
+<p><strong>Prerelease</strong> viene lanciato ad ogni push nel branch <code>dev</code>, e genera delle release marcate con il flag pre-release, con numero di versione generato automaticamente tramite <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin/blob/master/src/main/kotlin/org/danilopianini/gradle/gitsemver/GitSemVer.kt"><code>git-sensitive-semantic-versioning</code></a>. Effettua le seguenti operazioni:</p>
+<ol type="1">
+<li>Inferisce il nome del tag da associare alla prerelease, in modo del tutto automatico, tramite il plugin Gradle <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin/blob/master/src/main/kotlin/org/danilopianini/gradle/gitsemver/GitSemVer.kt"><code>git-sensitive-semantic-versioning</code></a>. Un task personalizzato permette di estrre il numero di versione e salvarlo su un file; il contenuto viene quindi prelevato, salvato come variabile d’ambiente, e viene creato un annotated tag in corrispondenza del commit di merge;</li>
+</ol>
+<ol start="2" type="1">
+<li>Genera una release GitHub nell’apposita sezione Releases, con il flag prerelease abilitato. Tale release contiene i report di PPS, LSS e un file di appendice (oltre al file <code>README.md</code>), a partire dai file Markdown, tramite un’immagine Docker con integrata un’installazione Pandoc;</li>
+</ol>
+<h3 data-number="6.2.3" id="sec:configurazione-di-pandoc"><span class="header-section-number">6.2.3</span> Configurazione di Pandoc</h3>
+<p>Per poter personalizzare l’output generato da Pandoc, sono stati utilizzati dei file configurazione Pandoc, accessibli dalla directory <code>/pandoc</code>. All’interno di questa si è andato a configurare il template LaTeX nativo di Pandoc, allo scopo di adattarlo al progetto. Per quanto rigaurda il template HTML, invece, si è creato e utilizzato un template custom, a partire da un fork del tamplate <a href="https://github.com/ashki23/pandoc-bootstrap">PandocBootstrap</a>. Il template di progetto è accessibile al repository <a href="https://github.com/scalaquest/PandocBootstrap"><code>scalaquest/PandocBootstrap</code></a>. Questo è stato posto come submodule del repository Report, così da avere a disposizione il template durante la generazione dei report in CI.</p>
+<h1 data-number="7" id="sec:conclusioni"><span class="header-section-number">7</span> Conclusioni</h1>
+<!-- cosa abbiamo imparato, cosa abbiamo fatto per la prima volta,
+soddisfazione complessiva -->
+<p>In conclusione, possiamo affermare come team di ritenerci molto soddisfatti di quanto fatto in questo progetto. Rispetto a progetti trattati in precedenza dai singoli membri del gruppo, in questo si è posta un’attenzione particolare alla metodologia e all’organizzazione di progetto, cercando per quanto possibile di approcciare lo sviluppo con mentalità ingegneristica, pragmatica e strutturata.</p>
+<p>Le sessioni di knowledge crunching iniziale si sono rivelate cruciali per la comprensione dei concetti alla base del progetto, e per l’organizzazione dello stesso. È stata una vera e propria soddisfazione poi vedere il proprio progetto pubblicato sulla repository pubblica Macen Central.</p>
+<p>Come membri del team ci teniamo inoltre ad aggiungere che nessuno di noi aveva in precedenza lavorato ad un progetto con un’organizzazione e una metodologia strutturata. Due membri del team provengono poi da una triennale differente dal percorso degli altri (Riccardo Maldini e Francesco Gorini, UniUrb), la quale proponeva un approccio ai progetti ben più approssimativo. Una sfida che si è accettata di buon grado, coscienti delle potenzialità dei singoli.</p></div>
+            <div class="d-none d-xl-block col-xl-3 bd-toc">
+               <ul class="section-nav">
+                  <li class="toc-entry"><ul>
+<li><a href="#sec:introduzione"><span class="toc-section-number">1</span> Introduzione</a>
+<ul>
+<li><a href="#sec:codice-sorgente-e-documentazione-aggiuntiva"><span class="toc-section-number">1.1</span> Codice sorgente e documentazione aggiuntiva</a></li>
+</ul></li>
+<li><a href="#sec:aspetti-di-domanin-driven-design"><span class="toc-section-number">2</span> Aspetti di Domanin Driven Design</a>
+<ul>
+<li><a href="#sec:knowledge-crunching"><span class="toc-section-number">2.1</span> Knowledge Crunching</a></li>
+<li><a href="#sec:ubiquitous-language"><span class="toc-section-number">2.2</span> Ubiquitous Language</a></li>
+<li><a href="#sec:individuazione-dei-requisiti-e-dei-casi-duso"><span class="toc-section-number">2.3</span> Individuazione dei requisiti e dei casi d’uso</a></li>
+<li><a href="#sec:bounded-context-e-context-map"><span class="toc-section-number">2.4</span> Bounded context e Context map</a></li>
+</ul></li>
+<li><a href="#sec:gradle-e-struttura-multi-progetto"><span class="toc-section-number">3</span> Gradle e struttura multi-progetto</a>
+<ul>
+<li><a href="#sec:strategia-basata-su-convention-plugin"><span class="toc-section-number">3.1</span> Strategia basata su convention plugin</a></li>
+</ul></li>
+<li><a href="#sec:continuous-integration-quality-assurance"><span class="toc-section-number">4</span> Continuous Integration, Quality Assurance</a>
+<ul>
+<li><a href="#sec:gradle-e-convention-plugin"><span class="toc-section-number">4.1</span> Gradle e convention plugin</a></li>
+<li><a href="#sec:framework-di-test-e-soglie-di-coverage"><span class="toc-section-number">4.2</span> Framework di test e soglie di coverage</a></li>
+<li><a href="#sec:lint-e-code-style"><span class="toc-section-number">4.3</span> Lint e code style</a></li>
+<li><a href="#sec:sonarcloud"><span class="toc-section-number">4.4</span> SonarCloud</a></li>
+<li><a href="#sec:il-workflow-ci"><span class="toc-section-number">4.5</span> Il workflow CI</a></li>
+<li><a href="#sec:il-workflow-opt-in-ci"><span class="toc-section-number">4.6</span> Il workflow Opt-in CI</a></li>
+<li><a href="#sec:modelli-di-sviluppo"><span class="toc-section-number">4.7</span> Modelli di sviluppo</a></li>
+<li><a href="#sec:github-flow-in-fase-embrionale"><span class="toc-section-number">4.8</span> GitHub Flow in fase embrionale</a></li>
+<li><a href="#sec:gitflow-a-regime"><span class="toc-section-number">4.9</span> GitFlow a regime</a></li>
+</ul></li>
+<li><a href="#sec:continuous-delivery-e-deployment"><span class="toc-section-number">5</span> Continuous Delivery e Deployment</a>
+<ul>
+<li><a href="#sec:il-workflow-release"><span class="toc-section-number">5.1</span> Il workflow Release</a></li>
+<li><a href="#sec:il-workflow-prerelease"><span class="toc-section-number">5.2</span> Il workflow Prerelease</a></li>
+<li><a href="#sec:maven-central"><span class="toc-section-number">5.3</span> Maven Central</a></li>
+</ul></li>
+<li><a href="#sec:reports-repository"><span class="toc-section-number">6</span> Reports repository</a>
+<ul>
+<li><a href="#sec:continuous-integration"><span class="toc-section-number">6.1</span> Continuous Integration</a></li>
+<li><a href="#sec:continuous-delivery-e-deployment-1"><span class="toc-section-number">6.2</span> Continuous Delivery e Deployment</a>
+<ul>
+<li><a href="#sec:il-workflow-release-1"><span class="toc-section-number">6.2.1</span> Il workflow Release</a></li>
+<li><a href="#sec:il-workflow-prerelease-1"><span class="toc-section-number">6.2.2</span> Il workflow Prerelease</a></li>
+<li><a href="#sec:configurazione-di-pandoc"><span class="toc-section-number">6.2.3</span> Configurazione di Pandoc</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sec:conclusioni"><span class="toc-section-number">7</span> Conclusioni</a></li>
+</ul></li>
+               </ul>
+            </div>
+         </div>
+               </div>
+            <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+      <!-- Mathjax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>
+         /* Bootstrap styles to tables */
+         function bootstrapStylePandocTables() {
+         $('tr.header').parent('thead').parent('table').addClass('table table-condensed'); }
+         $(document).ready(function () { bootstrapStylePandocTables(); });
+         /* Adjust the height when click the toc */
+         var shiftWindow = function() { scrollBy(0, -60) };
+         window.addEventListener("hashchange", shiftWindow);
+         function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+   </body>
+</html>
