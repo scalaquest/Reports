@@ -7,7 +7,7 @@ Overview. La scelta di utilizzare un sotto-progetto è stata dettata dalla
 necessità di dare una struttura al codice, e alla possilità di utilizzare il
 plugin `Spotless` di Gradle anche per lo styling del Markdown, grazie al ai task
 `:spotlessCheck` per il controllo sul rispetto delle regole di stile, e
-`:spotlessApply`.
+`:spotlessApply` per l'applicazione automatica delle stesse.
 
 Con l'aumentare con la complessità del progetto, però si è deciso di cambiare
 tale infrastruttura. Il sottoprogetto `reports` è stato quindi migrato in un
