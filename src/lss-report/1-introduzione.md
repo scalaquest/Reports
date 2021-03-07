@@ -1,9 +1,5 @@
 # Introduzione
 
-<!-- Parlare della consegna di progetto, cosa è stato aggiunto allo scopo di
-integrare LSS. Panoramica molto generale; accenno alla licenza di progetto
-(MIT) -->
-
 Il progetto ScalaQuest si pone come obiettivo quello di realizzare un framework
 per permettere l'implementazione di giochi del genere
 **[Interactive Fiction](https://en.wikipedia.org/wiki/Interactive_fiction)**

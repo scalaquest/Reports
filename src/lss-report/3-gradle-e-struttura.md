@@ -1,10 +1,5 @@
 # Gradle e struttura multi-progetto
 
-<!-- Come si è strutturata la repo principale di progetto, cosa sono
-i convention plugin e come sono stati utilizzati (panoramica generale; il
-focus sui plugin contenuti dentro di loro, tipo maiflai scalatest, maven publish
-sonarqube, scoverage ecc. va fatta nei rispettivi capitoli successivi) -->
-
 Una volta definiti i bounded context, si è proseguito andando a definire
 l'architettura di progetto. È stata predisposta la repository di base di
 progetto, dal nome

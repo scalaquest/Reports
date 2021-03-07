@@ -1,14 +1,5 @@
 # Aspetti di Domanin Driven Design
 
-<!-- Descrizione approfondita della sessione di knowledge chrunching
-iniziale, screen da miro, focus sul glossario, use cases, altro,
-accenno al fatto che poi ciò è stato utilizzato e si è evoluto in
-parte con l'avanzare del progetto
-
-NB: oltre a descrivere l'output, sarebbe bene focalizzarsi e descrivere
-bene il processo che ha portato a definirli.
--->
-
 Sin dalle prime iterazioni di progetto, particolare attenzione è stata posta
 nell'utilizzo di metodologie di topo Domain Driven. Nella pratica,
 [una board collaborativa **Miro**](https://miro.com/app/board/o9J_lfd9ZK0=/) è

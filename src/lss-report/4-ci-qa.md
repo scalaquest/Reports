@@ -1,10 +1,5 @@
 # Continuous Integration, Quality Assurance
 
-<!-- Descrizione dei workflow finalizzati a CI e QA incluso sonarcloud,
-quando scattano, regole di protezione dei branch, flusso di PR
-(no release ancora in questo capitolo), build automation, coverage, scoverage,
-framework di test (anche quello di zio), sonarqube, maiflai -->
-
 Particolare sforzo è stato posto nel porre in atto workflow efficaci e
 automatizzati, in grado di garantire la qualità del codice, e la Contiuous
 Integration. Per la realizzazione di questi, si è utilizzato il tool di CI
