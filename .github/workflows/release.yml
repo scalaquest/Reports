@@ -155,11 +155,11 @@ jobs:
 
       - name: Add images to gh-pages
         run: |
-          mkdir gh-pages/{pps-report,lss-report,appendix}/images -p
-          rm -rf gh-pages/{pps-report,lss-report,appendix}/images/*
-          mv src/appendix/images gh-pages/appendix/images
-          mv src/pps-report/images gh-pages/pps-report/images
-          mv src/lss-report/images gh-pages/lss-report/images
+          mkdir gh-pages/{pps-report,lss-report,appendix} -p
+          rm -rf gh-pages/{pps-report,lss-report,appendix}/images
+          mv src/appendix/images gh-pages/appendix
+          mv src/pps-report/images gh-pages/pps-report
+          mv src/lss-report/images gh-pages/lss-report
 
       - name: Push reports to gh-pages
         run: |
