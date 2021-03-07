@@ -209,3 +209,24 @@ Useful links:
 - [(Pull request) Add how-to-use guide to the Readme](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/112)
 - [(Issue) Auto generate prerelease on each dev push](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/110)
 - [(Pull request) Release to Maven Central](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/113)
+
+# Sprint 10 (28th February - 6th Februrty)
+
+In Sprint 10 we focused onto finish the PPS report. We finished it at the end of
+the Sprint. In parallel, we started working on the LSS report, we finished the
+last example WizardQuest, and we finished some minor modifications to the CI. We
+are planning to close the works in the next Sprint.
+
+Useful links:
+
+- [(Issue) Error in navigation with Lens](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/114)
+- [(Pull request) WizardQuest example](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/116)
+- [(Pull request) Release 0.3.1](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/117)
+- [(Issue) Bug in EscapeRoom](https://github.com/scalaquest/PPS-19-ScalaQuest/issue/119)
+- [(Pull request) More builders](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/120)
+- [(Pull request) LSS report structure](https://github.com/scalaquest/Reports/pull/29)
+- [(Pull request) Refactoring CLI component and minor fixes](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/122)
+- [(Pull request) Enhance release flows](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/122)
+- [(Issue) Pandoc CD fixes](https://github.com/scalaquest/Reports/issues/30)
+- [(Pull request) PPS revision](https://github.com/scalaquest/Reports/pull/33)
+- [(Pull request) LSS report](https://github.com/scalaquest/Reports/pull/34)
