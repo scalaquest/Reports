@@ -14,13 +14,13 @@ distribuiti tra i componenti come di seguito specificato:
 
 - A Riccardo Maldini è stato assegnato il ruolo di **Scrum Master**. Il suo
   ruolo è quello di facilitare il lavoro di Project Owner e team, innalzandosi a
-  garante dei principi Scrum, e del delineare l'organizzazione di Sprint e
+  garante dei principi Scrum, e nel delineare l'organizzazione di Sprint e
   meeting;
 
-- A Tutti i componenti è stato assegnato il ruolo di **team di sviluppo**. Scrum
-  prevede che i ruoli di Project Owner e Scrum Master non debbano sovrapporsi
-  con il team di sviluppo; è stata però di fatto una scelta obbligata, visto le
-  dimensioni ridotte del team.
+- A tutti i componenti è stato assegnato il ruolo di **team di sviluppo**. Scrum
+  prevede che i ruoli di Project Owner e Scrum Master non debbano in linea di
+  massima sovrapporsi con il team di sviluppo; è stata però di fatto una scelta
+  obbligata, visto le dimensioni ridotte del team.
 
 Il lavoro è stato suddiviso in **Sprint settimanali**, ad eccezione delle
 primissime iterazioni che hanno richiesto del tempo aggiuntivo.
@@ -32,7 +32,7 @@ primissime iterazioni che hanno richiesto del tempo aggiuntivo.
 Si è tenuto traccia del Backlog di progetto grazie allo strumento **GitHub
 Projects**. Questo rappresenta di fatto una versione di Trello interna a GitHub,
 che ne eredita la maggior parte delle caratteristiche (ad esempio,
-l'organizzazione dei task in liste), aggiungendo a esso però importanti
+l'organizzazione dei task in liste), aggiungendo ad esso però importanti
 integrazioni con GitHub. È possibile ad esempio associare Issue e Pull Request
 direttamente ai task, automatizzarne e sincronizzarne apertura e chiusura con
 gli stessi. È possibile accedere alla backlog di progetto, essendo pubblica, a
@@ -59,9 +59,9 @@ Si è utilizzato il software **Discord** per effettuare i meeting settimanali e
 quotidiani. Si è preferito questo strumento, rispetto ad altri simili quali
 Slack, Microsoft Teams, Google Meet o altri, per vari motivi:
 
-- per la buona qualità di videochiamata;
+- per la buona qualità di video-chiamata;
 - per la possibilità di lavorare in stanze differenti in contemporanea, e
-  passare facilmenta da una stanza all'altra;
+  passare agevolmente da una stanza all'altra;
 - per la possibilità di implementare hook integrati con GitHub, tali per cui
   ogni modifica alle repository di progetto viene notificata a tutti i
   componenti del gruppo, tramite un apposito canale.
@@ -117,7 +117,7 @@ successivo. In questi casi, si è aggiornato di conseguenza il Backlog.
 Il lavoro è stato sviluppato principalmente in team interni composti da due o
 tre componenti, seguendo la metodologia **pair programming**. Questa modalità,
 già utilizzata in altri progetti, pur portando iniziali rallentamenti dovuti a
-una minore parallelizzazione,porta ad un innalzamento della qualità del
+una minore parallelizzazione, porta ad un innalzamento della qualità del
 prodotto, e ad un minore debito tecnico, in quanto le scelte vengono discusse e
 revisionate in tempo reale dagli stessi membri del team. Essa porta inoltre i
 diversi componenti a comprendere meglio la parte sviluppata, e responsabilizza i
@@ -132,15 +132,12 @@ In particolare:
 - Si è individuato un **sotto-team 2**, composto dai componenti Filippo Nardini
   e Francesco Gorini. Il team ha approfondito i concetti legati al parsing del
   testo, e all'interpretazione dello stesso tramite l'engine Prolog;
-- Task di importanza chiave sono stati portati avanti **in comune tra tutti i
+- Task d'importanza chiave sono stati portati avanti **in comune tra tutti i
   componenti**;
 - Task minori sono stati portati avanti **singolarmente** da componenti del
   team.
 
 ## Modelli di sviluppo
-
-Durante lo svolgimento del progetto, non si è tenuto costantemente un singolo
-modello di sviluppo:
 
 ### GitHub Flow in fase embrionale
 
@@ -153,7 +150,7 @@ Il modello richiede ad esempio che la versione stabile del software sia
 mantenuta su un branch `main` (o `master`), senza però la necessità di un branch
 `dev` parallelo. Ciò ha permesso di avere nella fase iniziale un **flusso di
 sviluppo meno rigido**: non avendo in principio software abbastanza stabile da
-poter essere rilasciato, né tantomeno pipeline di deploy attive, ci si è
+poter essere rilasciato, né tanto meno pipeline di deploy attive, ci si è
 concentrati sullo sviluppo delle funzionalità di base. Allo stesso tempo, però,
 GitHub Flow suggerisce di organizzare il lavoro in `feature/*` branch, come in
 GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo
@@ -169,7 +166,10 @@ a un numero di versione. La versione "di lavoro" del codice, stabile ma
 potenzialmente parziale, risiede nel branch `dev`. I vari `feature/*` branch
 confluiscono ora in `dev`. Il `main` viene aggiornato tramite delle pull request
 sullo stesso originate da branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati
-dal `dev`, e con `X.Y.Z` numero di versione secondo semantic versioning.
+dal `dev`, e con `X.Y.Z` numero di versione formulato secondo semantic
+versioning.
+
+Per un maggiore approfondimento su questi aspetti, si rimanda al report di LSS.
 
 ## Strumenti di test, build e CI
 
@@ -178,11 +178,13 @@ primo luogo in quanto richiesto per l'integrazione con il corso di LSS. Ciò è
 comunque risultato molto utile per organizzare la build in maniera più
 strutturata, e per approfondirne gli strumenti di integrazione con Scala. A tal
 proposito, il codice è organizzato in più sotto-progetti, individuati a seguito
-di un'iniziale sessione DDD.
+di un'iniziale sessione di Domain Driven Design.
 
 È stato adottato per il testing del codice Scala il framework **ScalaTest**. Si
-è inoltre sperimentato **WordSpec** come stile di test. Un'ulteriore libreria è
-stata utilizzata per il testing del framework funzionale ZIO.
+è inoltre sperimentato **WordSpec** come stile di test. **ZIO Test** è stata
+utilizzata per il testing del framework funzionale ZIO.
+
+Per un maggiore approfondimento su questi aspetti, si rimanda al report di LSS.
 
 ### Continuous Integration
 
@@ -190,15 +192,15 @@ Particolare attenzione è stata posta nell'individuazione di misure per
 assicurare la qualità del codice. Sono stati predisposti dei workflow a garanzia
 di Continuous Integration e Quality Assurance, costruiti con il tool **GitHub
 Actions**. Sono stati posti criteri di qualità man mano più stringenti e
-vincolanti, a seconda del grado di stabilità del branch. In generale, `main` non
-può essere modificato senza che il codice passi tutti i controlli di CI/QA, e
-senza che la pull request venga prima revisionata da un ulteriore componente del
-team, mentre per il branch `dev` vengono generati warning nel caso in cui il
-codice non rispetti i requisiti qualitativi proposti.
+vincolanti, a seconda del grado di stabilità del branch. In generale, `main` e
+`dev` non possono essere modificati senza che il codice passi tutti i controlli
+di CI/QA, e senza che la pull request venga prima revisionata da un ulteriore
+componente del team, mentre per il branch `dev` non è necessaria alcuna
+revisione.
 
 In primo luogo, ogni push o pull request genera un controllo tramite il tool
 esterno **SonarCloud**, il quale definisce soglie qualitative basate su
-coverage, manutenibilità, code smells, presenza di bug conosciuti e molto altro.
+coverage, mantenibilità, code smells, presenza di bug conosciuti e molto altro.
 Sono presenti inoltre ulteriori controlli basati su **workflow CI/QA custom**,
 nei quali viene effettuato il lint del codice tramite il plugin Spotless, poste
 ulteriori soglie di coverage, effettuati test e compilato il codice su
@@ -219,13 +221,20 @@ aperta una pull request su `main` a partire da questa. Quanto detto è l'unica
 operazione manuale da effettuare: una volta chiusa la pull request, revisionata
 la stessa e passati i controlli di CI, un workflow genera il tag della versione,
 inferendolo dal nome del branch. Vengono quindi generati gli asset collegati
-alla release, e resi disponibili nella
+alla release, e resi disponibili sia nella
 [sezione Release](https://github.com/scalaquest/PPS-19-ScalaQuest/releases) del
-progetto. Vengono inoltre generati ScalaDoc, report di coverage e di test, resi
-disponibili all'interno dello
+progetto, che sulla repository pubblica Maven Central (modulo
+[core](https://mvnrepository.com/artifact/io.github.scalaquest/core) e modulo
+[cli](https://mvnrepository.com/artifact/io.github.scalaquest/cli)). Vengono
+inoltre generati ScalaDoc, report di coverage e di test, resi disponibili
+all'interno dello
 [spazio web GH Pages associato al progetto](https://scalaquest.github.io/PPS-19-ScalaQuest).
 
 Un meccanismo equivalente è stato sviluppato per la repository che ospita le
 relazioni di progetto. Al momento della release, vengono generate le relazioni
-(a partire da codice Markdown) in formato `PDF LaTeX` e `HTML`, tramite il tool
-Pandoc.
+(a partire da codice Markdown) in formato
+[PDF LaTeX](https://github.com/scalaquest/Reports/releases/latest) e `HTML`
+([pps report](https://scalaquest.github.io/Reports/pps-report/pps-report.html),
+[lss report](https://scalaquest.github.io/Reports/lss-report/lss-report.html),
+[appendix](https://scalaquest.github.io/Reports/appendix/appendix.html)),
+tramite il tool Pandoc.

@@ -19,23 +19,27 @@ organizzata in diverse colonne:
   svolgere in futuro, con priorità inferiore rispetto allo Sprint corrente. Essa
   viene popolata in particolare durante lo Scrum meeting settimanale, nella
   definizione degli obiettivi di lungo termine;
+
 - Una colonna **Backlog (current Sprint)** tiene traccia dei task da svolgere
   nello Sprint corrente. Essa viene popolata principalmente durante lo Scrum
   meeting settimanale, permettendo una pianificazione dei task a maggiore
   priorità. Inoltre, nel caso in cui uno dei team riuscisse a terminare tutti i
   task ad esso assegnati durante lo Sprint, può aggiungerne degli altri,
   accingendo da quelli del backlog;
+
 - Una colonna **In progress (current Sprint)** tiene traccia dei task ai quali
   dei membri stanno attualmente lavorando;
+
 - Una colonna **Done (current Sprint)** tiene traccia dei task conclusi nello
   Sprint corrente. Dei trigger di automazione permettono di porre in automatico
   i task in questa colonna a seguito della chiusura di issue e al merge di pull
   request;
+
 - Una colonna **Done** tiene traccia dei task completati negli Sprint
   precedenti. La colonna viene popolata a seguito della terminazione dello
   Sprint, accingendo dai task terminati nello stesso.
 
-Tale organizzazione ha dato poco spazio ad equivoci, rendendo possibile
+Tale organizzazione non ha dato spazio ad equivoci, rendendo possibile
 monitorare in maniera continuativa l'operato del team, ed effettuare eventuali
 aggiustamenti in corso d'opera.
 

@@ -22,11 +22,11 @@ Per requisiti di business si intendono i requisiti che delineano la base del
 progetto:
 
 - Il progetto consiste in un framework utilizzabile da sviluppatori terzi
-  (_storyteller_, nel nostro glossario) di **creare e giochi di tipo Interactive
+  (_storyteller_, nel nostro glossario) per **creare giochi di tipo Interactive
   Fiction**;
 
-- L'utilizzatore del gioco (_user_, nel nostro glossario) esprime i comandi di
-  gioco attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
+- L'utilizzatore del gioco (_user_, nel nostro glossario) esprime i comandi
+  attraverso delle **frasi in linguaggio naturale**. Ciò rende necessaria
   un'interpretazione lessicale e sintattica delle stesse;
 
 - Il gioco è strutturato in **iterazioni successive**: ogni comando inserito
@@ -45,17 +45,17 @@ requisiti caratteristici.
 Il termine storyteller identifica i soggetti che utilizzano il sistema per la
 creazione di giochi. Sono date lui le seguenti possibilità:
 
-- **Realizzare giochi di categoria Interactive Fiction**. A tale scopo, il
-  sistema deve **esporre un'API minimale ma completa**, accessibile tramite un
-  linguaggio di programmazione idoneo;
+- Utilizzare un'**API minimale ma completa** per la generazione di giochi di
+  genere Interactive Fiction, accessibile tramite un linguaggio di
+  programmazione idoneo;
 
-- Modellare la propria storia, e i componenti che la caratterizzano;
+- Modellare la propria **storia**, e i componenti che la caratterizzano;
 
-- Definire dei comportamenti associati a tali componenti, intesi come delle
+- Definire dei **comportamenti** associati a tali componenti, intesi come delle
   funzioni in grado di modificare lo stato del gioco e l'output mostrato allo
   user;
 
-- Definire le parole chiave (come nomi e verbi) che lo user può utilizzare,
+- Definire le **parole chiave** (come nomi e verbi) che lo user può utilizzare,
   combinati in frasi anche complesse, per dettare comandi al motore di gioco.
 
 ### User
@@ -67,59 +67,54 @@ pari dello storyteller, in quanto esso rappresenta sia un utente indiretto
 sistema includere degli esempi di utilizzo). Sono date lui le seguenti
 possibilità:
 
-- **Interagire con le storie** generate dagli storyteller, tramite
-  un'**interfaccia grafica a linea di comando**; questa deve supportare l'input
-  di frasi in linguaggio naturale, e fornirne un output testuale in risposta.
+- Interagire con le storie generate dagli storyteller, tramite un'**interfaccia
+  grafica a linea di comando**; questa deve supportare l'input di frasi in
+  linguaggio naturale, e fornirne un output testuale in risposta.
 
 ## Requisiti funzionali
 
 Per requisiti funzionali si intendono le funzionalità che caratterizzano il
 progetto:
 
-- Fornire un modello sul quale rendere possibile costruire storie di tipo
-  Interactive Fiction;
+- Fornire un **modello** sul quale rendere possibile la costruzione di storie di
+  tipo Interactive Fiction;
 
-- Fornire una piattaforma sulla quale lanciare le storie, agente da linea di
+- Fornire una **piattaforma** sulla quale lanciare le storie, agente da linea di
   comando;
 
-- Fornire la possibilità di creare piattaforme anche differenti da quella
-  standard (ad es. da interfaccia web);
+- Fornire la possibilità di creare **piattaforme anche differenti** da quella
+  standard (ad esempio da interfaccia web);
 
-- Fornire un engine **Prolog** in grado d'interpretare semplici comandi in
+- Fornire un **engine Prolog** in grado d'interpretare semplici comandi in
   linguaggio naturale in lingua inglese, mappandoli in azioni applicabili sulla
   storia;
 
-- Fornire dei costrutti comuni per la definizione della storia, già modellati e
-  potenzialmente riutilizzabili, al fine di rendere più agevole il compito dello
-  storyteller;
+- Fornire dei **costrutti comuni** per la definizione della storia, già
+  modellati e potenzialmente riutilizzabili, al fine di rendere più agevole il
+  compito dello storyteller;
 
-- Esporre un set di esempi (almeno due), utili come spunto di partenza per la
-  creazione, da parte dello storyteller, della propria storia giocabile.
+- Esporre un set di **esempi**, utili come spunto di partenza per la creazione,
+  da parte dello storyteller, della propria storia giocabile.
 
 ## Requisiti non funzionali
 
 Per requisiti non funzionali si intendono caratteristiche del progetto utili a
 minimizzare le problematiche d'integrazione tra le varie componenti del
 framework, verificarne i comportamenti e garantire uno stile di scrittura
-conforme alle convenzioni adottate.
+conforme alle convenzioni adottate:
 
-- **Effettuare test** per verificare il comportamento del codice, ponendo
+- Effettuare **test** per verificare il comportamento del codice, ponendo
   particolare attenzione ai componenti core;
 
-- Introdurre **procedure DevOps**, volte ad automatizzare la verifica del
-  codice, porre forti condizioni di QA, compilare il codice ed eseguire i test
-  su differenti sistemi operativi, e adottare workflow di Continuous Delivery;
+- Introdurre pratiche **DevOps**, volte ad automatizzare la verifica del codice,
+  porre forti condizioni di QA, compilare il codice ed eseguire i test su
+  differenti sistemi operativi, e adottare workflow di Continuous Delivery;
 
-- Velocizzare lo sviluppo di codice attraverso l'adozione del **paradigma
-  Agile**;
-
-- Utilizzare la **metodologia Scrum**, cercando di restare più fedeli possibile
-  al principio originale, definendo ruoli e Sprint settimanali al fine di
-  raggiungere una corretta organizzazione temporale.
+- Seguire la metodologia Agile **Scrum**, cercando di restare più fedeli
+  possibile al principio originale, definendo ruoli e Sprint settimanali al fine
+  di raggiungere una corretta organizzazione temporale.
 
 ## Requisiti d'implementazione
-
-<!-- Cosa deve essere utilizzato per l' implementazione, punti dai quali non possiamo prescindere -->
 
 Per requisiti d'implementazione si intendono tutte le tecnologie e le soluzioni
 d'implementazione considerate imprescindibili nella realizzazione del progetto.
@@ -135,6 +130,6 @@ d'implementazione considerate imprescindibili nella realizzazione del progetto.
 
 - Utilizzare **GitHub Actions** per CI e CD;
 
-- Utilizzare **ScalaTest**, **jUnit** e **WordSpec** come specifica di test;
+- Utilizzare **ScalaTest**, **ZIO Test** e **WordSpec** come specifica di test;
 
 - Utilizzare il linguaggio **Prolog** per implementare l'engine.
