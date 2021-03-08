@@ -512,7 +512,7 @@ forniti i componenti necessari, (`Model`, `State`, `MessagePusher` e `State`) ne
 crea un'istanza di `CLI`. Questa al proprio interno realizza il pattern di
 esecuzione REPL introdotto in @sec:cli_detail. L'applicazione supporta, oltre
 all'input da indirizzare al gioco, anche l'uso di meta-comandi, ovvero comandi
-che non sono destinati all'istanza di gioco in esecuzione, bensì
-all'interprete dei comandi stesso. Questi includono operazioni come il
-salvataggio della partita corrente su un file o il caricamento di una partita da
-un file, se il `Model` utilizzato supporta queste operazioni.
+che non sono destinati all'istanza di gioco in esecuzione, bensì all'interprete
+dei comandi stesso. Questi includono operazioni come il salvataggio della
+partita corrente su un file o il caricamento di una partita da un file, se il
+`Model` utilizzato supporta queste operazioni.
