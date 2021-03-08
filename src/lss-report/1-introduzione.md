@@ -15,7 +15,7 @@ su un'interfaccia da linea di comando. Questa permetterà ad utenti terzi di
 interagire con le storie create precedentemente, modificando lo stato nel gioco
 e avanzando man mano nella storia.
 
-Il progetto è stato pensato per essere oggetto di esame in maniera mutuata per i
+Il progetto è stato ideato per essere oggetto di esame in maniera mutuata per i
 corsi di PPS e LSS. A tale scopo, fin dalla definizione delle fondamenta del
 progetto si è posta particolare attenzione nell'adozione di una metodologia tale
 da integrare le peculiarità di entrambi i corsi. Il report di PPS descrive
