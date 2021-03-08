@@ -288,7 +288,7 @@ differenti trait. Nel progetto, in generale, i trait marcati con il suffisso
 `Ext` possono essere mixati al model principale; quelli che iniziano con il
 prefisso `C` sono inoltre dei trait facenti parte di `commons`.
 
-## CLI
+## CLI {#sec:cli_detail}
 
 Questo modulo rappresenta di fatto un'implementazione che fa uso dei concetti
 presenti in `ApplicationStructure`. Dentro `cli` viene definito un game loop
