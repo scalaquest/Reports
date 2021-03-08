@@ -11,10 +11,10 @@ e hanno subìto diverse modifiche lungo lo sviluppo del progetto.
 
 ## Il workflow Release
 
-Il primo e più importante workflow per il deploy degli artefatti è denominato
-**Release**. Questo viene lanciato ogniqualvolta viene chiusa con successo
-(ovvero generando un evento di merge) una pull request in direzione del `main`,
-a partire da un branch `release/X.Y.Z`. Tale workflow:
+Il primo e più importante workflow per il deploy degli artefatti è scaturisce
+dal file `release.yml`. Questo viene lanciato ogniqualvolta viene chiusa con
+successo (ovvero generando un evento di merge) una pull request in direzione del
+`main`, a partire da un branch `release/X.Y.Z`. Tale workflow:
 
 1. Inferisce il nome del tag da associare alla release, a partire del nome del
    branch di provenienza, e crea un annotated tag in corrispondenza del commit
@@ -39,12 +39,13 @@ a partire da un branch `release/X.Y.Z`. Tale workflow:
 
 ## Il workflow Prerelease
 
-Oltre al workflow di release principale, si è predisposto un secondo workflow,
-che va a creare delle release GitHub ogniqualvolta viene effettuato un push nel
-branch `dev`. Tali release vengono marcate come non perfettamente stabili,
-appunto con il marcatore prerelease, da cui il nome del workflow. Particolarità
-di questa routine è che non necessita di definire manualmente il nome della
-release: questa viene generata in automatico, tramite il plugin
+Oltre al workflow di release principale, si è predisposto un secondo workflow
+nel file `prerelease.yml`, che va a creare delle release GitHub ogniqualvolta
+viene effettuato un push nel branch `dev`. Tali release vengono marcate come non
+perfettamente stabili, appunto con il marcatore prerelease, da cui il nome del
+workflow. Particolarità di questa routine è che non necessita di definire
+manualmente il nome della release: questa viene generata in automatico, tramite
+il plugin
 [`git-sensitive-semantic-versioning`](https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin/blob/master/src/main/kotlin/org/danilopianini/gradle/gitsemver/GitSemVer.kt),
 a partire dall'ultimo tag disponibile.
 

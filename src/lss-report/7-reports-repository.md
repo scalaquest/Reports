@@ -1,4 +1,4 @@
-# Reports repository
+# Il repository dedicato alla documentazione
 
 Nelle prime fasi del progetto, il repository principale conteneva un ulteriore
 sotto-progetto denominato `reports`. All'interno di questo si erano andati a
@@ -11,13 +11,13 @@ plugin `Spotless` di Gradle anche per lo styling del Markdown, grazie al ai task
 
 Con l'aumentare con la complessità del progetto, però si è deciso di cambiare
 tale infrastruttura. Il sottoprogetto `reports` è stato quindi migrato in un
-repository del tutto slegato da quello principale, denominato
+repository del tutto slegato da quello principale, denominato ancora una volta
 [**Reports**](https://github.com/scalaquest/Reports). Scelta è stata dettata
 anche allo scopo di costruire un'infrastruttura più complessa attorno ai report
 stessi.
 
-Reports è un progetto Gradle, con abilitato il plugin `Spotless` per lo styling
-(con una configurazione dedicata per il Markdown), e i sorgenti della
+Reports è un progetto Gradle, con abilitato il plugin **Spotless** per lo
+styling (con una configurazione dedicata per il Markdown), e i sorgenti della
 documentazione (in Markdown) contenuti all'interno della directory `/src`. Il
 modello di sviluppo adottato è ancora una volta GitFlow, in maniera del tutto
 equivalente nelle modalità a quelle del repository principale.
@@ -90,7 +90,7 @@ Effettua le seguenti operazioni:
    appendice (oltre al file `README.md`), a partire dai file Markdown, tramite
    un'immagine Docker con integrata un'installazione Pandoc;
 
-### Configurazione di Pandoc
+## Configurazione di Pandoc
 
 Per poter personalizzare l'output generato da Pandoc, sono stati utilizzati dei
 file configurazione Pandoc, accessibli dalla directory `/pandoc`. All'interno di

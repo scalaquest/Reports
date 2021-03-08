@@ -9,7 +9,7 @@ causa delle
 Questi a loro volta sfruttano delle funzionalità integrate all'interno del
 progetto grazie al tool di build automation Gradle.
 
-## Gradle e convention plugin CI
+## Qualità del codice Gradle
 
 Uno dei primissimi accorgimenti posti in atto nel progetto ha riguardato dei
 controlli di qualità posti in atto sul codice Kotlin dei convention plugin
@@ -60,12 +60,14 @@ e che può portare a stime di coverage del tutto sballate. Lo stato dell'arte pe
 la messa in atto di controlli di coverage Scala con Gradle passa per l'utilizzo
 di plugin dedicati che tengono conto di queste caratteristiche, come **Scoverage
 di Maiflai**. Questo permette di generare, tra gli altri, report di coverage in
-formato html, oltre ad esporre un task `:scoverageCheck`, che permette di far
-fallire la build in presenza di coverage più bassa di una determinata soglia. Si
-è quindi installato nel progetto questo plugin, andando anche a configurare una
-soglia di coverage mandatoria del 75% per i moduli `core` e `cli`.
+formato html, sia in forma aggregata che per i singoli sottoprogetti (task
+`:aggregateReportScoverage` e `:reportScoverage`), oltre ad esporre un task
+`:scoverageCheck`, che permette di far fallire la build in presenza di coverage
+più bassa di una determinata soglia. Si è quindi installato nel progetto questo
+plugin, andando anche a configurare una soglia di coverage mandatoria del 75%
+per i moduli `core` e `cli`.
 
-## Lint e code style
+## Lint e code styling
 
 Particolare attenzione è stata posta anche alla qualità del codice e allo stile
 dello stesso, definendo una serie di constraint atti ad innalzare la coesione
@@ -89,7 +91,7 @@ automatizzati sul codice, estraendo varie metriche qualitative riguardo la
 codebase, legate a mantenibilità, coverage, debito tecnico, duplicazione e molto
 altro. Lo strumento fornisce inoltre una dashboard pubblica che ne raccoglie le
 principali metriche, accessibile
-[da qua](https://sonarcloud.io/dashboard?id=scalaquest_PPS-19-ScalaQuest).
+[a questo link](https://sonarcloud.io/dashboard?id=scalaquest_PPS-19-ScalaQuest).
 
 Di particolare rilevanza per il progetto è stata la funzionalità **quality
 gate**: SonarCloud integra infatti un bot, che ad ogni push all'interno di una
@@ -104,7 +106,7 @@ maniera più mirata le metriche. Il plugin fornisce il task `:sonarqube`, che va
 eseguito in CI nel momento in cui si voglia eseguire un controllo di quality
 gate.
 
-## Il workflow CI
+## Il workflow CI.yml
 
 Allo scopo di porre in atto la maggior parte dei controlli citati in precedenza,
 si è reso necessario definire un apposito workflow GirHub Actions, denominato
@@ -130,7 +132,7 @@ nelle routine di CI. I job eseguiti sono i seguenti:
 
 ## Il workflow Opt-in CI
 
-Ulteriore controllo di CI è stato posto tramite il workflow **Opt-in CI**.
+Ulteriore controllo di CI è stato posto tramite il workflow `opt-in-CI.yml`.
 Questo permette di attivare determitate funzioni di CI, come lo style check, la
 build, o il controllo di coverage, a partire dai branch `feature/*`. Viene
 definito "opt-in" in quanto di base questi controlli sono disabilitati. Vengono
