@@ -31,18 +31,18 @@ ovvero dalla data di sottomissione dello stesso.
 ## Ubiquitous Language
 
 Di particolare importanza si è rilevata l'individuazione di un Ubiquitous
-Language originato dai concetti base del progetto. Qui ne viene riportata la
+Language originato dai concetti base del progetto. In @fig:ul viene riportata la
 versione finale, che comprende tutti i concetti principali. Sulla
 [board Miro](https://miro.com/app/board/o9J_lfd9ZK0=/) è disponibile una
 versione dello stesso nel quale viene ampliata la descrizione di ogni termine.
 
-![Ubiquitous Language del progetto.](./images/ul.jpg)
+![Ubiquitous Language del progetto.](./images/ul.jpg){#fig:ul}
 
 ## Individuazione dei requisiti e dei casi d'uso
 
 Nell'ambito di progetto sono stati individuati due principali attori, tali da
 interagire con lo stesso. Sulla base della loro definizione, sono stati quindi
-individuati vari casi d'uso:
+individuati vari casi d'uso, riportati in @fig:usecase:
 
 - **Storyteller**: rappresenta l'attore in grado di creare delle storie
   giocabili. Questo è di fatto un programmatore che usufruisce del framework, e
@@ -56,26 +56,47 @@ individuati vari casi d'uso:
   Esso interagisce con il sistema immettendo comandi testuali, e consultandone
   l'output risultante.
 
-![Diagramma dei casi d'uso del progetto.](./images/use-case.jpg)
+![Diagramma dei casi d'uso del progetto.](./images/use-case.jpg){#fig:usecase}
 
 ## Bounded context e Context map
 
 A seguito dell'individuazione dei casi d'uso, si è andata a espandere l'analisi
 al fine di individuare i principali bounded context associati al progetto.
 
-![Context map di progetto.](./images/context-map.jpg)
+![Analisi dei bounded context di progetto.](./images/bounded-context-analysis.jpg){#fig:bcontextan}
 
-L'immagine riporta i principali bounded context, disposti con particolare
-attenzione alla complessità di modellazione degli stessi e all'importanza per il
-business. Si è intesa quest'ultima misura come rilevanza di tale context, dal
-punto di vista di user e storyteller. Dal grafico si può evincere anche come le
-operazioni DevOps siano state elevate a vero e proprio bounded context: in
-ottica di effettuare un progetto di esame per LSS, esso rappresenta un vero e
-proprio requisito, ad alta complessità. L'utente finale, inteso come
+L'immagine @fig:bcontextan riporta i principali bounded context, posti nel
+grafico in base alla complessità di modellazione degli stessi e all'importanza
+per il business. Si è intesa quest'ultima misura come la rilevanza di tale
+context, dal punto di vista di user e storyteller. Dal grafico si può evincere
+anche come le operazioni DevOps siano state elevate a vero e proprio bounded
+context: in ottica di effettuare un progetto di esame per LSS, esso rappresenta
+un vero e proprio requisito, ad alta complessità. L'utente finale, inteso come
 storyteller/user, può percepire da tali operazioni benefici indiretti (es. nella
 velocità delle release, nella qualità dell'API).
 
-I bounded context individuati nella sezione verde del grafico rappresentano i
-context core di progetto.
+Sulla base di questa analisi preliminare, si è andata quindi a definire la
+context map, mostrata in @fig:contextmap.
 
-<!-- todo individuazione della mappa dei context estesa -->
+![Context map di progetto.](./images/context-map.jpg){#fig:contextmap}
+
+Nello specifico, si è andato a accorpare quelli che erano stati individuati come
+bounded context di primaria importanza, in un unico **Core** bounded context.
+Questo in quanto, concettualmente, rappresentano moduli strettamente collegati.
+
+Il bounded context **Storyteller Application** include ciò che concerne
+l'implementazione di vere e proprie UI per l'interazione con l'utente. HTML è
+stato rappresentato come tratteggiato, in quanto rappresenta un elemento da
+valutare in corso d'opera.
+
+**Storyteller Support** include tutto ciò che concerne il supporto per lo
+storyteller alla costruzione della propria storia. In una libreria di queste
+dimensioni, fornire della documentazione di supporto diventa infatti un
+requisito di primaria importanza.
+
+Infine, è stato definito un bounded context anche per ciò che concerne le
+pratiche **DevOps**. Graficamente, essi sono sono collegati agli altri bounded
+context. Ma non per il fatto di non influenzare gli altri; anzi, i collegamenti
+non sono rappresentati per il semplice fatto che il primo contiene degli
+elementi per loro natura pervasivi, che influenzano in maniera indiretta a tutti
+gli altri bounded context.
