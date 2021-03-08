@@ -2,8 +2,8 @@
 
 Una volta definiti i bounded context, si è proseguito andando a definire
 l'architettura di progetto. È stata predisposta la repository di base, dal nome
-[PPS-19-ScalaQuest](https://github.com/scalaquest/PPS-19-ScalaQuest), come
-richiesto da specifiche di PPS. È qui che risiede il sorgente alla base dei
+[scalaquest/PPS-19-ScalaQuest](https://github.com/scalaquest/PPS-19-ScalaQuest),
+come richiesto da specifiche di PPS. È qui che risiede il sorgente alla base dei
 principali moduli.
 
 Si è deciso di utilizzare il tool di build automation **Gradle** per strutturare
