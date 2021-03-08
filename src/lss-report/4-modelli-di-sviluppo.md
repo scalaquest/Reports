@@ -1,4 +1,4 @@
-# Modelli di sviluppo
+# Strategie di Version Control
 
 Durante lo sviluppo del progetto, non si è adottato sempre lo stesso modello di
 sviluppo. Nelle prime fasi, durante le quali non si aveva del codice abbastanza
