@@ -64,6 +64,15 @@ jobs:
           ./gradlew generateVersionFile
           echo "RELEASE_VERSION=$(cat ./build/version)" >> $GITHUB_ENV
 
+        # It is necessary to manually setting the tag, as simply creating a release generates a
+        # lightweight tag, making the gitSemVer plugin not working properly.
+      - name: Add tag
+        run: |
+          git config user.name releaserbot
+          git config user.email github-actions@github.com
+          git tag ${{ env.RELEASE_VERSION }} -a -m "Release ${{ env.RELEASE_VERSION }}"
+          git push --follow-tags
+
       - name: Create release
         id: create-release
         uses: actions/create-release@v1
@@ -136,7 +145,7 @@ jobs:
       - name: Prepare gh-pages environment
         run: |
           rm -rf gh-pages/{pps-report,lss-report,appendix}
-          mkdir gh-pages/{pps-report,lss-report,appendix} -p
+          mkdir gh-pages/{pps-report,lss-report,appendix}
 
       - name: Generate PPS report HTML
         uses: docker://pandoc/latex:2.11.4
@@ -155,11 +164,11 @@ jobs:
 
       - name: Add images to gh-pages
         run: |
-          mkdir gh-pages/{pps-report,lss-report,appendix}/images -p
-          rm -rf gh-pages/{pps-report,lss-report,appendix}/images/*
-          mv src/appendix/images gh-pages/appendix/images
-          mv src/pps-report/images gh-pages/pps-report/images
-          mv src/lss-report/images gh-pages/lss-report/images
+          mkdir gh-pages/{pps-report,lss-report,appendix}
+          rm -rf gh-pages/{pps-report,lss-report,appendix}/images
+          mv src/appendix/images gh-pages/appendix
+          mv src/pps-report/images gh-pages/pps-report
+          mv src/lss-report/images gh-pages/lss-report
 
       - name: Push reports to gh-pages
         run: |

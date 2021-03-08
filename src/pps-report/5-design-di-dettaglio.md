@@ -288,7 +288,7 @@ differenti trait. Nel progetto, in generale, i trait marcati con il suffisso
 `Ext` possono essere mixati al model principale; quelli che iniziano con il
 prefisso `C` sono inoltre dei trait facenti parte di `commons`.
 
-## CLI
+## CLI {#sec:cli_detail}
 
 Questo modulo rappresenta di fatto un'implementazione che fa uso dei concetti
 presenti in `ApplicationStructure`. Dentro `cli` viene definito un game loop
@@ -297,7 +297,8 @@ console, che in questo modo risultano essere type safe.
 
 L'applicazione viene implementata tramite uno schema REPL
 (Read-Eval-Print-Loop), che consente ad ogni iterazione di inserire un comando
-che viene interpretato dal gioco e a cui corrisponde un output.
+che viene interpretato dal gioco e a cui corrisponde un output. Nello specifico
+i passi principali da eseguire sono i seguenti:
 
 1. **Lettura della frase inserita**: questa parte viene gestita attraverso
    **ZIO**, il quale si occupa della lettura dalla console in maniera type safe.
