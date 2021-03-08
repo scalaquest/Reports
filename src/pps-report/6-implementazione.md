@@ -506,3 +506,13 @@ template method, realizza un applicazione eseguibile costruendo un'istanza di
 
 ![Diagramma delle classi UML che rappresenta la relazione tra i costrutti del
 modulo `core` e quelli del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
+
+All'interno del companion object di `CLI` è messo a disposizione un metodo che
+forniti i componenti necessari, (`Model`, `State`, `MessagePusher` e `State`) ne
+crea un'istanza di `CLI`. Questa al proprio interno realizza il pattern di
+esecuzione REPL introdotto in @sec:cli_detail. L'applicazione supporta, oltre
+all'input da indirizzare al gioco, anche l'uso di meta-comandi, ovvero comandi
+che non sono destinati all'istanza di gioco in esecuzione, bensì all'interprete
+dei comandi stesso. Questi includono operazioni come il salvataggio della
+partita corrente su un file o il caricamento di una partita da un file, se il
+`Model` utilizzato supporta queste operazioni.
