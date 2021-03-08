@@ -1,4 +1,4 @@
-# Continuous Delivery e Deployment
+# Continuous Delivery e Deployment {#sec:chap6}
 
 Tra gli obiettivi di progetto è stato posto fin da subito quello di realizzare
 dei processi efficaci di Continuous Delivery e Deployment degli artefatti.
