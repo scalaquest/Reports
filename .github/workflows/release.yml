@@ -164,7 +164,6 @@ jobs:
 
       - name: Add images to gh-pages
         run: |
-          mkdir gh-pages/{pps-report,lss-report,appendix}
           rm -rf gh-pages/{pps-report,lss-report,appendix}/images
           mv src/appendix/images gh-pages/appendix
           mv src/pps-report/images gh-pages/pps-report
@@ -176,5 +175,5 @@ jobs:
           git config user.name Reportbot
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Update reports to version ${{ env.RELEASE_VERSION }}"
+          git commit -m "Update docs to version ${{ env.RELEASE_VERSION }}"
           git push
