@@ -1,8 +1,5 @@
 # Conclusioni
 
-<!-- cosa abbiamo imparato, cosa abbiamo fatto per la prima volta,
-soddisfazione complessiva -->
-
 In conclusione, possiamo affermare come team di ritenerci molto soddisfatti di
 quanto fatto in questo progetto. Rispetto a progetti trattati in precedenza dai
 singoli membri del gruppo, in questo si è posta un'attenzione particolare alla
