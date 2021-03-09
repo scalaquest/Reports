@@ -23,7 +23,9 @@ basate su questo modello.
 ## Architettura di massima
 
 Si è organizzato quindi il sistema in più macro-componenti, corrispondente
-ognuno a un sotto-progetto Gradle separato. Sono stati individuati:
+ognuno a un sotto-progetto Gradle separato. Le loro relazioni sono riportate
+tramite il diagramma dei componenti a @fig:maincomponents. Sono stati
+individuati:
 
 - Il modulo **Core**, che implementa l'engine di gioco, la pipeline, e il
   necessario per rendere possibile modellare nuove storie;
@@ -37,7 +39,7 @@ ognuno a un sotto-progetto Gradle separato. Sono stati individuati:
   mostrare le modalità consigliate per l'utilizzo di _CLI_ nell'implementazione
   di storie.
 
-![Diagramma dei componenti che rappresenta ad alto livello le dipendenze tra i moduli dell'applicazione.](./images/main-component.png)
+![Diagramma dei componenti che rappresenta ad alto livello le dipendenze tra i moduli dell'applicazione.](./images/main-component.png){#fig:maincomponents}
 
 In seguito si vanno ad approfondire le caratteristiche dei singoli moduli.
 
@@ -66,8 +68,8 @@ sezioni, corrispondenti in linea di massima a package separati:
 - **Pipeline**: definisce l'elaborazione di una singola iterazione di gioco,
   dall'input di un comando testuale e dello stato del gioco, all'output dello
   stato stesso modificato e del contenuto visualizzato dall'utente.
-  L'elaborazione si struttura in differenti fasi, a loro volta contenute in
-  differenti package:
+  L'elaborazione si struttura in differenti fasi, rappresentate in
+  @fig:pipeline. Ogni fase è a sua volta contenuta in un package differente:
 
   1. **Lexer**: dato l'input dello user, lo si sottopone ad un'analisi
      lessicale, volta alla creazione di uno stream di token. Ogni token
@@ -78,19 +80,20 @@ sezioni, corrispondenti in linea di massima a package separati:
      Abstract Syntax Tree;
 
   3. **Resolver**: dato il risultato del `Parser`, si associa ad ogni suo
-     elemento un significato all'interno del sistema, producendo uno
-     **Statement**, ossia un comando comprensibile dal modello;
+     elemento un significato, producendo uno `Statement`, ossia un comando
+     comprensibile dal modello;
 
   4. **Interpreter**: dato il risultato del `Resolver`, si verifica che sia
      possibile applicare lo `Statement` sullo stato corrente del gioco. Quando
      possibile, viene generata una **Reaction** ossia una funzione contenente le
-     eventuali modifiche da applicare sullo stesso;
+     eventuali modifiche da applicare sullo stesso, e tale da tener traccia
+     dell'output da mostrare all'utente;
 
   5. **Reducer**: data la `Reaction` ottenuta al termine del passo precedente,
      si provvede ad applicarla allo stato corrente del gioco, aggiornandolo e
      generando eventuali messaggi utili per l'interazione con lo user.
 
-![Diagramma delle attività che mostra il flusso di esecuzione delle pipeline, ad alto livello.](./images/activity-pipeline.png)
+![Diagramma delle attività che mostra il flusso di esecuzione delle pipeline, ad alto livello.](./images/activity-pipeline.png){#fig:pipeline}
 
 ### CLI
 
@@ -208,18 +211,19 @@ strutture quali `State` e `Room`.
 
 Durante la fase di analisi è emersa la necessità di accordarsi su quale
 implementazione di type classes utilizzare nel caso in cui si volessero scrivere
-algoritmi o strutture dati utilizzando un approccio funzionale. È stato deciso
-di utilizzare **Cats**, in quanto mette a disposizione un insieme di astrazioni,
-ispirate alla teoria delle categorie, che permettono di sfruttare al massimo le
-caratteristiche della programmazione funzionale. La scelta di **Cats** piuttosto
-che **Scalaz** è stata dettata principalmente dal fatto che la prima è una
-libreria più nuova, che in poco tempo è riuscita a guadagnare molta popolarità
-nella comunità di Scala (4.2k stars su GitHub per **Cats** alla sua release
-2.4.2 contro 4.4k per **Scalaz** alla sua release 7.3.3), in quanto per i casi
-d'uso delineati durante la fase di analisi le due sarebbero equivalenti.
+algoritmi o strutture dati utilizzando un approccio funzionale.
+
+È stato deciso di utilizzare **Cats**, in quanto mette a disposizione un insieme
+di astrazioni, ispirate alla teoria delle categorie, che permettono di sfruttare
+al massimo le caratteristiche della programmazione funzionale. La scelta di Cats
+piuttosto che **Scalaz** è stata dettata principalmente dal fatto che la prima è
+una libreria più nuova, che in poco tempo è riuscita a guadagnare molta
+popolarità nella comunità di Scala (4.2k stars su GitHub per Cats alla sua
+release 2.4.2 contro 4.4k per Scalaz alla sua release 7.3.3), in quanto per i
+casi d'uso delineati durante la fase di analisi le due sarebbero equivalenti.
 
 Per curiosità e interesse è stata approfondita la conoscenza di questa libreria,
 portando a notevoli miglioramenti nella qualità del codice. Nelle fasi avanzate
-dello sviluppo sono state riscritte attraverso le astrazioni fornite da **Cats**
+dello sviluppo sono state riscritte attraverso le astrazioni fornite da Cats
 (quali `Foldable`, `Monoid`, ecc.) sezioni del software che inizialmente non
 erano state progettate con i concetti di componibilità e riusabilità.

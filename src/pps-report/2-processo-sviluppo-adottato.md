@@ -1,9 +1,10 @@
 # Processo di sviluppo adottato
 
 Il processo di sviluppo adottato rispecchia i principi della metodologia
-**Scrum**, basata su un approccio di tipo Agile.
+**Scrum**, basata su un approccio di tipo Agile, con integrazioni nella fase
+iniziale legate a un approccio di tipo DDD.
 
-La metodologia richiede l'assegnamento di specifici ruoli, che sono stati
+La metodologia Scrum richiede l'assegnamento di specifici ruoli, che sono stati
 distribuiti tra i componenti come di seguito specificato:
 
 - A Filippo Nardini è stato assegnato il ruolo di **Product Owner**:
@@ -65,6 +66,15 @@ Slack, Microsoft Teams, Google Meet o altri, per vari motivi:
 - per la possibilità di implementare hook integrati con GitHub, tali per cui
   ogni modifica alle repository di progetto viene notificata a tutti i
   componenti del gruppo, tramite un apposito canale.
+
+### Miro
+
+Oltre agli strumenti citati, nella fase iniziale si è sfruttato estensivamente
+anche un tool denominato **Miro**. Esso consiste di fatto in una board
+collaborativa, che ci ha permesso di generare sketch analizzare i casi d'uso,
+effettuare sedute di knoledge chrunching. La board, pubblicamente accessibile,
+può essere consultata da
+[questo link](https://miro.com/app/board/o9J_lfd9ZK0=/).
 
 ## Meeting e interazioni pianificate {#sec:meet}
 
@@ -137,39 +147,76 @@ In particolare:
 - Task minori sono stati portati avanti **singolarmente** da componenti del
   team.
 
-## Modelli di sviluppo
+## Strategie di Version Control
+
+Durante lo sviluppo del progetto, non si è adottato sempre lo stesso modello di
+sviluppo. Nelle prime fasi, durante le quali non si aveva del codice abbastanza
+stabile da essere "rilasciabile", si è seguito un approccio più flessibile e
+prototipale, denominato **GitHubFlow**, per poi evolvere il modello ad un più
+strutturato **GitFlow**.
+
+Questi aspetti, congiuntamente con ciò che viene riportato riguardo i flussi di
+CI/QA e CD, sono stati approfonditi nel dettaglio nel report di LSS. Si rimanda
+quindi a tale report per una panoramica più completa.
 
 ### GitHub Flow in fase embrionale
 
-In una prima fase, all'interno dei singoli repository si è adottato come modello
-di sviluppo **GitHub Flow**. Tale modello, come intuibile dal nome, è ispirato a
-GitFlow, ma presenta alcune caratteristiche in contrapposizione allo stesso, che
-lo rendono più flessibile e semplice.
+**GitHub Flow** è un modello di sviluppo ispirato a GitFlow, ma con alcune
+caratteristiche che lo rendono più flessibile e semplice da porre in atto.
 
 Il modello richiede ad esempio che la versione stabile del software sia
 mantenuta su un branch `main` (o `master`), senza però la necessità di un branch
-`dev` parallelo. Ciò ha permesso di avere nella fase iniziale un **flusso di
-sviluppo meno rigido**: non avendo in principio software abbastanza stabile da
-poter essere rilasciato, né tanto meno pipeline di deploy attive, ci si è
-concentrati sullo sviluppo delle funzionalità di base. Allo stesso tempo, però,
-GitHub Flow suggerisce di organizzare il lavoro in `feature/*` branch, come in
-GitFlow, i quali confluiscono nel main a seguito della revisione di un secondo
-utente.
+`dev` parallelo. Allo stesso tempo, però, GitHub Flow suggerisce di organizzare
+il lavoro in `feature/*` branch, come in GitFlow, i quali confluiscono nel
+`main`.
+
+Alla luce di ciò, le prime iterazioni di progetto hanno presentato particolare
+flessibilità sulle modalità di modifica del codice. Le varie feature sono state
+sviluppate sui rispettivi `feature/*` branch, poi riversati nel `main` tramite
+pull request. Si è subordinato la chiusura di queste alla revisione da parte di
+un membro del team (solitamente, non appartenente allo stesso sub-team, così da
+aggiornare l'altro team sui progressi di progetto) e al passaggio di determitati
+workflow di CI e QA.
+
+Unica deroga a questo flusso di lavoro, è stata posta per modifiche minori, tali
+da non impattare sul funzionamento generale del codice (es. correzione di typo).
+Per queste è stato permesso il push diretto sul branch `main`.
 
 ### GitFlow a regime
 
 Una volta predisposta una codebase sufficientemente stabile, e una volta
-abilitate le pipeline di deploy, si è migrato al più strutturato modello
-**GitFlow**. Questo permette di avere nel branch `main` la versione ufficiale e
-stabile. A ogni push nel `main` deve corrispondere un tag, associato a sua volta
-a un numero di versione. La versione "di lavoro" del codice, stabile ma
-potenzialmente parziale, risiede nel branch `dev`. I vari `feature/*` branch
-confluiscono ora in `dev`. Il `main` viene aggiornato tramite delle pull request
-sullo stesso originate da branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati
-dal `dev`, e con `X.Y.Z` numero di versione formulato secondo semantic
-versioning.
+abilitati i workflow di Continuous Delivery, si è migrato a un più strutturato
+modello **GitFlow**. Questo permette di avere nel branch `main` la versione
+ufficiale e stabile, sempre associata a una release. A ogni push nel `main` deve
+corrispondere un tag annotato, associato a sua volta a un numero di versione. La
+versione "di lavoro" del codice, parziale ma potenzialmente rilasciabile,
+risiede nel branch `dev`.
 
-Per un maggiore approfondimento su questi aspetti, si rimanda al report di LSS.
+I vari `feature/*` branch confluiscono ora tramite pull request in `dev`, con
+gli stessi vincoli formulati per modello precedente (controlli di CI obbligatori
+e revisione di un utente obbligatoria), e la stessa deroga per le modifiche
+minori. In aggiunta, per una maggiore leggibilità e organizzazione del codice,
+si è adottata una precisa politica di merge, che prevede che queste pull request
+vengano chiuse tramite **squash and merge**, con un breve commento nel commit
+che ne identifichi il changelog.
+
+Il `main` viene aggiornato tramite delle pull request sullo stesso originate da
+branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati a loro volta dal `dev`; con
+`X.Y.Z` si intende un numero di versione, formulato secondo le regole del
+semantic versioning. Queste pull request presentano, oltre ai vincoli di
+validazione visti per le precedenti (controlli di CI e revisione di un membro
+del team obbligatoria), anche la necessità di presentare una coverage superiore
+al 75% nei moduli _Core_ e _CLI_. Sono poi presenti degli accorgimenti ulteriori
+per la delivery automatizzata degli asset, e la gestione dei tag, indicati in
+@sec:chap6. Infine, una politica di merge ben precisa è adottata alla chiusura
+di queste pull request, le quali richiedono un **merge commit** che riporti,
+come commento del commit, un breve changelog[^1].
+
+[^1]:
+  È necessario far presente che alcuni problemi sono incorsi tra la release
+  0.3.1 e 0.4.0, frangente nel quale, a seguito di un errore nelle politiche di
+  commit, si è dovuto agire tramite rebase per preservare la repository. La
+  storia tra questi due tag risulta quindi non perfettamente lineare.
 
 ## Strumenti di test, build e CI
 
@@ -184,9 +231,7 @@ di un'iniziale sessione di Domain Driven Design.
 è inoltre sperimentato **WordSpec** come stile di test. **ZIO Test** è stata
 utilizzata per il testing del framework funzionale ZIO.
 
-Per un maggiore approfondimento su questi aspetti, si rimanda al report di LSS.
-
-### Continuous Integration
+### Continuous Integration e Quality Assurance
 
 Particolare attenzione è stata posta nell'individuazione di misure per
 assicurare la qualità del codice. Sono stati predisposti dei workflow a garanzia
@@ -195,23 +240,20 @@ Actions**. Sono stati posti criteri di qualità man mano più stringenti e
 vincolanti, a seconda del grado di stabilità del branch. In generale, `main` e
 `dev` non possono essere modificati senza che il codice passi tutti i controlli
 di CI/QA, e senza che la pull request venga prima revisionata da un ulteriore
-componente del team, mentre per il branch `dev` non è necessaria alcuna
-revisione.
+componente del team. Per il branch `dev` non è necessaria la revisione di un
+ulteriore membro, ma rimangono validi i controlli di CI/QA.
 
 In primo luogo, ogni push o pull request genera un controllo tramite il tool
 esterno **SonarCloud**, il quale definisce soglie qualitative basate su
 coverage, mantenibilità, code smells, presenza di bug conosciuti e molto altro.
 Sono presenti inoltre ulteriori controlli basati su **workflow CI/QA custom**,
-nei quali viene effettuato il lint del codice tramite il plugin Spotless, poste
-ulteriori soglie di coverage, effettuati test e compilato il codice su
-molteplici piattaforme.
-
-Tutti gli accorgimenti vengono approfonditi in maniera più dettagliata nel
-report di LSS.
+nei quali viene effettuato il lint-styling del codice tramite il plugin
+`spotless`, poste ulteriori soglie di coverage, effettuati test ed effettuata la
+build del codice su molteplici piattaforme.
 
 ### Automazione della delivery
 
-Sono state inoltre predisposte dei workflow per la generazione e il deploy delle
+Sono state inoltre predisposte dei workflow per il deploy e il delivery delle
 release, strutturate in maniera tale da rispettare i requisiti imposti da
 GitFlow, apportandone importanti caratteristiche di automazione.
 
@@ -219,11 +261,11 @@ Nel momento in cui si desideri generare una release, il nostro flusso di lavoro
 GitFlow-based prevede che venga generato un branch `release/X.Y.Z`, e che venga
 aperta una pull request su `main` a partire da questa. Quanto detto è l'unica
 operazione manuale da effettuare: una volta chiusa la pull request, revisionata
-la stessa e passati i controlli di CI, un workflow genera il tag della versione,
-inferendolo dal nome del branch. Vengono quindi generati gli asset collegati
-alla release, e resi disponibili sia nella
-[sezione Release](https://github.com/scalaquest/PPS-19-ScalaQuest/releases) del
-progetto, che sulla repository pubblica Maven Central (modulo
+la stessa e passati i controlli di CI, un workflow genera il tag annotato della
+versione, inferendolo dal nome del branch. Vengono quindi generati gli asset
+collegati alla release, e resi disponibili sia nella
+[sezione Release di GitHub](https://github.com/scalaquest/PPS-19-ScalaQuest/releases)
+del progetto, che sulla repository pubblica Maven Central (modulo
 [core](https://mvnrepository.com/artifact/io.github.scalaquest/core) e modulo
 [cli](https://mvnrepository.com/artifact/io.github.scalaquest/cli)). Vengono
 inoltre generati ScalaDoc, report di coverage e di test, resi disponibili

@@ -32,7 +32,7 @@ al quale è stato dedicato un ammontare di ore di lavoro equivalente a quello di
 PPS, considerando oltre alla mera implementazione anche il lavoro di
 approfondimento e studio delle pratiche, in parte nuove per i membri del team.
 
-## Codice sorgente e documentazione aggiuntiva
+## Sorgenti
 
 Complessivamente, i sorgenti di progetto consistono nell'insieme di repository
 GitHub parte dell'[organizzazione ScalaQuest](https://github.com/scalaquest).

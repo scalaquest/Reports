@@ -28,18 +28,18 @@ estensivamente gli aspetti relativi allo stesso corso, tra cui:
 
 Il report di LSS va considerato parte integrante della documentazione di
 progetto, e approfondisce alcuni aspetti non trattatti all'interno del report
-corrente. Si consiglia quindi per la valutazione del progetto di consultare
-anche quest'ultimo.
+corrente. Si consiglia quindi di consultare anche quest'ultimo.
 
 Nel report corrente vengono invece approfonditi nel dettaglio gli aspetti
 inerenti al corso di Paradigmi di Programmazione e Sviluppo.
 
-## Codice sorgente e documentazione aggiuntiva
+## Sorgenti
 
-Il report corrente tratta il processo di sviluppo limitatamente alla repository
-[PPS-19-ScalaQuest](https://github.com/scalaquest/PPS-19-ScalaQuest). Ad ogni
-modo, i sorgenti di progetto consistono nell'insieme di repository GitHub parte
-dell'[organizzazione ScalaQuest](https://github.com/scalaquest).
+Il report corrente tratta il processo di sviluppo con particolare focus sul
+repository
+[scalaquest/PPS-19-ScalaQuest](https://github.com/scalaquest/PPS-19-ScalaQuest).
+Ad ogni modo, i sorgenti di progetto consistono nell'insieme di repository
+GitHub parte dell'[organizzazione ScalaQuest](https://github.com/scalaquest).
 
 Tutti i sorgenti sono resi disponibile sotto **licenza MIT**, in quanto chiara,
 breve e concisa. Non vengono poste particolari limitazioni riguardo la

@@ -230,3 +230,20 @@ Useful links:
 - [(Issue) Pandoc CD fixes](https://github.com/scalaquest/Reports/issues/30)
 - [(Pull request) PPS revision](https://github.com/scalaquest/Reports/pull/33)
 - [(Pull request) LSS report](https://github.com/scalaquest/Reports/pull/34)
+
+# Sprint 11 (7th March - 10th March)
+
+This is the final Sprint of the project, where we closed the last fixes and
+report revisions.
+
+Useful links:
+
+- [(Issue) Update reports link](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/125)
+- [(Pull request) LSS report](https://github.com/scalaquest/Reports/pull/34)
+- [(Issue) Tests in CLI](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/126)
+- [(Issue) Focus on PPS report](https://github.com/scalaquest/PPS-19-ScalaQuest/issues/126)
+- [(Pull request) LSS revision](https://github.com/scalaquest/Reports/pull/43)
+- [(Issue) Problem in release flow](https://github.com/scalaquest/Reports/issues/46)
+- [(Pull request) Add sources clone guide](https://github.com/scalaquest/Reports/pull/48)
+- [(Pull request) Final revision](https://github.com/scalaquest/Reports/pull/49)
+- [(Pull request) Bootstrap dependency with refreshVersion](https://github.com/scalaquest/PPS-19-ScalaQuest/pull/139)
