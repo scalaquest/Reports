@@ -231,7 +231,7 @@ Useful links:
 - [(Pull request) PPS revision](https://github.com/scalaquest/Reports/pull/33)
 - [(Pull request) LSS report](https://github.com/scalaquest/Reports/pull/34)
 
-# Sprint 11 (7th March - 10th March)
+## Sprint 11 (7th March - 10th March)
 
 This is the final Sprint of the project, where we closed the last fixes and
 report revisions.
