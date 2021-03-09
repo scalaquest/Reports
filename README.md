@@ -10,6 +10,20 @@ The documentation is written in Markdown, available in the `src` directory. Anyw
 are provided: for
 each release, PDF LaTeX and web version are generated automatically, using [Pandoc](https://pandoc.org/index.html).
 
+## How to consult sources?
+
+The repository uses [scalaquest/PandocBootstrap](https://github.com/scalaquest/PandocBootstrap) as a Git Submodule. As such, a plain clone does not initialize submodules. You have to clone the project this way:
+
+```
+git clone --recurse-submodules https://github.com/scalaquest/PandocBootstrap.git
+```
+
+Besides performing the clone, also recursively initialize submodules. Also, the submodule have to be updated manually periodically, by using
+
+```
+git submodule update --remote --recursive
+```
+
 ## How to consult the documentation?
 
 You can examine the web version of reports and the appendix document from the
