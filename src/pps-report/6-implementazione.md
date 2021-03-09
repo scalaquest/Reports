@@ -184,7 +184,10 @@ funzionalità, è spesso richiesto di accedere al tipo concreto di `Item`, `Room
 `Ground`. Tali tipi, a causa dell'utilizzo dei path dependent type, può essere
 acceduto soltanto a partite dal `Model` originario.
 
-I package contenuti all'interno di `commons` sono i seguenti:
+La struttura di Commons può risultare complessa nella sua comprensione. Si
+riporta il diagramma dele classi in @fig:commons per facilitarne la
+comprensione. Scendendo nel dettaglio, i package in esso contenuti sono i
+seguenti:
 
 - `actioning`, contente implementazioni comuni di `Action` e `Verb`;
 
@@ -219,7 +222,7 @@ I package contenuti all'interno di `commons` sono i seguenti:
   che "wrappano" delle Lens che agiscono sullo `State`, permettendo di
   utilizzare più facilmente le stesse.
 
-![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/commons-traits.png)
+![Diagramma delle classi che rappresenta la gerarchia di trait realizzata per il model, con particolare focus riguardo i commons.](./images/commons-traits.png){#fig:commons}
 
 ### Resolver
 
@@ -316,14 +319,14 @@ che siano state definite istanze per le seguenti type class:
 
 Contiene i costrutti, realizzati tramite algebraic data types, che consentono la
 dichiarazione di verbi, utilizzati in fase di scrittura di una storia da parte
-dello storyteller. A partire da un verbo deve essere possibile generare le
-seguenti informazioni:
+dello storyteller. La sua struttura viene riportata graficamente in @fig:verbs.
+A partire da un verbo deve essere possibile generare le seguenti informazioni:
 
 - una regola Prolog, che descrive la grammatica del verbo;
 - una tupla `(Verb, Preposition) -> Action` (o `Verb -> Action`), che collega
   l'uso del verbo al suo significato.
 
-![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](images/class-diagram-verb.png)
+![Diagramma delle classi che rappresenta la gerarchia realizzata per i verbi.](images/class-diagram-verb.png){#fig:verbs}
 
 Contiene inoltre una funzione in grado di generare, a partire dal dizionario di
 una storia e dalla grammatica di base, una teoria Prolog utilizzata per
@@ -473,25 +476,31 @@ Questa soluzione utilizza il pattern "Adapter" per wrappare e permettere di
 utilizzare la libreria **tuProlog** all'interno del codice. Successivamente
 questa è stata arraggiata per modellare correttamente il nostro dominio; ad
 esempio è stata creata una interfaccia `Engine` la quale prevede di essere
-definita solamente attraverso `Theory` e `Library`.
+definita solamente attraverso `Theory` e `Library`. La struttura del package
+viene riportata in @fig:parser.
 
 Occorre sottolineare che in alcuni parti del codice, vengono gestite solo
 parzialmente le eccezioni che potrebbero essere sollevate nell'utilizzo del
 Prolog. Questa scelta è stata dettata da un duplice fattore: il codice
 altrimenti si sarebbe notevolmente "sporcato" con l'utilizzo di costrutti
-try/catch o di Option. Tuttavia, questa parte viene utilizzata e gestita
+try/catch o di `Option`. Tuttavia, questa parte viene utilizzata e gestita
 interamente da i membri del team e quindi sappiamo come rispettare le
 interfacce, evitando di sollevare eccezioni.
 
-![Diagramma delle classi che mostra come è stato realizzato il Parser](images/class-diagram-parser.png)
+![Diagramma delle classi che mostra come è stato realizzato il Parser](images/class-diagram-parser.png){#fig:parser}
 
-### Modulo `cli`
+### CLI
 
 Questo modulo si occupa di fornire dei costrutti per creare un'applicazione a
 linea di comando che consenta di interagire con un'istanza di gioco. La sua
 implementazione è basata sul framework **ZIO**, che consente di creare effetti
 (ovvero codice con side-effects) tramite costrutti type-safe, funzionali, quindi
-facilmente componibili e testabili.
+facilmente componibili e testabili. La struttura del modulo, e il modo in cui
+questo si interfaccia con il modulo Core e con ZIO, è riportata graficamente in
+@fig:cli_hierarchy.
+
+![Diagramma delle classi UML che rappresenta la relazione tra i costrutti del
+modulo `core` e quelli del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
 
 L'interfaccia principale è `CLI`, ovvero un wrapper per un effetto
 `ZIO[Console, IOException, Unit]`, che può essere semplificato in
@@ -503,9 +512,6 @@ esteso per creare `GameCLIApp`: una classe astratta, configurabile con istanze
 di `Model`, `State`, `MessagePusher` e gli elementi del dizionario tramite
 template method, realizza un applicazione eseguibile costruendo un'istanza di
 `Game` tramite una `Pipeline` di default.
-
-![Diagramma delle classi UML che rappresenta la relazione tra i costrutti del
-modulo `core` e quelli del modulo `cli`.](images/cli-hierarchy.png){#fig:cli_hierarchy}
 
 All'interno del companion object di `CLI` è messo a disposizione un metodo che
 forniti i componenti necessari, (`Model`, `State`, `MessagePusher` e `State`) ne

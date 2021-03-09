@@ -25,6 +25,10 @@ un membro del team (solitamente, non appartenente allo stesso sub-team, così da
 aggiornare l'altro team sui progressi di progetto) e al passaggio di determitati
 workflow di CI e QA (descritti al @sec:chap5).
 
+Unica deroga a questo flusso di lavoro, è stata posta per modifiche minori, tali
+da non impattare sul funzionamento generale del codice (es. correzione di typo).
+Per queste è stato permesso il push diretto sul branch `main`.
+
 ## GitFlow a regime
 
 Una volta predisposta una codebase sufficientemente stabile, e una volta
@@ -37,10 +41,11 @@ risiede nel branch `dev`.
 
 I vari `feature/*` branch confluiscono ora tramite pull request in `dev`, con
 gli stessi vincoli formulati per modello precedente (controlli di CI obbligatori
-e revisione di un utente obbligatoria). In aggiunta, per una maggiore
-leggibilità e organizzazione del codice, si è adottata una precisa politica di
-merge, che prevede che queste pull request vengano chiuse tramite **squash and
-merge**, con un breve commento nel commit che ne identifichi il changelog.
+e revisione di un utente obbligatoria), e la stessa deroga per le modifiche
+minori. In aggiunta, per una maggiore leggibilità e organizzazione del codice,
+si è adottata una precisa politica di merge, che prevede che queste pull request
+vengano chiuse tramite **squash and merge**, con un breve commento nel commit
+che ne identifichi il changelog.
 
 Il `main` viene aggiornato tramite delle pull request sullo stesso originate da
 branch `release/X.Y.Z` (o `hotfix/X.Y.Z`), originati a loro volta dal `dev`; con
@@ -54,8 +59,8 @@ per la delivery automatizzata degli asset, e la gestione dei tag, indicati in
 di queste pull request, le quali richiedono un **merge commit** che riporti,
 come commento del commit, un breve changelog[^1].
 
-[^1]: è necessario far presente che alcuni problemi sono incorsi tra la release
-
-0.3.1 e 0.4.0, frangente nel quale, a seguito di un errore nelle politiche di
-commit, si è dovuto agire tramite rebase per preservare la repository. La storia
-tra questi due tag risulta quindi non perfettamente lineare.
+[^1]:
+  È necessario far presente che alcuni problemi sono incorsi tra la release
+  0.3.1 e 0.4.0, frangente nel quale, a seguito di un errore nelle politiche di
+  commit, si è dovuto agire tramite rebase per preservare la repository. La
+  storia tra questi due tag risulta quindi non perfettamente lineare.
