@@ -15,7 +15,7 @@ each release, PDF LaTeX and web version are generated automatically, using [Pand
 The repository uses [scalaquest/PandocBootstrap](https://github.com/scalaquest/PandocBootstrap) as a Git Submodule. As such, a plain clone does not initialize submodules. You have to clone the project this way:
 
 ```
-git clone --recurse-submodules https://github.com/scalaquest/PandocBootstrap.git
+git clone --recurse-submodules https://github.com/scalaquest/Reports.git
 ```
 
 Besides performing the clone, also recursively initialize submodules. Also, the submodule have to be updated manually periodically, by using
