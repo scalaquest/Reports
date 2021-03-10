@@ -140,7 +140,7 @@ Il flusso di dati di questa applicazione segue un percorso unidirezionale
 ciclico. Quest'ultima soluzione in particolare, risulta essere molto efficace
 con il problema definito in questo progetto in quanto ad ogni input generato
 dallo user viene aggiornato lo stato. Il prossimo input utente viene valutato a
-partire del nuovo stato attuale.
+partire dal nuovo stato attuale.
 
 In questo paradigma viene considerato come punto centrale il nodo
 **Dispatcher**, attraverso il quale fluiscono tutti i flussi di dati. Nel nostro
@@ -192,13 +192,13 @@ Il nucleo di ZIO è definito dal tipo `ZIO[R, E, A]`, nel quale:
 - `E` rappresenta il tipo dell'errore che la computazione potrebbe causare;
 - `A` rappresenta il tipo di ritorno nel caso in cui l'effetto vada a buon fine.
 
-Il tutto può essero vista come una versione con side-effect di una funzione
+Il tutto può essere visto come una versione con side-effect di una funzione
 `R => Either[E, A]`.
 
 ### Monocle Lens
 
 Al fine di leggere e trasformare oggetti immutabili si è scelto di utilizzare la
-libreria **Monocle**, in particolare il costrutto `Lens`, le quali mettono a
+libreria **Monocle**, in particolare il costrutto `Lens`, il quale mette a
 disposizione un'API semplice e componibile per modificare oggetti anche
 innestati, senza dover ricorrere all'uso del metodo `copy`. La libreria fornisce
 una macro `GenLens`, che consente la creazione di `Lens` a partire da una case

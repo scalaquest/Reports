@@ -1,4 +1,4 @@
-# Implementazione
+# Implementazione {#sec:chap6}
 
 In questo progetto sono diversi i temi implementativi salienti riscontrati. Di
 seguito sono descritti i punti principali, divisi in base all'autore o agli
@@ -124,10 +124,16 @@ Riguardo alla definizione del modello, vanno sottolineate le seguenti scelte
 implementative:
 
 - A causa delle dipendenze circolari tra `Room`, `Item` e `State`, tali entità
-  sono state definite all'interno di un abstract class comune, denominato
-  `Model`, e implementati tramite il meccanismo dei path dependent types. Tale
-  scelta ha influenzato il resto dell'implementazione, determinando la necessità
-  di espandere l'implementazione in una gerarchia che parte da essa.
+  sono state definite all'interno di una **abstract class comune**, denominato
+  `Model`. Tale scelta implica la necessità, per tutte le funzioni che hanno
+  bisogno di uno dei tipi concreti forniti dal modello, di conoscere l'istanza
+  del modello stesso, influenzando profondamente la struttura di molti
+  componenti di progetto, che vanno così a realizzare dei
+  [**dependent types**](https://en.wikipedia.org/wiki/Dependent_type):
+
+  Tale scelta ha inoltre influenzato il resto dell'implementazione, determinando
+  la necessità di espandere l'implementazione tramite una gerarchia che parte
+  dal `Model`.
 
 - L'implementazione del `Model` basata sul meccanismo dei behavior viene
   integrata tramite l'utilizzo dell'abstract class `BehaviorBasedModel`.
@@ -154,7 +160,7 @@ implementative:
   concreti presenti al loro interno, ma i soli riferimenti alle stesse. Per
   restituire gli `Item` concreti, la `Room` deve risolverli, prendendo in input
   lo `State`, il quale contiene la `Map` che memorizza gli `Item` effettivi. Ciò
-  evità ad esempio inconsistenze tra i dati.
+  evita ad esempio inconsistenze tra i dati.
 
 - Le case class che implementano i `BehaviorBasedItem` sono intese come delle
   categorie di oggetti (ad esempio: la categoria di oggetti `Key` denota
@@ -189,35 +195,35 @@ riporta il diagramma dele classi in @fig:commons per facilitarne la
 comprensione. Scendendo nel dettaglio, i package in esso contenuti sono i
 seguenti:
 
-- `actioning`, contente implementazioni comuni di `Action` e `Verb`;
+- **actioning**, contente implementazioni comuni di `Action` e `Verb`;
 
-- `groundBehavior`, contenente dei `Behavior` che possono essere integrati
+- **groundBehavior**, contenente dei `Behavior` che possono essere integrati
   all'interno di un `Ground`, ovvero tutti i comportamenti accessibili tramite
   verbi intransitivi. Tra questi, la possibilità di ispezionare la `Room`
   corrente (`inspect`), navigare tra differenti stanze (`go North`)
 
-- `grounds`, contenente implementazioni standard del costrutto `Ground`.
+- **grounds**, contenente implementazioni standard del costrutto `Ground`.
   Contiene, ad esempio, un'implementazione di `Ground` tale da includere i
   `GroundBehavior` citati in precedenza;
 
-- `itemBehavior`, contenente dei `Behavior` che possono essere integrati
+- **itemBehavior**, contenente dei `Behavior` che possono essere integrati
   all'interno di un `Item`, ovvero tutti i comportamenti accessibli tramite
   verbi transitivi e ditransitivi. Tra questi, la possibilità di afferrare un
   `Item` (`take the sword`), aprire un `Item` (`open the door with the key`), o
   mangiarlo (`eat the apple`).
 
-- `items`, contenente delle implementazioni comuni di `BehaviorBasedItem`. Ad
+- **items**, contenente delle implementazioni comuni di `BehaviorBasedItem`. Ad
   esempio, un `Chest` è un particolare `Item` che riversa nella `Room` corrente
-  degli `Item` una volta aperto, un `Foood` è un `Item` mangiabile, e così via.
+  degli `Item` una volta aperto, un `Food` è un `Item` mangiabile, e così via.
 
-- `pushing`, contenente alcune implementazioni di `Message` e una per il
+- **pushing**, contenente alcune implementazioni di `Message` e una per il
   `Pusher`, comunemente utilizzate, e sfruttate ampiamente nell'implementazione
   dei package precedenti. `Pusher` riconosce tutti i `Message` del package
   `pushing` e produce risposte sotto forma di stringa. Tali messaggi sono già
   gestiti dal `Pusher`, ma la risposta può anche essere personalizzata dallo
   storyteller all'interno della storia;
 
-- `reactions`, contenente delle `Reaction` comunemente utilizzate. Assume
+- **reactions**, contenente delle `Reaction` comunemente utilizzate. Assume
   particolere rilevanza in quanto al suo interno sono presenti delle funzioni
   che "wrappano" delle Lens che agiscono sullo `State`, permettendo di
   utilizzare più facilmente le stesse.
