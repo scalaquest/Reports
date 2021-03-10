@@ -16,8 +16,6 @@ content.
 About sentences, articles are always optional, and adjectives also but just if
 there aren't ambiguity.
 
-### Let's start
-
 Initially, you are in a basement. Inspecting the room there are:
 
 - a _brown chest_
@@ -55,8 +53,6 @@ content.
 About sentences, articles are always optional, and adjectives also but just if
 there aren't ambiguity.
 
-### Let's start
-
 Initially, you are in Vermilion City. Inspecting the room there is a sleeping
 snorlax. `inspect bag` will tell there are a pikachu, a pokeball, a pokeflute.
 
@@ -93,8 +89,6 @@ essential to understand the environment design and content.
 
 About sentences, articles are always optional, and adjectives also but just if
 there aren't ambiguity.
-
-### Let's start
 
 You are Harry Potter. And probably in the worst situation. Inspecting the room,
 you discover that you are in the Chamber of Secrets, with Tom Riddle in the
