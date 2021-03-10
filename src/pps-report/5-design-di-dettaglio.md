@@ -158,10 +158,9 @@ principali problematiche sono legate a:
   incrociate, ogni entità deve conoscere il tipo concreto di ognuna.
 
 La miglior soluzione a cui siamo giunti è stata quella di definire le interfacce
-base di `State`, `Item` e `Room` all'interno di un trait `Model`, e di
-implementarle facendo uso dei **path dependent types**. Sulla base di ciò sono
-state poi definite delle `Lens` per rendere possibile la modifica delle singole
-entità.
+base di `State`, `Item` e `Room` all'interno di un trait `Model`. Sulla base di
+ciò sono state poi definite delle `Lens` per rendere possibile la modifica delle
+singole entità.
 
 ### Aggiornamento dello stato e behavior-based model
 

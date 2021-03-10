@@ -27,9 +27,9 @@ git submodule update --remote --recursive
 ## How to consult the documentation?
 
 You can examine the web version of reports and the appendix document from the
-[PPS report website](https://scalaquest.github.io/Reports/docs/pps-report.html),
-[LSS report website](https://scalaquest.github.io/Reports/docs/lss-report.html) and
-[appendix website](https://scalaquest.github.io/Reports/docs/appendix.html).
+[PPS report website](https://scalaquest.github.io/Reports/pps-report/pps-report.html),
+[LSS report website](https://scalaquest.github.io/Reports/lss-report/lss-report.html) and
+[appendix website](https://scalaquest.github.io/Reports/appendix/appendix.html).
 
 If you prefer a LaTeX PDF version, you can download the latest release 
 [from here](https://github.com/scalaquest/Reports/releases/latest).

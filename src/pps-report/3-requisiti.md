@@ -43,7 +43,7 @@ requisiti caratteristici.
 ### Storyteller
 
 Il termine storyteller identifica i soggetti che utilizzano il sistema per la
-creazione di giochi. Sono date lui le seguenti possibilità:
+creazione di giochi. Sono date a lui le seguenti possibilità:
 
 - Utilizzare un'**API minimale ma completa** per la generazione di giochi di
   genere Interactive Fiction, accessibile tramite un linguaggio di
